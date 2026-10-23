@@ -115,7 +115,7 @@ dialog.lb button:hover{border-color:var(--sand);}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.4</span></div></header>
+<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.4.1</span></div></header>
 
 <main class="wrap">
   <div class="hero">
@@ -129,15 +129,22 @@ dialog.lb button:hover{border-color:var(--sand);}
       <a class="btn" href="#downloads">All downloads</a>
     </div>
     <p class="note">No account, no install. 0.4 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 56 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
-    <video class="shot" id="heroVid" src="images/play.webm?v=0.1" poster="images/board.jpg?v=0.1" width="1280" height="800" autoplay muted loop playsinline aria-label="The campaign map around Jupiter. HYDRA BRAVO's planned intercept arc runs out to the node; the operator executes the burn and time speeds up. The red uncertainty ellipse of TRK 4417 stretches while it is unseen, an IR flash shows the hostile dodging, and lines of bearing from HYDRA, EXCALIBUR and Ganymede Station cross on it."></video>
+    <video class="shot" id="heroVid" src="images/play.webm?v=0.4.1" poster="images/play-poster.jpg?v=0.4.1" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.4 in motion. The console over the Jovian system with TRK 4417 selected; the planner opens on it and the gold transfer arc appears on the map; HYDRA turns and lights its drive, seen close up with its exhaust plume; then the view pulls out and time speeds up as the ships coast along their orbits."></video>
     <script>/* A still picture for anyone who asks their device for reduced motion */ (function(){var v=document.getElementById('heroVid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
-    <p class="cap">HYDRA BRAVO burns toward the hostile's estimated path; TRK 4417 sees it coming and dodges. (A still picture shows instead if your device asks for reduced motion.)</p>
+    <p class="cap">Playtest 0.4: plan an intercept on TRK 4417, light HYDRA's drive, and coast. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
   </div>
 
   <section id="whats-new">
     <h2>What's new</h2>
     <dl class="log">
-            <dt>0.4<small>23 Oct 2026 · look and feel</small><span class="latest">LATEST</span></dt>
+      <dt>0.4.1<small>23 Oct 2026 · fix</small><span class="latest">LATEST</span></dt>
+      <dd>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>Drive plumes fixed.</b> A burning drive no longer throws a giant white beam across the screen: the plume now runs out of the nozzle, short and bright, and fades into space.</li>
+          <li><b>A new clip at the top of this page,</b> recorded in 0.4.</li>
+        </ul></div><figure><img width="1600" height="900" alt="HYDRA close up in the space view, its drive lit: a short blue-white exhaust plume runs straight out of the nozzle and fades to orange, then to nothing." loading="lazy" src="images/g-plume.jpg?v=0.4.1"><figcaption>HYDRA burning, with the fixed plume</figcaption></figure></div>
+      </dd>
+      <dt>0.4<small>23 Oct 2026 · look and feel</small></dt>
       <dd>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>A new look, all original.</b> Every frame, button, icon, insignia and the mission patch is new, drawn for SATWAR. Windows glint and wipe in, and the console clicks and hums.</li>
