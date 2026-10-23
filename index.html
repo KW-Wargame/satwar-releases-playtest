@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SATWAR · Playtest</title>
+<meta name="description" content="SATWAR: an educational game of stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics. Play in your browser or download.">
+<meta property="og:title" content="SATWAR · Playtest 0.1">
+<meta property="og:description" content="Nothing hides in space. Find a cold, quiet hostile around Jupiter before it boards a freighter, using real orbital mechanics and sensor physics.">
+<meta property="og:image" content="images/board.jpg?v=0.1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Share+Tech+Mono&display=swap">
+<style>
+:root{
+  color-scheme: dark;
+  --void:#050709; --panel:#0b0f12; --line:#1f272c; --line2:#34404a;
+  --ink:#e9eef1; --dim:#aab5bc; --faint:#95a1a8;
+  --sand:#f2cd4b; --blue:#7fe08a; --red:#ff4f45; --laser:#9d8cff;
+  --display:'Share Tech Mono','IBM Plex Mono',Consolas,ui-monospace,monospace;
+  --mono:'IBM Plex Mono','Cascadia Mono',Consolas,ui-monospace,monospace;
+  --sans:'IBM Plex Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;}
+html{background:var(--void);}
+body{margin:0;color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;
+  background:
+    linear-gradient(rgba(120,140,150,.05) 1px,transparent 1px) 0 0/44px 44px,
+    linear-gradient(90deg,rgba(120,140,150,.05) 1px,transparent 1px) 0 0/44px 44px,
+    var(--void);}
+a{color:var(--sand);}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px;}
+header.top{border-bottom:1px solid var(--line);background:rgba(5,7,9,.85);}
+header.top .wrap{display:flex;justify-content:space-between;align-items:center;height:56px;gap:16px;}
+.brand{font-family:var(--display);font-size:16px;letter-spacing:.3em;color:#f1f3f5;white-space:nowrap;}
+.tag{font-family:var(--display);font-size:12px;letter-spacing:.13em;color:var(--sand);white-space:nowrap;}
+.hero{padding:56px 0 32px;}
+.kick{font-family:var(--display);font-size:13px;letter-spacing:.16em;color:var(--sand);text-transform:uppercase;margin:0 0 14px;}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,5vw,52px);letter-spacing:.06em;line-height:1.15;margin:0 0 18px;color:#f4f5f7;
+  text-shadow:-1px 0 rgba(255,60,60,.35),1px 0 rgba(60,200,255,.35);}
+h1 em{font-style:normal;color:var(--sand);}
+.lede{max-width:700px;font-size:18px;color:#c9d0d5;margin:0 0 28px;}
+.ctas{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:12px;}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border:1px solid var(--sand);color:var(--sand);
+  font-family:var(--display);font-size:14px;letter-spacing:.12em;text-decoration:none;text-transform:uppercase;}
+.btn:hover{background:rgba(242,205,75,.08);}
+.btn:focus-visible{outline:2px solid #fff;outline-offset:2px;}
+.btn.primary{background:var(--sand);color:#121314;}
+.btn.primary:hover{background:#f8de80;}
+.note{font-family:var(--mono);font-size:12px;color:var(--dim);letter-spacing:.02em;}
+.shot{margin:36px 0 8px;border:1px solid var(--line2);display:block;width:100%;height:auto;background:#000;}
+.cap{font-family:var(--mono);font-size:12px;color:var(--faint);margin:0 0 48px;}
+section{padding:40px 0;border-top:1px solid var(--line);}
+h2{font-family:var(--display);font-weight:400;font-size:20px;letter-spacing:.14em;color:#f1f3f5;margin:0 0 22px;text-transform:uppercase;}
+h3{font-family:var(--display);font-weight:400;font-size:13px;letter-spacing:.13em;color:var(--sand);margin:22px 0 8px;text-transform:uppercase;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start;}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.card{border:1px solid var(--line);background:var(--panel);padding:18px 20px;}
+.card b{display:block;font-family:var(--display);font-size:13px;letter-spacing:.12em;color:var(--sand);margin-bottom:6px;font-weight:400;}
+.card b.blue{color:var(--blue);} .card b.red{color:var(--red);}
+.card p{margin:0;color:#c3cad0;font-size:15px;}
+.card .src{display:block;margin-top:10px;font-family:var(--mono);font-size:11.5px;color:var(--faint);line-height:1.45;}
+.card .src a{color:var(--faint);}
+table{width:100%;border-collapse:collapse;font-size:15px;}
+th{text-align:left;font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--dim);font-weight:500;padding:10px 12px;border-bottom:1px solid var(--line2);text-transform:uppercase;}
+td{padding:14px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+td.f a{font-family:var(--mono);font-size:14px;text-decoration:none;}
+td.f a:hover{text-decoration:underline;}
+td.s{font-family:var(--mono);font-size:12px;color:var(--faint);white-space:nowrap;}
+ol,ul{padding-left:20px;margin:6px 0;} li{margin:4px 0;}
+code{font-family:var(--mono);font-size:13px;background:#10161a;border:1px solid var(--line);padding:1px 6px;}
+footer{border-top:1px solid var(--line);padding:28px 0 48px;color:var(--faint);font-size:13px;}
+footer p{margin:6px 0;}
+footer a{color:var(--faint);}
+img.inline{width:100%;height:auto;border:1px solid var(--line2);}
+.news{display:inline-flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:0 0 26px;padding:9px 14px;border:1px solid var(--sand);
+  background:rgba(242,205,75,.07);color:var(--ink);text-decoration:none;font-size:14px;}
+.news:hover{background:rgba(242,205,75,.13);}
+.news b{font-family:var(--display);font-size:12px;letter-spacing:.12em;color:#121314;background:var(--sand);padding:3px 8px;font-weight:400;}
+.news span{color:var(--sand);font-family:var(--display);font-size:13px;letter-spacing:.08em;}
+.log{display:grid;grid-template-columns:200px 1fr;gap:10px 28px;margin:0;}
+.log dt{font-family:var(--display);font-size:13px;letter-spacing:.13em;color:var(--sand);padding-top:3px;}
+.log dt small{display:block;color:var(--dim);letter-spacing:.06em;font-size:12px;margin-top:2px;font-family:var(--mono);}
+.log dt .latest{display:inline-block;margin-top:8px;font-size:11px;letter-spacing:.12em;color:#121314;background:var(--sand);padding:2px 7px;}
+.log dd{margin:0 0 22px;color:#dfe3e7;}
+.log dd > ul > li{margin-bottom:12px;max-width:78ch;}
+.log dd > ul > li > b{color:#f1f3f5;}
+.cl-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:center;margin:16px 0;padding:16px 0;border-top:1px solid var(--line);}
+.cl-pair:first-child{border-top:0;padding-top:0;margin-top:0;}
+.cl-pair.flip .cl-note{order:2;}
+.cl-pair .cl-note ul{margin:0;}
+.cl-pair .cl-note li{margin-bottom:10px;}
+.cl-pair figure{margin:0;}
+.log figure img{display:block;width:100%;height:auto;border:1px solid var(--line2);cursor:zoom-in;}
+.log figcaption{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--dim);margin-top:6px;text-align:center;}
+.log figure img:focus-visible,.hero img.shot:focus-visible,img.inline:focus-visible{outline:2px solid var(--sand);outline-offset:3px;}
+.dn{margin:14px 0 0;padding:12px 16px;border-left:2px solid var(--sand);background:var(--panel);color:#dfe3e7;}
+.dn b{display:block;font-family:var(--display);font-size:12px;letter-spacing:.12em;color:var(--sand);margin-bottom:4px;font-weight:400;}
+.model td:first-child{font-family:var(--display);letter-spacing:.08em;color:var(--sand);white-space:nowrap;}
+.model td{font-size:14px;}
+dialog.lb{padding:0;border:1px solid var(--line2);background:var(--panel);color:var(--ink);max-width:96vw;max-height:94vh;overflow:auto;}
+dialog.lb::backdrop{background:rgba(5,7,9,.9);}
+dialog.lb img{display:block;max-width:94vw;max-height:84vh;width:auto;height:auto;margin:0 auto;cursor:zoom-out;}
+dialog.lb .lbbar{display:flex;align-items:center;gap:12px;padding:10px 14px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--dim);}
+dialog.lb .lbbar span{flex:1;}
+dialog.lb button{font:inherit;color:var(--sand);background:none;border:1px solid var(--line2);padding:6px 12px;cursor:pointer;min-width:44px;min-height:36px;}
+dialog.lb button:hover{border-color:var(--sand);}
+@media (max-width:760px){
+  .log{grid-template-columns:1fr;gap:4px;}
+  .grid2,.grid3,.cl-pair{grid-template-columns:1fr;}
+  .cl-pair.flip .cl-note{order:0;}
+  .tag{display:none;}
+  td.s{display:none;}
+}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.1</span></div></header>
+
+<main class="wrap">
+  <div class="hero">
+    <a class="news" href="#whats-new"><b>FIRST PLAYTEST 0.1</b> The campaign map and the first scenario, INDUSTRIAL INTENT. <span>What's new ↓</span></a>
+    <p class="kick">An educational game of stealth satellites and electronic warfare</p>
+    <h1>Nothing hides in space.<br><em>Forty-eight hours</em> to find what's trying.</h1>
+    <p class="lede">Jupiter, 2041. A freighter has gone silent in her parking orbit, and a cold, quiet hostile is coasting in to board her. Every sensor saw its drive flash once. Now it's dark. You run the console: find it, fix it and stop it, with the real orbits of Jupiter's moons and the real physics of seeing and being seen.</p>
+    <div class="ctas">
+      <a class="btn primary" href="play/">Play in your browser ▸</a>
+      <a class="btn" href="#science">The science</a>
+      <a class="btn" href="#downloads">All downloads</a>
+    </div>
+    <p class="note">No account, no install. Works on any computer with a modern browser and a keyboard and mouse. Nothing leaves your machine.</p>
+    <video class="shot" id="heroVid" src="images/play.webm?v=0.1" poster="images/board.jpg?v=0.1" width="1280" height="800" autoplay muted loop playsinline aria-label="The campaign map around Jupiter. HYDRA BRAVO's planned intercept arc runs out to the node; the operator executes the burn and time speeds up. The red uncertainty ellipse of TRK 4417 stretches while it is unseen, an IR flash shows the hostile dodging, and lines of bearing from HYDRA, EXCALIBUR and Ganymede Station cross on it."></video>
+    <script>/* A still picture for anyone who asks their device for reduced motion */ (function(){var v=document.getElementById('heroVid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
+    <p class="cap">HYDRA BRAVO burns toward the hostile's estimated path; TRK 4417 sees it coming and dodges. (A still picture shows instead if your device asks for reduced motion.)</p>
+  </div>
+
+  <section id="whats-new">
+    <h2>What's new</h2>
+    <dl class="log">
+      <dt>0.1<small>23 Oct 2026 · browser</small><span class="latest">LATEST</span></dt>
+      <dd>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>The first playtest.</b> The campaign map of the Jovian system and one scenario, INDUSTRIAL INTENT, from the drive flash to the after-action report.</li>
+          <li><b>Plan with real orbits.</b> Pick a target and a time of flight; the planner solves Lambert's problem, shows the arc, the delta-v and how uncertain the target will be when you get there.</li>
+        </ul></div><figure><img width="1600" height="1000" alt="The campaign map at the start: Jupiter and its four large moons on their orbits, HYDRA's planned intercept arc in green out to an intercept node labelled T+20:00, the red uncertainty ellipse of TRK 4417, MV INDUSTRIAL INTENT in yellow and EXCALIBUR in violet, with the asset card on the left and the tracks and maneuver planner on the right." loading="lazy" src="images/board.jpg?v=0.1"><figcaption>The map at T+00:00 with HYDRA's intercept planned</figcaption></figure></div>
+        <div class="cl-pair flip"><div class="cl-note"><ul>
+          <li><b>Find, fix, finish.</b> Passive infrared sees a cold hull only up close; lines of bearing from two sensors cross into a fix; radar gives a hard lock but is heard ten times farther away.</li>
+          <li><b>A hostile that watches back.</b> If it sees a warship closing, it re-plans its own transfer and dodges. Every dodge is a burn you can see.</li>
+        </ul></div><figure><img width="1600" height="1000" alt="Close in on TRK 4417: HYDRA's radar lock has shrunk the red ellipse to a few kilometres, a green radar line joins HYDRA to the track, and the ENGAGE panel shows HYDRA ready to fire with an 85 percent kill probability." loading="lazy" src="images/radar-lock.jpg?v=0.1"><figcaption>Radar lock: the ellipse collapses and the shot opens up</figcaption></figure></div>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>Learn the science as you play.</b> Every line in the event log has a WHY? link to a short note on the physics behind it, with its sources.</li>
+          <li><b>See what really happened.</b> The after-action map shows the hostile's true path against what your tracking believed.</li>
+        </ul></div><figure><img width="1600" height="1000" alt="A science note open over the map: Lambert's problem, planning an intercept, three short paragraphs and its sources, Curtis and Bate, Mueller and White." loading="lazy" src="images/science.jpg?v=0.1"><figcaption>A science note, with its sources</figcaption></figure></div>
+      </dd>
+    </dl>
+  </section>
+
+  <section>
+    <h2>What you do</h2>
+    <div class="grid3">
+      <div class="card"><b class="red">FIND</b><p>TRK 4417 is a 140 K hull with a low-emissivity skin. Your ship sensors see it from 170,000 km at best. Spread them out, cross your lines of bearing and keep the red ellipse small.</p></div>
+      <div class="card"><b>FIX</b><p>Every burn lights you up across the system, and radar tells the hostile where you are. Choose when to break emission control: a hard lock now, or stay quiet and close in.</p></div>
+      <div class="card"><b class="blue">FINISH</b><p>Plan intercepts with real orbits and a real fuel budget. Kill the hostile for a DECISIVE result, or guard the freighter so it breaks off: DETERRED.</p></div>
+    </div>
+    <div class="grid2" style="margin-top:32px">
+      <div>
+        <h3>Who might enjoy it</h3>
+        <p>Anyone curious how space operations would really work: students, teachers, analysts, wargamers, and people in space or electronic warfare education who want to explore the ideas. There are no starfighters and no sound in space here, only orbits, heat and patience. It's an independent hobby project, not an official or endorsed course.</p>
+        <h3>What it is built on</h3>
+        <p>Jupiter's and the Galilean moons' masses and orbits from NASA and JPL; the orbital mechanics of Curtis and of Bate, Mueller and White; nuclear thermal propulsion as NASA tested it; infrared and radar physics from Hudson and Skolnik; Kalman tracking from Bar-Shalom. The full list is <a href="#science">below</a> and in the game.</p>
+      </div>
+      <div>
+        <img class="inline" src="images/briefing.jpg?v=0.1" alt="The operation order that opens the game: situation, mission and execution for INDUSTRIAL INTENT, in green terminal text, with links to the science notes." width="1600" height="1000" loading="lazy">
+        <p class="cap" style="margin:8px 0 0">Each game opens with an operation order: what you know, what you have, and what the enemy may do.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="science">
+    <h2>The science</h2>
+    <p class="note" style="margin:0 0 18px">The physics is real and every number cites its source. Where the game simplifies or invents, it says so.</p>
+    <div class="grid3">
+      <div class="card"><b>KEPLER'S THIRD LAW</b><p>The moons move by T = 2π√(a³/GM) with NASA's and JPL's values. The game's periods match NASA's observed ones to better than 0.1 %, and the tests check it.</p><span class="src">NASA NSSDCA Jupiter and Jovian Satellite Fact Sheets; JPL SSD satellite elements (JUP365, Jacobson 2021)</span></div>
+      <div class="card"><b>RESONANT ORBITS</b><p>The freighter parks at 1.699 × 10⁶ km: exactly twice Ganymede's period. Io, Europa and Ganymede share a 1:2:4 resonance that heats Io into the most volcanic world in the solar system.</p><span class="src">Peale, Cassen &amp; Reynolds (1979), <i>Science</i> 203</span></div>
+      <div class="card"><b>LAMBERT'S PROBLEM</b><p>Every intercept is the orbit that joins here-and-now to there-and-then. The solver is the universal-variable method, and reproduces the textbook's worked example.</p><span class="src">Curtis (2020), <i>Orbital Mechanics for Engineering Students</i>, 4th ed., Alg. 5.2; Bate, Mueller &amp; White (1971)</span></div>
+      <div class="card"><b>DELTA-V AND NUCLEAR THERMAL</b><p>Fuel is delta-v, set by the rocket equation. The 2040-era drives heat hydrogen in a reactor to about 900 s of specific impulse, twice the best chemical rockets, as NASA's Rover/NERVA reactors showed.</p><span class="src">NASA Glenn, Ideal Rocket Equation; Borowski, McCurdy &amp; Packard (2012), NASA NTRS 20120003776</span></div>
+      <div class="card"><b>WHY NOTHING HIDES</b><p>Every warm hull glows: P = εσT⁴A. That light falls off with the square of distance. Stealth means cold, dull and small; a burn means hundreds of megawatts anyone can see.</p><span class="src">CODATA 2018 (Stefan–Boltzmann constant); Hudson (1969), <i>Infrared System Engineering</i></span></div>
+      <div class="card"><b>BEARINGS, RADAR AND LISTENING</b><p>One passive sensor gives a line; two give a fix, kept by a Kalman filter. Radar's echo fades as 1/R⁴ but a listener only needs 1/R², so it hears you first.</p><span class="src">Bar-Shalom, Li &amp; Kirubarajan (2001); Skolnik (2001), <i>Introduction to Radar Systems</i>, 3rd ed.</span></div>
+    </div>
+    <h3 style="margin-top:32px">What the game simplifies</h3>
+    <table class="model">
+      <thead><tr><th>Part</th><th>Real</th><th>Simplified or invented</th></tr></thead>
+      <tbody>
+        <tr><td>MOONS</td><td>JPL mean elements; Kepler periods within 0.1 % of observed</td><td>One plane (real tilts are under half a degree); mean elements, not a full ephemeris</td></tr>
+        <tr><td>SHIPS</td><td>Exact two-body coasts; Lambert intercepts; rocket equation at 900 s</td><td>Burns are instant; the moons' pull is ignored; every ship is fiction</td></tr>
+        <tr><td>SENSORS</td><td>Stefan–Boltzmann; inverse square; Jupiter blocks the view</td><td>Sensor sensitivity, glare, plume power and radar ranges are game values</td></tr>
+        <tr><td>WEAPONS</td><td>—</td><td>All performance is invented for play</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="downloads">
+    <h2>Downloads</h2>
+    <p class="note" style="margin:0 0 14px">Version 0.1 runs in your browser: play it online with <b>Play in your browser</b> above, or download it as one HTML file that works offline. Manuals come later in the playtest.</p>
+    <table>
+      <thead><tr><th>If you want to…</th><th>Download</th><th>Size</th></tr></thead>
+      <tbody>
+        <tr><td>Play offline on any computer: double-click to open in your browser</td><td class="f"><a href="satwar-0.1.html" download>satwar-0.1.html</a></td><td class="s">64 KB</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section>
+    <h2>How to play</h2>
+    <div class="grid2">
+      <div>
+        <ol>
+          <li>Read the operation order, then <b>Begin operation</b>. The clock starts at 3,000× time warp.</li>
+          <li>HYDRA is selected. In the <b>Maneuver planner</b>, the target is TRK 4417 and the time of flight is 20 hours: check the delta-v and press <b>Execute burn</b>.</li>
+          <li>Watch the red ellipse. When a flash shows the hostile dodging, re-plan: a shorter time of flight closes faster but costs more.</li>
+          <li>Inside 120,000 km, think about <b>Radar on</b>. When <b>Engage</b> shows a kill probability, fire.</li>
+        </ol>
+        <p class="note">Space pauses · [ and ] change time warp · T switches the view · F follows a ship · C re-centres · wheel zooms · drag pans.</p>
+      </div>
+      <img class="inline" src="images/after-action.jpg?v=0.1" alt="The after-action report: DECISIVE in large green letters, the operation's length, the delta-v spent, shots fired, the dodges forced, and what TRK 4417 really was." width="1600" height="1000" loading="lazy">
+    </div>
+  </section>
+
+  <section>
+    <h2>Feedback</h2>
+    <p>This is a playtest. Please note the seed (bottom right of the map), whether you won and how, anything confusing, and any place the physics felt wrong, and send it to whoever shared this page with you.</p>
+  </section>
+</main>
+
+<footer><div class="wrap">
+  <p>© 2026 Kevin Williamson. All rights reserved. SATWAR is an independent educational project.</p>
+  <p>Planetary data from NASA's Space Science Data Coordinated Archive and JPL Solar System Dynamics, used as published; NASA and JPL have not reviewed or endorsed this game. All ships, operators and events are original fiction. Full credits are under SOURCES in the game.</p>
+</div></footer>
+<dialog class="lb" id="lb" aria-label="Enlarged picture"><img id="lbImg" alt=""><div class="lbbar"><button type="button" id="lbPrev" aria-label="Previous picture">‹</button><span id="lbCap"></span><button type="button" id="lbNext" aria-label="Next picture">›</button><button type="button" id="lbX">CLOSE ✕</button></div></dialog>
+<script>
+(function(){
+  var lb=document.getElementById('lb');
+  if(!lb||!lb.showModal){return;}
+  var imgs=[].slice.call(document.querySelectorAll('.log figure img, img.inline')), cur=0;
+  function show(i){
+    cur=(i+imgs.length)%imgs.length; var im=imgs[cur], fc=im.closest('figure');
+    var big=document.getElementById('lbImg'); big.src=im.currentSrc||im.src; big.alt=im.alt;
+    document.getElementById('lbCap').textContent=fc&&fc.querySelector('figcaption')?fc.querySelector('figcaption').textContent:(im.alt||'');
+  }
+  imgs.forEach(function(im,i){
+    im.tabIndex=0; im.setAttribute('role','button'); im.setAttribute('aria-label','Enlarge: '+(im.alt||'picture')); im.style.cursor='zoom-in';
+    im.addEventListener('click',function(){show(i);lb.showModal();});
+    im.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();show(i);lb.showModal();}});
+  });
+  document.getElementById('lbX').onclick=function(){lb.close();};
+  document.getElementById('lbPrev').onclick=function(){show(cur-1);};
+  document.getElementById('lbNext').onclick=function(){show(cur+1);};
+  document.getElementById('lbImg').onclick=function(){lb.close();};
+  lb.addEventListener('click',function(e){if(e.target===lb){lb.close();}});
+  lb.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'){show(cur-1);}else if(e.key==='ArrowRight'){show(cur+1);}});
+  lb.addEventListener('close',function(){var im=imgs[cur];if(im){im.focus();}});
+})();
+</script>
+</body>
+</html>
