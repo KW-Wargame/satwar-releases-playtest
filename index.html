@@ -115,20 +115,20 @@ dialog.lb button:hover{border-color:var(--sand);}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.1</span></div></header>
+<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.3</span></div></header>
 
 <main class="wrap">
   <div class="hero">
-    <a class="news" href="#whats-new"><b>FIRST PLAYTEST 0.1</b> The campaign map and the first scenario, INDUSTRIAL INTENT. <span>What's new ↓</span></a>
+    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.3</b> The full 3D campaign, Operation NIGHT HERON. <span>What's new ↓</span></a>
     <p class="kick">An educational game of stealth satellites and electronic warfare</p>
     <h1>Nothing hides in space.<br><em>Forty-eight hours</em> to find what's trying.</h1>
     <p class="lede">Jupiter, 2041. A freighter has gone silent in her parking orbit, and a cold, quiet hostile is coasting in to board her. Every sensor saw its drive flash once. Now it's dark. You run the console: find it, fix it and stop it, with the real orbits of Jupiter's moons and the real physics of seeing and being seen.</p>
     <div class="ctas">
-      <a class="btn primary" href="play/">Play in your browser ▸</a>
+      <a class="btn primary" href="game/">Play 0.3 in your browser ▸</a>
       <a class="btn" href="#science">The science</a>
       <a class="btn" href="#downloads">All downloads</a>
     </div>
-    <p class="note">No account, no install. Works on any computer with a modern browser and a keyboard and mouse. Nothing leaves your machine.</p>
+    <p class="note">No account, no install. 0.3 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 54 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
     <video class="shot" id="heroVid" src="images/play.webm?v=0.1" poster="images/board.jpg?v=0.1" width="1280" height="800" autoplay muted loop playsinline aria-label="The campaign map around Jupiter. HYDRA BRAVO's planned intercept arc runs out to the node; the operator executes the burn and time speeds up. The red uncertainty ellipse of TRK 4417 stretches while it is unseen, an IR flash shows the hostile dodging, and lines of bearing from HYDRA, EXCALIBUR and Ganymede Station cross on it."></video>
     <script>/* A still picture for anyone who asks their device for reduced motion */ (function(){var v=document.getElementById('heroVid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
     <p class="cap">HYDRA BRAVO burns toward the hostile's estimated path; TRK 4417 sees it coming and dodges. (A still picture shows instead if your device asks for reduced motion.)</p>
@@ -137,7 +137,26 @@ dialog.lb button:hover{border-color:var(--sand);}
   <section id="whats-new">
     <h2>What's new</h2>
     <dl class="log">
-      <dt>0.1<small>23 Oct 2026 · browser</small><span class="latest">LATEST</span></dt>
+      <dt>0.3<small>23 Oct 2026 · 3D campaign</small><span class="latest">LATEST</span></dt>
+      <dd>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>Operation NIGHT HERON.</b> A ten-day campaign against four hidden Red satellites: a tender stalking the freighter, a relay that carries its orders, an inspector shadowing your hunter, and a sleeper that hasn't said a word.</li>
+          <li><b>The whole Jovian system in 3D, under real gravity.</b> Jupiter's flattening as NASA's Juno measured it, and the pull of all four big moons. Plans drift; correction burns matter.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The 3D space view: orbits of the moons and ships around Jupiter, brackets on tracks with their uncertainty, the Signals, Campaign, Selected and Overview windows, and the event log." loading="lazy" src="images/g-space.jpg?v=0.3"><figcaption>The space view: Red appears only where your tracks put it</figcaption></figure></div>
+        <div class="cl-pair flip"><div class="cl-note"><ul>
+          <li><b>Find them by listening.</b> The EW console: deep-space band tiles, a waterfall over the spectrum, bearings, and every heard signal kept as an annotation. One ear gives a line; drop listening buoys so lines cross into a fix.</li>
+          <li><b>Plain or US doctrinal language.</b> Switch any time between everyday words and the terms of JP 3-85, JP 3-14, JP 3-60 and the Space Force's Space Warfighting framework.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The EW console: S, X and Ka band waterfalls, the X band in detail with a spectrum below it, a polar plot of bearings, and a table of heard signals with Find direction and Identify signal buttons." loading="lazy" src="images/g-ew.jpg?v=0.3"><figcaption>The EW console, laid out after open-source SDR tools</figcaption></figure></div>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>Move by orbit.</b> The planner draws a porkchop plot of fuel against departure and flight time, aimed at where your track says the target will be.</li>
+          <li><b>Non-kinetic first.</b> Jam, spoof, dazzle, microwave pulse or take control, each decided by its physics and each with a price. An interceptor is the last resort, and it leaves debris. Stay below open war.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The maneuver planner: a grid of delta-v values by departure time and time of flight, the cheapest affordable transfer highlighted, and its details below." loading="lazy" src="images/g-planner.jpg?v=0.3"><figcaption>A porkchop plot, solved by Lambert's problem</figcaption></figure></div>
+        <div class="cl-pair flip"><div class="cl-note"><ul>
+          <li><b>See it in infrared.</b> The camera shows what a telescope really would: brightness is radiance, sharpness is the diffraction limit. Close in, the hull resolves; far off, it's one point of light.</li>
+          <li><b>Original score,</b> a tutorial you finish by doing, saves, and a library of every source, US doctrine first.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The infrared camera on TRK 4417 at 21 km: a white-hot hull against black, a boxed data table on the left, range, rate and signal readings on the right, and the caption TARGET RESOLVED." loading="lazy" src="images/g-ir.jpg?v=0.3"><figcaption>The long-wave infrared camera, at 21 km</figcaption></figure></div>
+      </dd>
+      <dt>0.1<small>23 Oct 2026 · browser</small></dt>
       <dd>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>The first playtest.</b> The campaign map of the Jovian system and one scenario, INDUSTRIAL INTENT, from the drive flash to the after-action report.</li>
@@ -192,20 +211,22 @@ dialog.lb button:hover{border-color:var(--sand);}
       <thead><tr><th>Part</th><th>Real</th><th>Simplified or invented</th></tr></thead>
       <tbody>
         <tr><td>MOONS</td><td>JPL mean elements; Kepler periods within 0.1 % of observed</td><td>One plane (real tilts are under half a degree); mean elements, not a full ephemeris</td></tr>
-        <tr><td>SHIPS</td><td>Exact two-body coasts; Lambert intercepts; rocket equation at 900 s</td><td>Burns are instant; the moons' pull is ignored; every ship is fiction</td></tr>
+        <tr><td>SHIPS</td><td>0.3: Jupiter's J2 and all four moons' pull, integrated; Lambert intercepts; rocket equation at 900 s</td><td>Burns are instant; every ship is fiction (0.1 ignored the moons' pull)</td></tr>
         <tr><td>SENSORS</td><td>Stefan–Boltzmann; inverse square; Jupiter blocks the view</td><td>Sensor sensitivity, glare, plume power and radar ranges are game values</td></tr>
-        <tr><td>WEAPONS</td><td>—</td><td>All performance is invented for play</td></tr>
+        <tr><td>EFFECTS</td><td>0.3: jamming by Friis link budgets, dazzle by diffraction, microwave field strength √(30PG)/R</td><td>Equipment specs and thresholds (J/S needed, kill fluence, escalation) are design values</td></tr>
       </tbody>
     </table>
   </section>
 
   <section id="downloads">
     <h2>Downloads</h2>
-    <p class="note" style="margin:0 0 14px">Version 0.1 runs in your browser: play it online with <b>Play in your browser</b> above, or download it as one HTML file that works offline. Manuals come later in the playtest.</p>
+    <p class="note" style="margin:0 0 14px">0.3 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
     <table>
       <thead><tr><th>If you want to…</th><th>Download</th><th>Size</th></tr></thead>
       <tbody>
-        <tr><td>Play offline on any computer: double-click to open in your browser</td><td class="f"><a href="satwar-0.1.html" download>satwar-0.1.html</a></td><td class="s">64 KB</td></tr>
+        <tr><td>Play 0.3, the 3D campaign, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">54 MB</td></tr>
+        <tr><td>Play 0.1, the campaign map, in your browser</td><td class="f"><a href="play/">play/</a></td><td class="s">64 KB</td></tr>
+        <tr><td>0.1 offline on any computer: double-click to open in your browser</td><td class="f"><a href="satwar-0.1.html" download>satwar-0.1.html</a></td><td class="s">64 KB</td></tr>
       </tbody>
     </table>
   </section>
