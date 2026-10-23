@@ -115,11 +115,11 @@ dialog.lb button:hover{border-color:var(--sand);}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.3</span></div></header>
+<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.3.1</span></div></header>
 
 <main class="wrap">
   <div class="hero">
-    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.3</b> The full 3D campaign, Operation NIGHT HERON. <span>What's new ↓</span></a>
+    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.3.1</b> The full 3D campaign, Operation NIGHT HERON. <span>What's new ↓</span></a>
     <p class="kick">An educational game of stealth satellites and electronic warfare</p>
     <h1>Nothing hides in space.<br><em>Forty-eight hours</em> to find what's trying.</h1>
     <p class="lede">Jupiter, 2041. A freighter has gone silent in her parking orbit, and a cold, quiet hostile is coasting in to board her. Every sensor saw its drive flash once. Now it's dark. You run the console: find it, fix it and stop it, with the real orbits of Jupiter's moons and the real physics of seeing and being seen.</p>
@@ -137,24 +137,32 @@ dialog.lb button:hover{border-color:var(--sand);}
   <section id="whats-new">
     <h2>What's new</h2>
     <dl class="log">
-      <dt>0.3<small>23 Oct 2026 · 3D campaign</small><span class="latest">LATEST</span></dt>
+      <dt>0.3.1<small>23 Oct 2026 · polish</small><span class="latest">LATEST</span></dt>
+      <dd>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>No more freeze</b> when you open the planner: it now opens in a fraction of a second.</li>
+          <li><b>A darker, solid console.</b> Opaque windows, hover tooltips that explain everything in plain words, and simpler wording in Plain mode.</li>
+          <li><b>See the ships.</b> Double-click a ship in the Overview and scroll in: its 3D model appears, magnified and labelled. Every orbit has its own colour, with a key.</li>
+        </ul></div><figure><img width="1600" height="900" alt="A close-up of EXCALIBUR's 3D model in the space view, its radiator panels catching the sunlight, labelled EXCALIBUR and shown magnified eleven times." loading="lazy" src="images/g-model.jpg?v=0.3.1"><figcaption>EXCALIBUR up close in the space view</figcaption></figure></div>
+      </dd>
+      <dt>0.3<small>23 Oct 2026 · 3D campaign</small></dt>
       <dd>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>Operation NIGHT HERON.</b> A ten-day campaign against four hidden Red satellites: a tender stalking the freighter, a relay that carries its orders, an inspector shadowing your hunter, and a sleeper that hasn't said a word.</li>
           <li><b>The whole Jovian system in 3D, under real gravity.</b> Jupiter's flattening as NASA's Juno measured it, and the pull of all four big moons. Plans drift; correction burns matter.</li>
-        </ul></div><figure><img width="1600" height="900" alt="The 3D space view: orbits of the moons and ships around Jupiter, brackets on tracks with their uncertainty, the Signals, Campaign, Selected and Overview windows, and the event log." loading="lazy" src="images/g-space.jpg?v=0.3"><figcaption>The space view: Red appears only where your tracks put it</figcaption></figure></div>
+        </ul></div><figure><img width="1600" height="900" alt="The 3D space view: orbits of the moons and ships around Jupiter, brackets on tracks with their uncertainty, the Signals, Campaign, Selected and Overview windows, and the event log." loading="lazy" src="images/g-space.jpg?v=0.3.1"><figcaption>The space view: Red appears only where your tracks put it</figcaption></figure></div>
         <div class="cl-pair flip"><div class="cl-note"><ul>
           <li><b>Find them by listening.</b> The EW console: deep-space band tiles, a waterfall over the spectrum, bearings, and every heard signal kept as an annotation. One ear gives a line; drop listening buoys so lines cross into a fix.</li>
           <li><b>Plain or US doctrinal language.</b> Switch any time between everyday words and the terms of JP 3-85, JP 3-14, JP 3-60 and the Space Force's Space Warfighting framework.</li>
-        </ul></div><figure><img width="1600" height="900" alt="The EW console: S, X and Ka band waterfalls, the X band in detail with a spectrum below it, a polar plot of bearings, and a table of heard signals with Find direction and Identify signal buttons." loading="lazy" src="images/g-ew.jpg?v=0.3"><figcaption>The EW console, laid out after open-source SDR tools</figcaption></figure></div>
+        </ul></div><figure><img width="1600" height="900" alt="The EW console: S, X and Ka band waterfalls, the X band in detail with a spectrum below it, a polar plot of bearings, and a table of heard signals with Find direction and Identify signal buttons." loading="lazy" src="images/g-ew.jpg?v=0.3.1"><figcaption>The EW console, laid out after open-source SDR tools</figcaption></figure></div>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>Move by orbit.</b> The planner draws a porkchop plot of fuel against departure and flight time, aimed at where your track says the target will be.</li>
           <li><b>Non-kinetic first.</b> Jam, spoof, dazzle, microwave pulse or take control, each decided by its physics and each with a price. An interceptor is the last resort, and it leaves debris. Stay below open war.</li>
-        </ul></div><figure><img width="1600" height="900" alt="The maneuver planner: a grid of delta-v values by departure time and time of flight, the cheapest affordable transfer highlighted, and its details below." loading="lazy" src="images/g-planner.jpg?v=0.3"><figcaption>A porkchop plot, solved by Lambert's problem</figcaption></figure></div>
+        </ul></div><figure><img width="1600" height="900" alt="The maneuver planner: a grid of delta-v values by departure time and time of flight, the cheapest affordable transfer highlighted, and its details below." loading="lazy" src="images/g-planner.jpg?v=0.3.1"><figcaption>A porkchop plot, solved by Lambert's problem</figcaption></figure></div>
         <div class="cl-pair flip"><div class="cl-note"><ul>
           <li><b>See it in infrared.</b> The camera shows what a telescope really would: brightness is radiance, sharpness is the diffraction limit. Close in, the hull resolves; far off, it's one point of light.</li>
           <li><b>Original score,</b> a tutorial you finish by doing, saves, and a library of every source, US doctrine first.</li>
-        </ul></div><figure><img width="1600" height="900" alt="The infrared camera on TRK 4417 at 21 km: a white-hot hull against black, a boxed data table on the left, range, rate and signal readings on the right, and the caption TARGET RESOLVED." loading="lazy" src="images/g-ir.jpg?v=0.3"><figcaption>The long-wave infrared camera, at 21 km</figcaption></figure></div>
+        </ul></div><figure><img width="1600" height="900" alt="The infrared camera on TRK 4417 at 21 km: a white-hot hull against black, a boxed data table on the left, range, rate and signal readings on the right, and the caption TARGET RESOLVED." loading="lazy" src="images/g-ir.jpg?v=0.3.1"><figcaption>The long-wave infrared camera, at 21 km</figcaption></figure></div>
       </dd>
       <dt>0.1<small>23 Oct 2026 · browser</small></dt>
       <dd>
