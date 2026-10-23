@@ -1,12 +1,12 @@
 # SATWAR · Playtest downloads
 
-![The 3D space view of playtest 0.4: orbits around Jupiter, tracks with their uncertainty, and the operator's windows.](images/g-space.jpg)
+![The 3D space view of playtest 0.5: orbits around Jupiter, tracks with their uncertainty, and the operator's windows.](images/g-space.jpg)
 
 An educational game of near-future stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics and sensor physics. It runs in your browser.
 
 | | |
 |---|---|
-| Play 0.4, the 3D campaign | [game/](game/) |
+| Play 0.5, the 3D campaign | [game/](game/) |
 | Play 0.1, the campaign map | [play/](play/) |
 | Game as one HTML file | [satwar-0.1.html](satwar-0.1.html) |
 
