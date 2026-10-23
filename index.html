@@ -115,20 +115,20 @@ dialog.lb button:hover{border-color:var(--sand);}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.3.1</span></div></header>
+<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.4</span></div></header>
 
 <main class="wrap">
   <div class="hero">
-    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.3.1</b> The full 3D campaign, Operation NIGHT HERON. <span>What's new ↓</span></a>
+    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.4</b> A new look for Operation NIGHT HERON. <span>What's new ↓</span></a>
     <p class="kick">An educational game of stealth satellites and electronic warfare</p>
     <h1>Nothing hides in space.<br><em>Forty-eight hours</em> to find what's trying.</h1>
     <p class="lede">Jupiter, 2041. A freighter has gone silent in her parking orbit, and a cold, quiet hostile is coasting in to board her. Every sensor saw its drive flash once. Now it's dark. You run the console: find it, fix it and stop it, with the real orbits of Jupiter's moons and the real physics of seeing and being seen.</p>
     <div class="ctas">
-      <a class="btn primary" href="game/">Play 0.3 in your browser ▸</a>
+      <a class="btn primary" href="game/">Play 0.4 in your browser ▸</a>
       <a class="btn" href="#science">The science</a>
       <a class="btn" href="#downloads">All downloads</a>
     </div>
-    <p class="note">No account, no install. 0.3 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 54 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
+    <p class="note">No account, no install. 0.4 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 56 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
     <video class="shot" id="heroVid" src="images/play.webm?v=0.1" poster="images/board.jpg?v=0.1" width="1280" height="800" autoplay muted loop playsinline aria-label="The campaign map around Jupiter. HYDRA BRAVO's planned intercept arc runs out to the node; the operator executes the burn and time speeds up. The red uncertainty ellipse of TRK 4417 stretches while it is unseen, an IR flash shows the hostile dodging, and lines of bearing from HYDRA, EXCALIBUR and Ganymede Station cross on it."></video>
     <script>/* A still picture for anyone who asks their device for reduced motion */ (function(){var v=document.getElementById('heroVid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
     <p class="cap">HYDRA BRAVO burns toward the hostile's estimated path; TRK 4417 sees it coming and dodges. (A still picture shows instead if your device asks for reduced motion.)</p>
@@ -137,7 +137,23 @@ dialog.lb button:hover{border-color:var(--sand);}
   <section id="whats-new">
     <h2>What's new</h2>
     <dl class="log">
-      <dt>0.3.1<small>23 Oct 2026 · polish</small><span class="latest">LATEST</span></dt>
+            <dt>0.4<small>23 Oct 2026 · look and feel</small><span class="latest">LATEST</span></dt>
+      <dd>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>A new look, all original.</b> Every frame, button, icon, insignia and the mission patch is new, drawn for SATWAR. Windows glint and wipe in, and the console clicks and hums.</li>
+          <li><b>A real title screen.</b> Key art of HYDRA against Jupiter, rendered from the game's own ship model, behind the new SATWAR logo.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The title screen: the SATWAR logo in steel letters, Operation NIGHT HERON, menu buttons on the left, the How to play briefing in a framed panel, HYDRA in the foreground against a crescent Jupiter, and the mission patch in the corner." loading="lazy" src="images/g-title.jpg?v=0.4"><figcaption>The title screen and its key art</figcaption></figure></div>
+        <div class="cl-pair flip"><div class="cl-note"><ul>
+          <li><b>A console that reads at a glance.</b> The clock and time controls hang at the top centre; escalation is a gauge from deniable to war. The selected contact gets a card with its class picture, range, uncertainty and last contact.</li>
+          <li><b>Your ship's modules</b> sit along the bottom as lit dials, on keys 1–0: green ready, amber running, dark not now.</li>
+          <li><b>Smoother.</b> Time warp no longer makes zoomed-in ships jump. Ships turn to burn and show their drive plume, the planned intercept is drawn on the map with hour ticks and the meeting point, and the menu responds at once.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The space view with the new console: the top bar with the clock housing and escalation gauge, the left rail of icons, the target card for TRK 4417 with its class picture, Signals and Overview windows, the event log, and the ship console with its round module dials." loading="lazy" src="images/g-space.jpg?v=0.4"><figcaption>The new console over the space view</figcaption></figure></div>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>The kit, in one picture.</b> Frames, buttons, dials, 41 icons, the Coalition, Red and Ganymede Station insignia, and the NIGHT HERON patch.</li>
+          <li><b>A proper debrief,</b> framed over its own key art, with what you achieved, what became of each Red asset, and the price in escalation and debris.</li>
+        </ul></div><figure><img width="1600" height="1440" alt="A contact sheet of the SATWAR interface kit: window frames, button states, controls, module dials, icons, the SATWAR logo, three insignia and the mission patch." loading="lazy" src="images/g-kit.jpg?v=0.4"><figcaption>The interface kit</figcaption></figure></div>
+      </dd>
+      <dt>0.3.1<small>23 Oct 2026 · polish</small></dt>
       <dd>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>No more freeze</b> when you open the planner: it now opens in a fraction of a second.</li>
@@ -150,19 +166,19 @@ dialog.lb button:hover{border-color:var(--sand);}
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>Operation NIGHT HERON.</b> A ten-day campaign against four hidden Red satellites: a tender stalking the freighter, a relay that carries its orders, an inspector shadowing your hunter, and a sleeper that hasn't said a word.</li>
           <li><b>The whole Jovian system in 3D, under real gravity.</b> Jupiter's flattening as NASA's Juno measured it, and the pull of all four big moons. Plans drift; correction burns matter.</li>
-        </ul></div><figure><img width="1600" height="900" alt="The 3D space view: orbits of the moons and ships around Jupiter, brackets on tracks with their uncertainty, the Signals, Campaign, Selected and Overview windows, and the event log." loading="lazy" src="images/g-space.jpg?v=0.3.1"><figcaption>The space view: Red appears only where your tracks put it</figcaption></figure></div>
+        </ul></div><figure><img width="1600" height="900" alt="The 3D space view: orbits of the moons and ships around Jupiter, brackets on tracks with their uncertainty, the Signals, Campaign, Selected and Overview windows, and the event log." loading="lazy" src="images/g-space.jpg?v=0.4"><figcaption>The space view: Red appears only where your tracks put it</figcaption></figure></div>
         <div class="cl-pair flip"><div class="cl-note"><ul>
           <li><b>Find them by listening.</b> The EW console: deep-space band tiles, a waterfall over the spectrum, bearings, and every heard signal kept as an annotation. One ear gives a line; drop listening buoys so lines cross into a fix.</li>
           <li><b>Plain or US doctrinal language.</b> Switch any time between everyday words and the terms of JP 3-85, JP 3-14, JP 3-60 and the Space Force's Space Warfighting framework.</li>
-        </ul></div><figure><img width="1600" height="900" alt="The EW console: S, X and Ka band waterfalls, the X band in detail with a spectrum below it, a polar plot of bearings, and a table of heard signals with Find direction and Identify signal buttons." loading="lazy" src="images/g-ew.jpg?v=0.3.1"><figcaption>The EW console, laid out after open-source SDR tools</figcaption></figure></div>
+        </ul></div><figure><img width="1600" height="900" alt="The EW console: S, X and Ka band waterfalls, the X band in detail with a spectrum below it, a polar plot of bearings, and a table of heard signals with Find direction and Identify signal buttons." loading="lazy" src="images/g-ew.jpg?v=0.4"><figcaption>The EW console, laid out after open-source SDR tools</figcaption></figure></div>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>Move by orbit.</b> The planner draws a porkchop plot of fuel against departure and flight time, aimed at where your track says the target will be.</li>
           <li><b>Non-kinetic first.</b> Jam, spoof, dazzle, microwave pulse or take control, each decided by its physics and each with a price. An interceptor is the last resort, and it leaves debris. Stay below open war.</li>
-        </ul></div><figure><img width="1600" height="900" alt="The maneuver planner: a grid of delta-v values by departure time and time of flight, the cheapest affordable transfer highlighted, and its details below." loading="lazy" src="images/g-planner.jpg?v=0.3.1"><figcaption>A porkchop plot, solved by Lambert's problem</figcaption></figure></div>
+        </ul></div><figure><img width="1600" height="900" alt="The maneuver planner: a grid of delta-v values by departure time and time of flight, the cheapest affordable transfer highlighted, and its details below." loading="lazy" src="images/g-planner.jpg?v=0.4"><figcaption>A porkchop plot, solved by Lambert's problem</figcaption></figure></div>
         <div class="cl-pair flip"><div class="cl-note"><ul>
           <li><b>See it in infrared.</b> The camera shows what a telescope really would: brightness is radiance, sharpness is the diffraction limit. Close in, the hull resolves; far off, it's one point of light.</li>
           <li><b>Original score,</b> a tutorial you finish by doing, saves, and a library of every source, US doctrine first.</li>
-        </ul></div><figure><img width="1600" height="900" alt="The infrared camera on TRK 4417 at 21 km: a white-hot hull against black, a boxed data table on the left, range, rate and signal readings on the right, and the caption TARGET RESOLVED." loading="lazy" src="images/g-ir.jpg?v=0.3.1"><figcaption>The long-wave infrared camera, at 21 km</figcaption></figure></div>
+        </ul></div><figure><img width="1600" height="900" alt="The infrared camera on TRK 4417 at 21 km: a white-hot hull against black, a boxed data table on the left, range, rate and signal readings on the right, and the caption TARGET RESOLVED." loading="lazy" src="images/g-ir.jpg?v=0.4"><figcaption>The long-wave infrared camera, at 21 km</figcaption></figure></div>
       </dd>
       <dt>0.1<small>23 Oct 2026 · browser</small></dt>
       <dd>
@@ -228,11 +244,11 @@ dialog.lb button:hover{border-color:var(--sand);}
 
   <section id="downloads">
     <h2>Downloads</h2>
-    <p class="note" style="margin:0 0 14px">0.3 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
+    <p class="note" style="margin:0 0 14px">0.4 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
     <table>
       <thead><tr><th>If you want to…</th><th>Download</th><th>Size</th></tr></thead>
       <tbody>
-        <tr><td>Play 0.3, the 3D campaign, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">54 MB</td></tr>
+        <tr><td>Play 0.4, the 3D campaign, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">56 MB</td></tr>
         <tr><td>Play 0.1, the campaign map, in your browser</td><td class="f"><a href="play/">play/</a></td><td class="s">64 KB</td></tr>
         <tr><td>0.1 offline on any computer: double-click to open in your browser</td><td class="f"><a href="satwar-0.1.html" download>satwar-0.1.html</a></td><td class="s">64 KB</td></tr>
       </tbody>
