@@ -125,14 +125,23 @@ dialog.lb button:hover{border-color:var(--sand);}
     <p class="lede">Jupiter, 2041. A freighter has gone silent in her parking orbit, and a cold, quiet hostile is coasting in to board her. Every sensor saw its drive flash once. Now it's dark. You run the console: find it, fix it and stop it, with the real orbits of Jupiter's moons and the real physics of seeing and being seen.</p>
     <div class="ctas">
       <a class="btn primary" href="game/">Play 0.6 in your browser ▸</a>
+      <a class="btn" href="#trailer">Watch the trailer</a>
       <a class="btn" href="#science">The science</a>
       <a class="btn" href="#downloads">All downloads</a>
     </div>
     <p class="note">No account, no install. 0.6 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 134 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
-    <video class="shot" id="heroVid" src="images/play.webm?v=0.5" poster="images/play-poster.jpg?v=0.5" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.5 in motion. The console over the Jovian system with TRK 4417 selected; the planner opens on it and the gold transfer arc appears on the map; HYDRA turns and lights its drive, seen close up with its exhaust plume; then the view pulls out and time speeds up as the ships coast along their orbits."></video>
+    <video class="shot" id="heroVid" src="images/play.webm?v=0.6" poster="images/play-poster.jpg?v=0.6" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.6 in motion. The console over the Jovian system with TRK 4417 selected; the planner opens on it and the gold transfer arc appears on the map; HYDRA turns and lights its drive, seen close up with its exhaust plume; then the view pulls out and time speeds up as the ships coast along their orbits."></video>
     <script>/* A still picture for anyone who asks their device for reduced motion */ (function(){var v=document.getElementById('heroVid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
-    <p class="cap">Recorded in playtest 0.5: plan an intercept on TRK 4417, light HYDRA's drive, and coast. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
+    <p class="cap">Recorded in playtest 0.6: plan an intercept on TRK 4417, light HYDRA's drive, and coast. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
   </div>
+
+  <section id="trailer">
+    <h2>The trailer</h2>
+    <video class="shot" id="trailerVid" controls preload="none" playsinline width="1920" height="1080" poster="images/trailer.jpg?v=0.6" aria-label="The SATWAR trailer, 80 seconds with sound. Jupiter in 2041; the silent freighter and the cold hostile coming for her; the SIGINT station picking out its bursts; two bearings crossing into a fix; HYDRA lighting its drive; the coast along real orbits; the target in the infrared; a jamming cone; a kinetic kill and its debris; then the title.">
+      <source src="images/trailer.mp4?v=0.6" type="video/mp4">
+    </video>
+    <p class="cap">80 seconds, with sound. Every shot is the game itself, rendered by its own movie writer; the score is the game's own. (49 MB, loads when you press play.)</p>
+  </section>
 
   <section id="whats-new">
     <h2>What's new</h2>
