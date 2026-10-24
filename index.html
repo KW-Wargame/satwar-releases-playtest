@@ -115,29 +115,52 @@ dialog.lb button:hover{border-color:var(--sand);}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.5</span></div></header>
+<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.6</span></div></header>
 
 <main class="wrap">
   <div class="hero">
-    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.5</b> New art, new ships and the SIGINT station. <span>What's new ↓</span></a>
+    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.6</b> Heat, infrared and antennas, rebuilt on real physics. <span>What's new ↓</span></a>
     <p class="kick">An educational game of stealth satellites and electronic warfare</p>
     <h1>Nothing hides in space.<br><em>Forty-eight hours</em> to find what's trying.</h1>
     <p class="lede">Jupiter, 2041. A freighter has gone silent in her parking orbit, and a cold, quiet hostile is coasting in to board her. Every sensor saw its drive flash once. Now it's dark. You run the console: find it, fix it and stop it, with the real orbits of Jupiter's moons and the real physics of seeing and being seen.</p>
     <div class="ctas">
-      <a class="btn primary" href="game/">Play 0.5 in your browser ▸</a>
+      <a class="btn primary" href="game/">Play 0.6 in your browser ▸</a>
       <a class="btn" href="#science">The science</a>
       <a class="btn" href="#downloads">All downloads</a>
     </div>
-    <p class="note">No account, no install. 0.5 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and an 86 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
+    <p class="note">No account, no install. 0.6 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 134 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
     <video class="shot" id="heroVid" src="images/play.webm?v=0.5" poster="images/play-poster.jpg?v=0.5" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.5 in motion. The console over the Jovian system with TRK 4417 selected; the planner opens on it and the gold transfer arc appears on the map; HYDRA turns and lights its drive, seen close up with its exhaust plume; then the view pulls out and time speeds up as the ships coast along their orbits."></video>
     <script>/* A still picture for anyone who asks their device for reduced motion */ (function(){var v=document.getElementById('heroVid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
-    <p class="cap">Playtest 0.5: plan an intercept on TRK 4417, light HYDRA's drive, and coast. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
+    <p class="cap">Recorded in playtest 0.5: plan an intercept on TRK 4417, light HYDRA's drive, and coast. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
   </div>
 
   <section id="whats-new">
     <h2>What's new</h2>
     <dl class="log">
-            <dt>0.5<small>23 Oct 2026 · art and signals</small><span class="latest">LATEST</span></dt>
+            <dt>0.6<small>23 Oct 2026 · heat, infrared and signals</small><span class="latest">LATEST</span></dt>
+      <dd>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>Hide your heat.</b> Telescopes see only the 6–10 µm band, as NASA's NEO Surveyor does. Every look is a roll of the dice, and noise throws up false blips that a second sensor has to confirm.</li>
+          <li><b>Every watt goes somewhere.</b> Reactor waste heat leaves through radiators laid flat to the plane, so everyone sees only their edge. Press DARK to send it into a heat sink instead: HYDRA vents water for 3.5 h; the tender's ice lasts 15 h and must then be refrozen, which shows.</li>
+          <li><b>How visible are we to it? ⓘ</b> The Inspector adds up skin, radiator, drive, range and sensor noise, term by term, with each source.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The infrared Inspector over the map: how visible HYDRA is to TRK 4417's telescope, with skin and radiator in watts per steradian, range, irradiance, the sensor's noise, and S/N 188.59 with a 100% chance a look." loading="lazy" src="images/g-heat.jpg?v=0.6"><figcaption>How visible HYDRA is to TRK 4417, term by term</figcaption></figure></div>
+        <div class="cl-pair flip"><div class="cl-note"><ul>
+          <li><b>Antennas that point.</b> Dishes follow the international reference patterns, so what you hear depends on where you stand against the enemy's beam. The tender spreads its reports thin to whisper.</li>
+          <li><b>A busy band.</b> Seven civil relays, probes and tugs report across the X band, so Red has to be picked out of the traffic.</li>
+          <li><b>A rebuilt SIGINT station.</b> A live waterfall, constellation and eye diagram, and identification by the modulation and symbol rate you measure.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The SIGINT station: band tiles, the X-band waterfall and spectrum, a bearings plot, the signal list, and a selected burst identified as a VESPER-class tender from its constellation, eye diagram and threat-library match, with the electronic attack panel below." loading="lazy" src="images/g-sigint6.jpg?v=0.6"><figcaption>The SIGINT station, identifying TRK 4417</figcaption></figure></div>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>A clearer planner.</b> The porkchop plot comes first, with a colour key, Fastest, Balanced and Cheapest picks, and a drawn plan of timeline, fuel, passing speed and uncertainty.</li>
+          <li><b>Radar measures.</b> Range and bearing to every track in reach, tight enough to aim a jammer, and every Red ship hears you do it.</li>
+          <li><b>Sunlight finds you too.</b> Once you hold a track, a telescope can keep it in view by reflected light.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The maneuver planner: a colour-keyed grid of fuel cost by wait and flight time with Fastest, Balanced and Cheapest marked, and below it a drawn plan with the burn, the meeting point, the fuel bar, passing speed and uncertainty." loading="lazy" src="images/g-planner6.jpg?v=0.6"><figcaption>The planner, with its porkchop plot first</figcaption></figure></div>
+        <div class="cl-pair flip"><div class="cl-note"><ul>
+          <li><b>The platform database (F5).</b> Every class, sensor and drive, with its real-world lineage and sources. Blue is the U.S. Space Force with its CSpO partners.</li>
+          <li><b>Checked against the real thing.</b> The moons follow positions fitted to JPL Horizons, and 732 independent checks hold the game's physics to published references.</li>
+          <li><b>A longer score.</b> Nine long tracks, shuffled and crossfaded, with cues when you make contact, identify, jam or launch.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The platform database: a list of Blue, Red and civil classes and equipment on the left, and the 0.5 m LWIR telescope's page with its picture, real-world lineage in NASA's NEO Surveyor, the basis of its numbers and its sources." loading="lazy" src="images/g-db.jpg?v=0.6"><figcaption>The database: the 0.5 m infrared telescope</figcaption></figure></div>
+      </dd>
+      <dt>0.5<small>23 Oct 2026 · art and signals</small></dt>
       <dd>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>A new look.</b> Our own typefaces, black space with a crimson haze, white engineered type and hairline frames. Your ships are blue, friendlies green, unknowns yellow, hostiles red.</li>
@@ -250,16 +273,16 @@ dialog.lb button:hover{border-color:var(--sand);}
       <div class="card"><b>RESONANT ORBITS</b><p>The freighter parks at 1.699 × 10⁶ km: exactly twice Ganymede's period. Io, Europa and Ganymede share a 1:2:4 resonance that heats Io into the most volcanic world in the solar system.</p><span class="src">Peale, Cassen &amp; Reynolds (1979), <i>Science</i> 203</span></div>
       <div class="card"><b>LAMBERT'S PROBLEM</b><p>Every intercept is the orbit that joins here-and-now to there-and-then. The solver is the universal-variable method, and reproduces the textbook's worked example.</p><span class="src">Curtis (2020), <i>Orbital Mechanics for Engineering Students</i>, 4th ed., Alg. 5.2; Bate, Mueller &amp; White (1971)</span></div>
       <div class="card"><b>DELTA-V AND NUCLEAR THERMAL</b><p>Fuel is delta-v, set by the rocket equation. The 2040-era drives heat hydrogen in a reactor to about 900 s of specific impulse, twice the best chemical rockets, as NASA's Rover/NERVA reactors showed.</p><span class="src">NASA Glenn, Ideal Rocket Equation; Borowski, McCurdy &amp; Packard (2012), NASA NTRS 20120003776</span></div>
-      <div class="card"><b>WHY NOTHING HIDES</b><p>Every warm hull glows: P = εσT⁴A. That light falls off with the square of distance. Stealth means cold, dull and small; a burn means hundreds of megawatts anyone can see.</p><span class="src">CODATA 2018 (Stefan–Boltzmann constant); Hudson (1969), <i>Infrared System Engineering</i></span></div>
+      <div class="card"><b>WHY NOTHING HIDES</b><p>Every warm hull glows, and a telescope sees the share of that glow in its band, by Planck's law. A reactor's waste heat must leave through radiators; laid flat, they show only their edge. Stealth is cold, shiny and edge-on; a burn is megawatts anyone can see.</p><span class="src">Mainzer et al. (2023), NEO Surveyor, <i>PSJ</i> 4:224; Widger &amp; Woodall (1976), <i>BAMS</i> 57; Mason (2003), NASA/TM-2003-212596</span></div>
       <div class="card"><b>BEARINGS, RADAR AND LISTENING</b><p>One passive sensor gives a line; two give a fix, kept by a Kalman filter. Radar's echo fades as 1/R⁴ but a listener only needs 1/R², so it hears you first.</p><span class="src">Bar-Shalom, Li &amp; Kirubarajan (2001); Skolnik (2001), <i>Introduction to Radar Systems</i>, 3rd ed.</span></div>
     </div>
     <h3 style="margin-top:32px">What the game simplifies</h3>
     <table class="model">
       <thead><tr><th>Part</th><th>Real</th><th>Simplified or invented</th></tr></thead>
       <tbody>
-        <tr><td>MOONS</td><td>JPL mean elements; Kepler periods within 0.1 % of observed</td><td>One plane (real tilts are under half a degree); mean elements, not a full ephemeris</td></tr>
+        <tr><td>MOONS</td><td>0.6: positions fitted to JPL Horizons, within 1° of JPL's prediction for 2041</td><td>One plane (real tilts are under half a degree); average orbits, not a full ephemeris</td></tr>
         <tr><td>SHIPS</td><td>0.3: Jupiter's J2 and all four moons' pull, integrated; Lambert intercepts; rocket equation at 900 s</td><td>Burns are instant; every ship is fiction (0.1 ignored the moons' pull)</td></tr>
-        <tr><td>SENSORS</td><td>Stefan–Boltzmann; inverse square; Jupiter blocks the view</td><td>Sensor sensitivity, glare, plume power and radar ranges are game values</td></tr>
+        <tr><td>SENSORS</td><td>0.6: Planck's law in band, inverse square, Gaussian noise; reactor waste heat; reflected sunlight; ITU antenna patterns; Jupiter blocks the view</td><td>Radiators lie flat to the plane and temperatures change at once; equipment beyond NEO Surveyor and GEODSS, glare and plume sizes are design values</td></tr>
         <tr><td>EFFECTS</td><td>0.3: jamming by Friis link budgets, dazzle by diffraction, microwave field strength √(30PG)/R</td><td>Equipment specs and thresholds (J/S needed, kill fluence, escalation) are design values</td></tr>
       </tbody>
     </table>
@@ -267,11 +290,11 @@ dialog.lb button:hover{border-color:var(--sand);}
 
   <section id="downloads">
     <h2>Downloads</h2>
-    <p class="note" style="margin:0 0 14px">0.5 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
+    <p class="note" style="margin:0 0 14px">0.6 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
     <table>
       <thead><tr><th>If you want to…</th><th>Download</th><th>Size</th></tr></thead>
       <tbody>
-        <tr><td>Play 0.5, the 3D campaign, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">86 MB</td></tr>
+        <tr><td>Play 0.6, the 3D campaign, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">134 MB</td></tr>
         <tr><td>Play 0.1, the campaign map, in your browser</td><td class="f"><a href="play/">play/</a></td><td class="s">64 KB</td></tr>
         <tr><td>0.1 offline on any computer: double-click to open in your browser</td><td class="f"><a href="satwar-0.1.html" download>satwar-0.1.html</a></td><td class="s">64 KB</td></tr>
       </tbody>

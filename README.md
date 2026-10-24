@@ -6,7 +6,7 @@ An educational game of near-future stealth satellites and electronic warfare aro
 
 | | |
 |---|---|
-| Play 0.5, the 3D campaign | [game/](game/) |
+| Play 0.6, the 3D campaign | [game/](game/) |
 | Play 0.1, the campaign map | [play/](play/) |
 | Game as one HTML file | [satwar-0.1.html](satwar-0.1.html) |
 
