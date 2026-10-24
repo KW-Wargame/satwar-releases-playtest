@@ -5,9 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SATWAR · Playtest</title>
 <meta name="description" content="SATWAR: an educational game of stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics. Play in your browser or download.">
-<meta property="og:title" content="SATWAR · Playtest 0.1">
-<meta property="og:description" content="Nothing hides in space. Find a cold, quiet hostile around Jupiter before it boards a freighter, using real orbital mechanics and sensor physics.">
-<meta property="og:image" content="images/board.jpg?v=0.1">
+<meta property="og:title" content="SATWAR · Playtest 0.7">
+<meta property="og:description" content="Nothing hides in space. An unflagged inspector is shadowing an allied radar satellite in low Jupiter orbit: rendezvous, stay cold, find its command link and jam it until it leaves, with real orbital mechanics and sensor physics.">
+<meta property="og:image" content="images/trailer.jpg?v=0.7">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Share+Tech+Mono&display=swap">
@@ -115,38 +115,56 @@ dialog.lb button:hover{border-color:var(--sand);}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.6</span></div></header>
+<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.7</span></div></header>
 
 <main class="wrap">
   <div class="hero">
-    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.6</b> Heat, infrared and antennas, rebuilt on real physics. <span>What's new ↓</span></a>
+    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.7</b> A new scenario, THE SHADOWING, and a new console. <span>What's new ↓</span></a>
     <p class="kick">An educational game of stealth satellites and electronic warfare</p>
-    <h1>Nothing hides in space.<br><em>Forty-eight hours</em> to find what's trying.</h1>
-    <p class="lede">Jupiter, 2041. A freighter has gone silent in her parking orbit, and a cold, quiet hostile is coasting in to board her. Every sensor saw its drive flash once. Now it's dark. You run the console: find it, fix it and stop it, with the real orbits of Jupiter's moons and the real physics of seeing and being seen.</p>
+    <h1>Nothing hides in space.<br><em>Three days</em> to make it leave.</h1>
+    <p class="lede">Jupiter, 2041. An unflagged inspector has slipped into the orbit of ORIEL-36, an allied radar satellite in low Jupiter orbit, and is closing in to park beside it. Nobody asked it to. You run the console: get alongside, stay cold so it keeps talking, find its command link and cut it until it gives up and leaves, without starting a war. Real orbits, and the real physics of seeing and being seen.</p>
     <div class="ctas">
-      <a class="btn primary" href="game/">Play 0.6 in your browser ▸</a>
+      <a class="btn primary" href="game/">Play 0.7 in your browser ▸</a>
       <a class="btn" href="#trailer">Watch the trailer</a>
       <a class="btn" href="#science">The science</a>
       <a class="btn" href="#downloads">All downloads</a>
     </div>
-    <p class="note">No account, no install. 0.6 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 134 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
-    <video class="shot" id="heroVid" src="images/play.webm?v=0.6" poster="images/play-poster.jpg?v=0.6" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.6 in motion. The console over the Jovian system with TRK 4417 selected; the planner opens on it and the gold transfer arc appears on the map; HYDRA turns and lights its drive, seen close up with its exhaust plume; then the view pulls out and time speeds up as the ships coast along their orbits."></video>
+    <p class="note">No account, no install. 0.7 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 92 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
+    <video class="shot" id="heroVid" src="images/play.webm?v=0.7" poster="images/play-poster.jpg?v=0.7" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.7 in motion. The console over Jupiter's dayside with TRK 4417 selected beside ORIEL-36 in low orbit; the planner opens on ORIEL-36 with its grid of waits and flight times; HYDRA turns and lights its drive, seen close up with its exhaust plume; then the view pulls out and time speeds up as HYDRA drops to ORIEL-36's orbit."></video>
     <script>/* A still picture for anyone who asks their device for reduced motion */ (function(){var v=document.getElementById('heroVid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
-    <p class="cap">Recorded in playtest 0.6: plan an intercept on TRK 4417, light HYDRA's drive, and coast. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
+    <p class="cap">Recorded in playtest 0.7: plan a rendezvous with ORIEL-36, light HYDRA's drive, and drop to its orbit. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
   </div>
 
   <section id="trailer">
     <h2>The trailer</h2>
-    <video class="shot" id="trailerVid" controls preload="none" playsinline width="1920" height="1080" poster="images/trailer.jpg?v=0.6" aria-label="The SATWAR trailer, 80 seconds with sound. Jupiter in 2041; the silent freighter and the cold hostile coming for her; the SIGINT station picking out its bursts; two bearings crossing into a fix; HYDRA lighting its drive; the coast along real orbits; the target in the infrared; a jamming cone; a kinetic kill and its debris; then the title.">
-      <source src="images/trailer.mp4?v=0.6" type="video/mp4">
+    <video class="shot" id="trailerVid" controls preload="none" playsinline width="1920" height="1080" poster="images/trailer.jpg?v=0.7" aria-label="The SATWAR trailer, 86 seconds with sound. Jupiter in 2041; the radar satellite ORIEL-36 in low orbit, its radar sweeping, and the unflagged inspector parked beside it; the console, and the planner's grid of transfers to ORIEL-36; HYDRA lighting its drive to drop to its orbit; the transfer on the map; HYDRA alongside and dark; the SIGINT station picking out the inspector's report; a jamming beam on its command link; the inspector backing away; then the title.">
+      <source src="images/trailer.mp4?v=0.7" type="video/mp4">
     </video>
-    <p class="cap">80 seconds, with sound. Every shot is the game itself, rendered by its own movie writer; the score is the game's own. (49 MB, loads when you press play.)</p>
+    <p class="cap">86 seconds, with sound. Every shot is the game itself, rendered by its own movie writer; the score is the game's own. (23 MB, loads when you press play.)</p>
   </section>
 
   <section id="whats-new">
     <h2>What's new</h2>
     <dl class="log">
-            <dt>0.6<small>23 Oct 2026 · heat, infrared and signals</small><span class="latest">LATEST</span></dt>
+      <dt>0.7<small>24 Oct 2026 · the shadowing</small><span class="latest">LATEST</span></dt>
+      <dd>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>A new scenario: THE SHADOWING.</b> An unflagged inspector closes on ORIEL-36, an allied commercial radar satellite in low Jupiter orbit, and parks beside it. It follows the steps of a real uncooperative approach reported in October 2026: stand off, close to a few kilometres, loiter within half a kilometre, then leave. Times are shortened from weeks to days.</li>
+          <li><b>Win without a shot.</b> Rendezvous, go dark so it keeps talking to its handler, identify its report, and spot-jam its command link. Cut off for three hours, it backs away on its own.</li>
+          <li><b>A guided start.</b> The tutorial walks you through it one step at a time, and finishes each step when you do it.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The inspector TRK 4417, a dark hexagonal bus with a solar panel and a dish, seen close up against the cloud bands of Jupiter's dayside." loading="lazy" src="images/g7-shadow.jpg?v=0.7"><figcaption>TRK 4417, a few kilometres from ORIEL-36</figcaption></figure></div>
+        <div class="cl-pair flip"><div class="cl-note"><ul>
+          <li><b>A new console.</b> Smoked glass over black, thin type and hairline marks. The clock, the time rate and your posture each have a panel of their own; the dock keeps your ship's picture, fuel, heat and module dials.</li>
+          <li><b>Time you can read.</b> Mission elapsed time large, the day, the time left and the next scheduled burn under it. Each time rate is its own key, with a real pause key, and the rate in force is lit.</li>
+          <li><b>The selected contact</b> gets a large picture and a grid of range, speed, course, closing speed, error and age.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The console over low Jupiter orbit: Jupiter with ORIEL-36's orbit and the inspector beside it, the time bar at T+16:00, the Overview of tracks on the right, HYDRA's card and the action dock along the bottom." loading="lazy" src="images/g7-console.jpg?v=0.7"><figcaption>The new console over low Jupiter orbit</figcaption></figure></div>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>A planner for low orbit.</b> Close to Jupiter an orbit takes hours, so the plot now waits up to a day for the phasing and flies a few hours. Your ship is coasted under full gravity, so the plan costs what the burn will.</li>
+          <li><b>Cheapest counts stopping too.</b> Each square knows the MATCH burn on arrival; the quick picks prefer the ways there you can afford to stop at.</li>
+          <li><b>A steady preview.</b> The route on the map now follows the square under the pointer instead of snapping back.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The planner on ORIEL-36: a grid of fuel cost by wait and flight time in low orbit, Fastest, Balanced and Cheapest marked, and below it the plan: burn, flight, meeting, fuel bar, and the passing speed to match." loading="lazy" src="images/g7-planner.jpg?v=0.7"><figcaption>The planner on ORIEL-36</figcaption></figure></div>
+      </dd>
+      <dt>0.6<small>23 Oct 2026 · heat, infrared and signals</small></dt>
       <dd>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>Hide your heat.</b> Telescopes see only the 6–10 µm band, as NASA's NEO Surveyor does. Every look is a roll of the dice, and noise throws up false blips that a second sensor has to confirm.</li>
@@ -256,9 +274,9 @@ dialog.lb button:hover{border-color:var(--sand);}
   <section>
     <h2>What you do</h2>
     <div class="grid3">
-      <div class="card"><b class="red">FIND</b><p>TRK 4417 is a 140 K hull with a low-emissivity skin. Your ship sensors see it from 170,000 km at best. Spread them out, cross your lines of bearing and keep the red ellipse small.</p></div>
-      <div class="card"><b>FIX</b><p>Every burn lights you up across the system, and radar tells the hostile where you are. Choose when to break emission control: a hard lock now, or stay quiet and close in.</p></div>
-      <div class="card"><b class="blue">FINISH</b><p>Plan intercepts with real orbits and a real fuel budget. Kill the hostile for a DECISIVE result, or guard the freighter so it breaks off: DETERRED.</p></div>
+      <div class="card"><b class="blue">CLOSE</b><p>HYDRA starts in a higher orbit, behind. To catch something ahead of you, drop lower: lower is faster. The planner finds the transfer; MATCH stops you alongside.</p></div>
+      <div class="card"><b>STAY COLD</b><p>The inspector has an infrared camera. If it sees a warship coming, its handler tells it to go quiet. Go dark: send your reactor's heat into the sink so it keeps talking.</p></div>
+      <div class="card"><b class="red">CUT THE LINK</b><p>Hear its report, identify it, and spot-jam its command uplink. Reversible, deniable, and nothing breaks. A kill would end it too, and leave debris in the busiest orbit there is.</p></div>
     </div>
     <div class="grid2" style="margin-top:32px">
       <div>
@@ -279,7 +297,7 @@ dialog.lb button:hover{border-color:var(--sand);}
     <p class="note" style="margin:0 0 18px">The physics is real and every number cites its source. Where the game simplifies or invents, it says so.</p>
     <div class="grid3">
       <div class="card"><b>KEPLER'S THIRD LAW</b><p>The moons move by T = 2π√(a³/GM) with NASA's and JPL's values. The game's periods match NASA's observed ones to better than 0.1 %, and the tests check it.</p><span class="src">NASA NSSDCA Jupiter and Jovian Satellite Fact Sheets; JPL SSD satellite elements (JUP365, Jacobson 2021)</span></div>
-      <div class="card"><b>RESONANT ORBITS</b><p>The freighter parks at 1.699 × 10⁶ km: exactly twice Ganymede's period. Io, Europa and Ganymede share a 1:2:4 resonance that heats Io into the most volcanic world in the solar system.</p><span class="src">Peale, Cassen &amp; Reynolds (1979), <i>Science</i> 203</span></div>
+      <div class="card"><b>LOW ORBIT AND J2</b><p>ORIEL-36 circles at 1.3 Jupiter radii, once every 4.4 hours. Jupiter is flattened, and so close in its pull bends a three-hour coast by thousands of kilometres: every burn is corrected through the full gravity. Down there is deep in the radiation belts; how hardened each craft is, is a design value.</p><span class="src">Folkner et al. (2017), <i>GRL</i> 44, Juno gravity field; Vallado (2013), <i>Fundamentals of Astrodynamics and Applications</i></span></div>
       <div class="card"><b>LAMBERT'S PROBLEM</b><p>Every intercept is the orbit that joins here-and-now to there-and-then. The solver is the universal-variable method, and reproduces the textbook's worked example.</p><span class="src">Curtis (2020), <i>Orbital Mechanics for Engineering Students</i>, 4th ed., Alg. 5.2; Bate, Mueller &amp; White (1971)</span></div>
       <div class="card"><b>DELTA-V AND NUCLEAR THERMAL</b><p>Fuel is delta-v, set by the rocket equation. The 2040-era drives heat hydrogen in a reactor to about 900 s of specific impulse, twice the best chemical rockets, as NASA's Rover/NERVA reactors showed.</p><span class="src">NASA Glenn, Ideal Rocket Equation; Borowski, McCurdy &amp; Packard (2012), NASA NTRS 20120003776</span></div>
       <div class="card"><b>WHY NOTHING HIDES</b><p>Every warm hull glows, and a telescope sees the share of that glow in its band, by Planck's law. A reactor's waste heat must leave through radiators; laid flat, they show only their edge. Stealth is cold, shiny and edge-on; a burn is megawatts anyone can see.</p><span class="src">Mainzer et al. (2023), NEO Surveyor, <i>PSJ</i> 4:224; Widger &amp; Woodall (1976), <i>BAMS</i> 57; Mason (2003), NASA/TM-2003-212596</span></div>
@@ -299,11 +317,11 @@ dialog.lb button:hover{border-color:var(--sand);}
 
   <section id="downloads">
     <h2>Downloads</h2>
-    <p class="note" style="margin:0 0 14px">0.6 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
+    <p class="note" style="margin:0 0 14px">0.7 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
     <table>
       <thead><tr><th>If you want to…</th><th>Download</th><th>Size</th></tr></thead>
       <tbody>
-        <tr><td>Play 0.6, the 3D campaign, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">134 MB</td></tr>
+        <tr><td>Play 0.7, THE SHADOWING, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">92 MB</td></tr>
         <tr><td>Play 0.1, the campaign map, in your browser</td><td class="f"><a href="play/">play/</a></td><td class="s">64 KB</td></tr>
         <tr><td>0.1 offline on any computer: double-click to open in your browser</td><td class="f"><a href="satwar-0.1.html" download>satwar-0.1.html</a></td><td class="s">64 KB</td></tr>
       </tbody>
@@ -315,12 +333,12 @@ dialog.lb button:hover{border-color:var(--sand);}
     <div class="grid2">
       <div>
         <ol>
-          <li>Read the operation order, then <b>Begin operation</b>. The clock starts at 3,000× time warp.</li>
-          <li>HYDRA is selected. In the <b>Maneuver planner</b>, the target is TRK 4417 and the time of flight is 20 hours: check the delta-v and press <b>Execute burn</b>.</li>
-          <li>Watch the red ellipse. When a flash shows the hostile dodging, re-plan: a shorter time of flight closes faster but costs more.</li>
-          <li>Inside 120,000 km, think about <b>Radar on</b>. When <b>Engage</b> shows a kill probability, fire.</li>
+          <li>Press <b>New campaign</b>. The tutorial opens, and time is paused until you're ready.</li>
+          <li>Click ORIEL-36, then TRK 4417, and set time running (] or the keys under the clock).</li>
+          <li>Open the <b>planner</b> (F3) on ORIEL-36, take a pick and burn. When you arrive, press <b>MATCH</b>, then <b>DARK</b>.</li>
+          <li>Open the <b>SIGINT station</b> (F2), click TRK 4417's report and <b>identify</b> it. Then press <b>JAM</b> and hold it until it leaves.</li>
         </ol>
-        <p class="note">Space pauses · [ and ] change time warp · T switches the view · F follows a ship · C re-centres · wheel zooms · drag pans.</p>
+        <p class="note">Space pauses · [ and ] change the time rate · F2 SIGINT · F3 planner · F5 database · drag turns the view · wheel zooms · W A S D moves it.</p>
       </div>
       <img class="inline" src="images/after-action.jpg?v=0.1" alt="The after-action report: DECISIVE in large green letters, the operation's length, the delta-v spent, shots fired, the dodges forced, and what TRK 4417 really was." width="1600" height="1000" loading="lazy">
     </div>
