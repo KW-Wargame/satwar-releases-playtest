@@ -134,7 +134,7 @@ h1,h2,h3{margin:0;font-weight:700}
 .feat.flip .text{grid-column:1/5;grid-row:1}
 .media img,.media video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.55)}
 .media::before{content:"";position:absolute;left:-12px;top:-12px;width:28px;height:28px;border-left:1px solid var(--orange);border-top:1px solid var(--orange);pointer-events:none}
-.feat .n{font:300 15px/1 var(--geo);letter-spacing:.2em;color:var(--orange2)}
+.feat .n{font:600 15px/1 var(--cond);letter-spacing:.24em;color:var(--orange2)}
 .feat .h3{margin:var(--s5) 0}
 .feat .text p{color:var(--ink2);font-size:17px}
 .feat .spec{margin-top:var(--s6);padding-top:var(--s5);border-top:1px solid var(--line);font:600 12px/1.7 var(--cond);letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
@@ -147,7 +147,9 @@ h1,h2,h3{margin:0;font-weight:700}
 
 .nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s6);margin-top:var(--s8)}
 .nums div{border-top:1px solid var(--line2);padding-top:var(--s5)}
-.nums b{display:block;font:300 clamp(44px,4.6vw,72px)/1 var(--geo);letter-spacing:.02em;color:#fff}
+.nums b{display:block;font:600 clamp(56px,5.6vw,92px)/.9 var(--cond);letter-spacing:0;font-variant-numeric:lining-nums;color:#fff}
+.nums b small{font-size:.5em;font-weight:500;margin-left:.12em;color:var(--ink2);letter-spacing:.02em}
+.nums b sup{font-size:.5em;vertical-align:0;position:relative;top:-.72em;margin-left:.04em}
 .nums span{display:block;margin-top:var(--s4);font-size:15px;line-height:1.5;color:var(--ink2);max-width:16em}
 .band .more{margin-top:var(--s8)}
 
@@ -204,7 +206,7 @@ footer .a p{margin-top:var(--s5)}
 .pagehead h1{font:700 clamp(56px,7vw,112px)/.9 var(--cond);text-transform:uppercase;margin:var(--s5) 0 var(--s6)}
 .log{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s6);margin:0}
 .log dt{grid-column:1/4;padding:var(--s8) 0 0;position:sticky;top:calc(var(--nav) + var(--s6));align-self:start}
-.log dt .bn{display:block;font:300 clamp(36px,3.4vw,52px)/1 var(--geo);letter-spacing:.04em;color:#fff}
+.log dt .bn{display:block;font:600 clamp(40px,3.8vw,60px)/1 var(--cond);letter-spacing:.01em;color:#fff}
 .log dt small{display:block;margin-top:var(--s4);font:600 12px/1.6 var(--cond);letter-spacing:.24em;text-transform:uppercase;color:var(--ink3)}
 .log dt .latest{display:inline-block;margin-top:var(--s4);font:600 12px/1 var(--cond);letter-spacing:.22em;text-transform:uppercase;color:var(--orange2)}
 .log dd{grid-column:4/13;margin:0;padding:var(--s8) 0;border-bottom:1px solid var(--line);color:var(--ink2);font-size:17px}
@@ -347,11 +349,11 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
     <div class="sh"><span class="idx">03</span><h2>The science</h2><p class="sub">Built on real physics. Every number cites its source.</p></div>
     <div class="nums">
       <div><b>762</b><span>comparisons against published references, all passing</span></div>
-      <div><b>4.4 h</b><span>ORIEL-36's orbit, at 1.3 Jupiter radii</span></div>
-      <div><b>900 s</b><span>specific impulse of the nuclear-thermal drives</span></div>
-      <div><b>1/R&sup2;</b><span>a listener hears radar long before radar's 1/R&#8308; echo finds it</span></div>
+      <div><b>4.4<small>h</small></b><span>ORIEL-36's orbit, at 1.3 Jupiter radii</span></div>
+      <div><b>900<small>s</small></b><span>specific impulse of the nuclear-thermal drives</span></div>
+      <div><b>1/R<sup>2</sup></b><span>a listener hears radar long before radar's 1/R&#8308; echo finds it</span></div>
     </div>
-    <div class="more"><a class="tl" href="research/">Read the research edition <small>23 pages</small></a></div>
+    <div class="more"><a class="tl" href="research/">Read the research edition <small>26 pages</small></a></div>
   </div>
 </section>
 
@@ -374,7 +376,7 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
     <div class="links"><a class="tl" href="manual/SATWAR-Operators-Handbook.pdf">PDF <small>12 pages</small></a><a class="tl" href="manual/">Read online</a></div></div>
   <div class="doc"><a class="cv" href="research/"><img src="images/doc-research.jpg" width="612" height="792" loading="lazy" alt="The first page of the Research Edition."></a>
     <span class="k">For the curious</span><h3 class="h3">Research Edition</h3><p>Every model behind the game, the sources it rests on, and the checks that hold it to them.</p>
-    <div class="links"><a class="tl" href="research/SATWAR-Research-Edition.pdf">PDF <small>23 pages</small></a><a class="tl" href="research/">Read online</a></div></div>
+    <div class="links"><a class="tl" href="research/SATWAR-Research-Edition.pdf">PDF <small>26 pages</small></a><a class="tl" href="research/">Read online</a></div></div>
 </div></section>
 
 <section class="end" aria-label="Play">
