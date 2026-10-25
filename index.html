@@ -7,7 +7,7 @@
 <meta name="description" content="SATWAR: an educational game of stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics. Play in your browser or download.">
 <meta property="og:title" content="SATWAR · Playtest 0.8">
 <meta property="og:description" content="Nothing hides in space. An unflagged inspector is shadowing an allied radar satellite in low Jupiter orbit: rendezvous, stay cold, find its command link and jam it until it leaves, with real orbital mechanics and sensor physics.">
-<meta property="og:image" content="images/trailer.jpg?v=0.7">
+<meta property="og:image" content="images/trailer.jpg?v=0.8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Share+Tech+Mono&display=swap">
@@ -130,15 +130,15 @@ dialog.lb button:hover{border-color:var(--sand);}
       <a class="btn" href="#downloads">All downloads</a>
     </div>
     <p class="note">No account, no install. 0.8 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 108 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
-    <video class="shot" id="heroVid" src="images/play.webm?v=0.7" poster="images/play-poster.jpg?v=0.7" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.7 in motion. The console over Jupiter's dayside with TRK 4417 selected beside ORIEL-36 in low orbit; the planner opens on ORIEL-36 with its grid of waits and flight times; HYDRA turns and lights its drive, seen close up with its exhaust plume; then the view pulls out and time speeds up as HYDRA drops to ORIEL-36's orbit."></video>
+    <video class="shot" id="heroVid" src="images/play.webm?v=0.8" poster="images/play-poster.jpg?v=0.8" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.8 in motion. The console over Jupiter's dayside with TRK 4417 selected beside ORIEL-36 in low orbit; the planner opens on ORIEL-36 with its grid of waits and flight times; HYDRA turns and lights its drive, seen close up with its exhaust plume; then the view pulls out and time speeds up as HYDRA drops to ORIEL-36's orbit."></video>
     <script>/* A still picture for anyone who asks their device for reduced motion */ (function(){var v=document.getElementById('heroVid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
-    <p class="cap">Recorded in playtest 0.7: plan a rendezvous with ORIEL-36, light HYDRA's drive, and drop to its orbit. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
+    <p class="cap">Recorded in playtest 0.8: plan a rendezvous with ORIEL-36, light HYDRA's drive, and drop to its orbit. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
   </div>
 
   <section id="trailer">
     <h2>The trailer</h2>
-    <video class="shot" id="trailerVid" controls preload="none" playsinline width="1920" height="1080" poster="images/trailer.jpg?v=0.7" aria-label="The SATWAR trailer, 86 seconds with sound. Jupiter in 2041; the radar satellite ORIEL-36 in low orbit, its radar sweeping, and the unflagged inspector parked beside it; the console, and the planner's grid of transfers to ORIEL-36; HYDRA lighting its drive to drop to its orbit; the transfer on the map; HYDRA alongside and dark; the SIGINT station picking out the inspector's report; a jamming beam on its command link; the inspector backing away; then the title.">
-      <source src="images/trailer.mp4?v=0.7" type="video/mp4">
+    <video class="shot" id="trailerVid" controls preload="none" playsinline width="1920" height="1080" poster="images/trailer.jpg?v=0.8" aria-label="The SATWAR trailer, 86 seconds with sound. Jupiter in 2041; the radar satellite ORIEL-36 in low orbit, its radar sweeping, and the unflagged inspector parked beside it; the console, and the planner's grid of transfers to ORIEL-36; HYDRA lighting its drive to drop to its orbit; the transfer on the map; HYDRA alongside and dark; the SIGINT station picking out the inspector's report; a jamming beam on its command link; the inspector backing away; then the title.">
+      <source src="images/trailer.mp4?v=0.8" type="video/mp4">
     </video>
     <p class="cap">86 seconds, with sound. Every shot is the game itself, rendered by its own movie writer; the score is the game's own. (23 MB, loads when you press play.)</p>
   </section>
@@ -152,7 +152,7 @@ dialog.lb button:hover{border-color:var(--sand);}
           <li><b>A tutorial for everything.</b> Thirty short steps in nine parts teach every control and every mechanic the shadowing uses: the view, tracks and their uncertainty, the database, your goals, map layers, your assets, fuel and heat, time, listening, bearings, identifying, the link budget, the planner, matching speed, the infrared camera, going dark, every effect and its price, and jamming.</li>
           <li><b>One thing at a time.</b> Each card says what to do in a line and why in another, points at the control, and finishes when you do it. While the clock is all you are waiting on, it says so, with a countdown.</li>
           <li><b>Listen first.</b> The inspector goes quiet once it sees a warship coming, so you hear and identify it from afar before you close in. A bot played the whole scenario through the tutorial and won.</li>
-        </ul></div><figure><img width="1600" height="900" alt="The tutorial card over the map, at step 29 of 30: Keep jamming. Cut off for 3 hours, it gives up and leaves. Jamming, press ] to speed up. Its leader points at the dock, framed in amber; HYDRA sits beside TRK 4417 in low Jupiter orbit." loading="lazy" src="images/g8-tutorial.jpg?v=0.8"><figcaption>The tutorial, near the end of the shadowing</figcaption></figure></div>
+        </ul></div><figure><img width="1600" height="900" alt="The tutorial card over the map, at step 29 of 30: Keep jamming. Cut off for 3 hours, it gives up and leaves. Jamming, press ] to speed up. Below it the dock: HYDRA BRAVO and GANYMEDE STATION as art cards over HYDRA's fuel gauge, its actions and its heat gauge; on the right, Selected Item shows TRK 4417 identified as a KITE-class inspector 2 km away." loading="lazy" src="images/g8-tutorial.jpg?v=0.8"><figcaption>The tutorial, near the end of the shadowing</figcaption></figure></div>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>Telescopes identify.</b> Close enough, your telescope makes out the hull and names it: about 13 resolution elements across it, by the Johnson criteria. A 1 m telescope names a 10 m inspector inside about 1,200 km, a 100 m ship inside about 12,000 km.</li>
           <li><b>Signals still matter.</b> Only identifying its radio reveals the command channel, so spot jamming needs it; otherwise you barrage the whole band.</li>
@@ -163,6 +163,10 @@ dialog.lb button:hover{border-color:var(--sand);}
           <li><b>Look anywhere.</b> Right-drag slides the view off any ship; double-click a moon or Jupiter to fly to it.</li>
           <li><b>An orientation panel.</b> Up close, a compass marks Jupiter, the Sun, your direction of travel and your target, solid when it faces you, with each one's angle and range.</li>
           <li><b>A steadier console.</b> Your assets sit under the gauges, and only they change who you act from. The Overview keeps its order while you click, and Selected Item is a box of its own you can drag anywhere.</li>
+          <li><b>One deck for your assets.</b> Each asset is a card with its own rendered art, its fuel and its state, over the acting one's fuel gauge, actions and heat gauge, all on a dark plate that reads against Jupiter. A bigger force wraps onto more rows.</li>
+          <li><b>Radar you can see.</b> Pulses ripple out from the antenna, and ORIEL-36's imaging radar draws its side-looking beam down to the cloud tops.</li>
+          <li><b>Ganymede Station rebuilt</b> as a ground site: telescope domes, the 12 m dish, a counter-comms trailer and an ops vault under an ice berm.</li>
+          <li><b>The SIGINT signal pane is back</b> in its earlier layout, and every class in the threat library links to its database entry.</li>
           <li><b>True-size ships.</b> Nuclear drives and tanks at their real sizes, WARDEN's drop tanks, rebuilt civil ships, and hits that leave craters and cooling debris.</li>
         </ul></div><figure><img width="1600" height="900" alt="HYDRA close up with the new orientation panel on the left: a compass with markers for Jupiter, the Sun, prograde and TRK 4417, and a legend of each one's angle and range above a scale bar." loading="lazy" src="images/g8-orient.jpg?v=0.8"><figcaption>HYDRA up close, with the orientation panel</figcaption></figure></div>
       </dd>
