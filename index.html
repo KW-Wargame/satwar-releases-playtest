@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SATWAR · Playtest</title>
 <meta name="description" content="SATWAR: an educational game of stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics. Play in your browser or download.">
-<meta property="og:title" content="SATWAR · Playtest 0.7">
+<meta property="og:title" content="SATWAR · Playtest 0.8">
 <meta property="og:description" content="Nothing hides in space. An unflagged inspector is shadowing an allied radar satellite in low Jupiter orbit: rendezvous, stay cold, find its command link and jam it until it leaves, with real orbital mechanics and sensor physics.">
 <meta property="og:image" content="images/trailer.jpg?v=0.7">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -115,21 +115,21 @@ dialog.lb button:hover{border-color:var(--sand);}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.7</span></div></header>
+<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.8</span></div></header>
 
 <main class="wrap">
   <div class="hero">
-    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.7</b> A new scenario, THE SHADOWING, and a new console. <span>What's new ↓</span></a>
+    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.8</b> A tutorial for every control, telescopes that identify, and a cleaner console. <span>What's new ↓</span></a>
     <p class="kick">An educational game of stealth satellites and electronic warfare</p>
     <h1>Nothing hides in space.<br><em>Three days</em> to make it leave.</h1>
-    <p class="lede">Jupiter, 2041. An unflagged inspector has slipped into the orbit of ORIEL-36, an allied radar satellite in low Jupiter orbit, and is closing in to park beside it. Nobody asked it to. You run the console: get alongside, stay cold so it keeps talking, find its command link and cut it until it gives up and leaves, without starting a war. Real orbits, and the real physics of seeing and being seen.</p>
+    <p class="lede">Jupiter, 2041. An unflagged inspector has slipped into the orbit of ORIEL-36, an allied radar satellite in low Jupiter orbit, and is closing in to park beside it. Nobody asked it to. You run the console: listen to it before it knows you are there, get alongside and go dark, find its command link and cut it until it gives up and leaves, without starting a war. Real orbits, and the real physics of seeing and being seen.</p>
     <div class="ctas">
-      <a class="btn primary" href="game/">Play 0.7 in your browser ▸</a>
+      <a class="btn primary" href="game/">Play 0.8 in your browser ▸</a>
       <a class="btn" href="#trailer">Watch the trailer</a>
       <a class="btn" href="#science">The science</a>
       <a class="btn" href="#downloads">All downloads</a>
     </div>
-    <p class="note">No account, no install. 0.7 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 92 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
+    <p class="note">No account, no install. 0.8 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 108 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
     <video class="shot" id="heroVid" src="images/play.webm?v=0.7" poster="images/play-poster.jpg?v=0.7" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.7 in motion. The console over Jupiter's dayside with TRK 4417 selected beside ORIEL-36 in low orbit; the planner opens on ORIEL-36 with its grid of waits and flight times; HYDRA turns and lights its drive, seen close up with its exhaust plume; then the view pulls out and time speeds up as HYDRA drops to ORIEL-36's orbit."></video>
     <script>/* A still picture for anyone who asks their device for reduced motion */ (function(){var v=document.getElementById('heroVid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
     <p class="cap">Recorded in playtest 0.7: plan a rendezvous with ORIEL-36, light HYDRA's drive, and drop to its orbit. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
@@ -146,7 +146,27 @@ dialog.lb button:hover{border-color:var(--sand);}
   <section id="whats-new">
     <h2>What's new</h2>
     <dl class="log">
-      <dt>0.7<small>24 Oct 2026 · the shadowing</small><span class="latest">LATEST</span></dt>
+      <dt>0.8<small>24 Oct 2026 · the walkthrough</small><span class="latest">LATEST</span></dt>
+      <dd>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>A tutorial for everything.</b> Thirty short steps in nine parts teach every control and every mechanic the shadowing uses: the view, tracks and their uncertainty, the database, your goals, map layers, your assets, fuel and heat, time, listening, bearings, identifying, the link budget, the planner, matching speed, the infrared camera, going dark, every effect and its price, and jamming.</li>
+          <li><b>One thing at a time.</b> Each card says what to do in a line and why in another, points at the control, and finishes when you do it. While the clock is all you are waiting on, it says so, with a countdown.</li>
+          <li><b>Listen first.</b> The inspector goes quiet once it sees a warship coming, so you hear and identify it from afar before you close in. A bot played the whole scenario through the tutorial and won.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The tutorial card over the map, at step 29 of 30: Keep jamming. Cut off for 3 hours, it gives up and leaves. Jamming, press ] to speed up. Its leader points at the dock, framed in amber; HYDRA sits beside TRK 4417 in low Jupiter orbit." loading="lazy" src="images/g8-tutorial.jpg?v=0.8"><figcaption>The tutorial, near the end of the shadowing</figcaption></figure></div>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>Telescopes identify.</b> Close enough, your telescope makes out the hull and names it: about 13 resolution elements across it, by the Johnson criteria. A 1 m telescope names a 10 m inspector inside about 1,200 km, a 100 m ship inside about 12,000 km.</li>
+          <li><b>Signals still matter.</b> Only identifying its radio reveals the command channel, so spot jamming needs it; otherwise you barrage the whole band.</li>
+          <li><b>No free looks.</b> Until a track is identified it is only a symbol on the map and a blur of heat in the infrared camera. Once its class is known, the telescope ranges it by how big it looks.</li>
+          <li><b>A cleaner SIGINT station.</b> Solid, its columns level, with larger infrared and class pictures.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The SIGINT station during the tutorial: the X-band waterfall with TRK 4417's first report selected, its constellation, eye diagram and threat-library match with KITE INSPECTOR on top, FIND DIRECTION and IDENTIFY SIGNAL lit, and the tutorial's one-line card in the title strip." loading="lazy" src="images/g8-sigint.jpg?v=0.8"><figcaption>Hearing TRK 4417 from afar, before closing in</figcaption></figure></div>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>Look anywhere.</b> Right-drag slides the view off any ship; double-click a moon or Jupiter to fly to it.</li>
+          <li><b>An orientation panel.</b> Up close, a compass marks Jupiter, the Sun, your direction of travel and your target, solid when it faces you, with each one's angle and range.</li>
+          <li><b>A steadier console.</b> Your assets sit under the gauges, and only they change who you act from. The Overview keeps its order while you click, and Selected Item is a box of its own you can drag anywhere.</li>
+          <li><b>True-size ships.</b> Nuclear drives and tanks at their real sizes, WARDEN's drop tanks, rebuilt civil ships, and hits that leave craters and cooling debris.</li>
+        </ul></div><figure><img width="1600" height="900" alt="HYDRA close up with the new orientation panel on the left: a compass with markers for Jupiter, the Sun, prograde and TRK 4417, and a legend of each one's angle and range above a scale bar." loading="lazy" src="images/g8-orient.jpg?v=0.8"><figcaption>HYDRA up close, with the orientation panel</figcaption></figure></div>
+      </dd>
+      <dt>0.7<small>24 Oct 2026 · the shadowing</small></dt>
       <dd>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>A new scenario: THE SHADOWING.</b> An unflagged inspector closes on ORIEL-36, an allied commercial radar satellite in low Jupiter orbit, and parks beside it. It follows the steps of a real uncooperative approach reported in October 2026: stand off, close to a few kilometres, loiter within half a kilometre, then leave. Times are shortened from weeks to days.</li>
@@ -317,11 +337,11 @@ dialog.lb button:hover{border-color:var(--sand);}
 
   <section id="downloads">
     <h2>Downloads</h2>
-    <p class="note" style="margin:0 0 14px">0.7 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
+    <p class="note" style="margin:0 0 14px">0.8 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
     <table>
       <thead><tr><th>If you want to…</th><th>Download</th><th>Size</th></tr></thead>
       <tbody>
-        <tr><td>Play 0.7, THE SHADOWING, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">92 MB</td></tr>
+        <tr><td>Play 0.8, THE SHADOWING, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">108 MB</td></tr>
         <tr><td>Play 0.1, the campaign map, in your browser</td><td class="f"><a href="play/">play/</a></td><td class="s">64 KB</td></tr>
         <tr><td>0.1 offline on any computer: double-click to open in your browser</td><td class="f"><a href="satwar-0.1.html" download>satwar-0.1.html</a></td><td class="s">64 KB</td></tr>
       </tbody>
