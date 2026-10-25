@@ -3,401 +3,417 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>SATWAR · Playtest 0.10</title>
-<meta name="description" content="SATWAR: an educational game of stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics. Play in your browser.">
-<meta property="og:title" content="SATWAR · Playtest 0.10">
-<meta property="og:description" content="Nothing hides in space. An unflagged inspector is shadowing an allied radar satellite in low Jupiter orbit: rendezvous, stay cold, find its command link and jam it until it leaves, with real orbital mechanics and sensor physics.">
-<meta property="og:image" content="manual/img/keyart.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@500;600;700&display=swap">
+<title>SATWAR · Alpha 0.5</title>
+<meta name="description" content="SATWAR: a hard-science game of stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics. Free in your browser.">
+<meta name="theme-color" content="#0b0c0d">
+<meta property="og:title" content="SATWAR · Alpha 0.5">
+<meta property="og:description" content="Nothing hides in space. An unflagged inspector is shadowing an allied radar satellite in low Jupiter orbit. Close in, stay cold, and cut its command link without firing a shot. Free in your browser.">
+<meta property="og:image" content="images/site/hero-1280.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=Barlow+Condensed:wght@500;600;700&display=swap">
 <style>
-:root{color-scheme:dark;--paper:#141517;--night:#0b0c0d;--soft:#1b1d20;--rule:#2d3034;--rule2:#41454b;
-  --ink:#ecebe8;--ink2:#b9bbbf;--ink3:#868a90;--orange:#ec6a34;--orange2:#ff8a5c;
+@font-face{font-family:'Satwar Geo';src:url(fonts/SatwarGeo-Medium.ttf) format('truetype');font-weight:500;font-display:swap}
+@font-face{font-family:'Satwar Geo';src:url(fonts/SatwarGeo-Light.ttf) format('truetype');font-weight:300;font-display:swap}
+:root{color-scheme:dark;
+  --bg:#0b0c0d;--bg2:#111214;--bg3:#16171a;--line:rgba(255,255,255,.09);--line2:rgba(255,255,255,.16);
+  --ink:#ecebe8;--ink2:#b3b5b9;--ink3:#7d8086;--orange:#ec6a34;--orange2:#ff8a5c;
   --own:#80a8d6;--prot:#b4c8dc;--unk:#dcbc56;--host:#e8544a;
-  --cond:'Barlow Condensed','Arial Narrow',sans-serif;--body:'Barlow','Segoe UI',system-ui,sans-serif}
+  --geo:'Satwar Geo','Barlow Condensed',sans-serif;--cond:'Barlow Condensed','Arial Narrow',sans-serif;--body:'Barlow','Segoe UI',system-ui,sans-serif;
+  /* one spacing scale for the whole site */
+  --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;--s9:96px;--s10:128px;--s11:192px;
+  --gut:clamp(20px,5vw,80px);--max:1400px;--sec:clamp(96px,11vw,176px);--nav:76px}
 *,*::before,*::after{box-sizing:border-box}
-html{background:var(--night);scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+html{background:var(--bg);scroll-behavior:smooth;scroll-padding-top:var(--nav)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 18px/1.65 var(--body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img,video{display:block;max-width:100%;height:auto}
-a{color:var(--orange2);text-decoration-thickness:1px;text-underline-offset:3px}
-a:hover{color:#fff}
-:focus-visible{outline:2px solid var(--orange);outline-offset:3px}
-.wrap{max-width:1160px;margin:0 auto;padding:0 28px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--orange);outline-offset:4px}
+p{margin:0}
+h1,h2,h3{margin:0;font-weight:700}
+.wrap{width:100%;max-width:calc(var(--max) + 2*var(--gut));margin:0 auto;padding:0 var(--gut)}
+.k{display:block;font:600 13px/1 var(--cond);letter-spacing:.3em;text-transform:uppercase;color:var(--orange2)}
+.k.dim{color:var(--ink3)}
+.h2{font:700 clamp(40px,5.4vw,80px)/.95 var(--cond);letter-spacing:.005em;text-transform:uppercase;text-wrap:balance}
+.h3{font:700 clamp(28px,2.6vw,40px)/1 var(--cond);letter-spacing:.01em;text-transform:uppercase}
+.lead{font-size:clamp(18px,1.45vw,21px);line-height:1.6;color:var(--ink2);max-width:34em;text-wrap:pretty}
+.small{font-size:15px;color:var(--ink3)}
 
-/* top bar */
-.bar{position:absolute;top:0;left:0;right:0;z-index:5}
-.bar .wrap{display:flex;align-items:center;gap:28px;height:68px}
-.mark{font:700 20px var(--cond);letter-spacing:.34em;color:#fff;text-decoration:none}
-.bar nav{display:flex;gap:26px;margin-left:auto}
-.bar nav a{font:600 13px var(--cond);letter-spacing:.2em;text-transform:uppercase;color:#c9c9c9;text-decoration:none}
-.bar nav a:hover{color:#fff}
-.bar .go{font:700 13px var(--cond);letter-spacing:.2em;text-transform:uppercase;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.35);padding:9px 16px}
-.bar .go:hover{border-color:var(--orange);color:var(--orange2)}
-.bar.solid{position:static;background:var(--night);border-bottom:1px solid var(--rule)}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:var(--s3);height:60px;padding:0 var(--s6);background:var(--orange);color:#fff;text-decoration:none;
+  font:700 16px/1 var(--cond);letter-spacing:.22em;text-transform:uppercase;clip-path:polygon(0 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%);transition:background .2s}
+.btn:hover{background:#ff7a42}
+.btn svg{width:12px;height:12px}
+.btn.sm{height:42px;padding:0 var(--s5);font-size:14px;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)}
+.ghost{display:inline-flex;align-items:center;gap:var(--s4);height:60px;color:var(--ink);text-decoration:none;background:none;border:0;cursor:pointer;padding:0;
+  font:600 15px/1 var(--cond);letter-spacing:.22em;text-transform:uppercase}
+.ghost i{display:grid;place-items:center;width:48px;height:48px;border:1px solid var(--line2);border-radius:50%;transition:border-color .2s,background .2s}
+.ghost i svg{width:12px;height:12px;margin-left:2px}
+.ghost:hover i{border-color:var(--orange);background:rgba(236,106,52,.12)}
+.tl{font:600 14px/1 var(--cond);letter-spacing:.22em;text-transform:uppercase;text-decoration:none;color:var(--ink);display:inline-flex;gap:var(--s3);align-items:center;padding-bottom:6px;border-bottom:1px solid var(--line2);transition:border-color .2s,color .2s}
+.tl:hover{border-color:var(--orange);color:#fff}
+.tl small{font:500 13px var(--body);letter-spacing:0;text-transform:none;color:var(--ink3)}
+
+/* navigation */
+.nav{position:fixed;inset:0 0 auto;z-index:20;height:var(--nav);transition:background .3s,border-color .3s;border-bottom:1px solid transparent}
+.nav.on,.nav.solid{background:rgba(11,12,13,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;height:100%;gap:var(--s7)}
+.word{font:500 22px/1 var(--geo);letter-spacing:.26em;color:#fff;text-decoration:none;margin-right:auto}
+.nav nav{display:flex;gap:var(--s6)}
+.nav nav a{font:600 13px/1 var(--cond);letter-spacing:.24em;text-transform:uppercase;color:var(--ink2);text-decoration:none;padding:var(--s2) 0;transition:color .2s}
+.nav nav a:hover{color:#fff}
 
 /* hero */
-.hero{position:relative;min-height:min(92vh,860px);display:flex;align-items:flex-end;background:#000;overflow:hidden}
-.hero .art{position:absolute;inset:0;background:url(manual/img/keyart.jpg) 70% 40%/cover no-repeat}
-.hero .art::after{content:"";position:absolute;inset:0;background:
-  linear-gradient(90deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.72) 34%,rgba(0,0,0,0) 66%),
-  linear-gradient(180deg,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 62%,var(--paper) 100%)}
-.hero .wrap{position:relative;width:100%;padding-bottom:56px}
-.kick{font:600 13px var(--cond);letter-spacing:.3em;text-transform:uppercase;color:var(--orange2);margin:0 0 14px}
-.hero h1{margin:0;font:700 clamp(64px,11vw,148px)/.84 var(--cond);letter-spacing:.12em;color:#fff;margin-left:-.04em}
-.hero h2{margin:14px 0 20px;font:600 clamp(20px,2.6vw,30px)/1.15 var(--cond);letter-spacing:.2em;text-transform:uppercase;color:#e6e6e6}
-.hero p.lede{max-width:560px;margin:0 0 30px;font-size:18px;color:#cfcfcf}
-.acts{display:flex;flex-wrap:wrap;align-items:center;gap:14px 26px}
-.btn{display:inline-flex;align-items:center;gap:12px;background:var(--orange);color:#fff;text-decoration:none;
-  font:700 16px var(--cond);letter-spacing:.18em;text-transform:uppercase;padding:16px 26px 15px}
-.btn:hover{background:#ff7c45;color:#fff}
-.btn svg{width:14px;height:14px}
-.alt{font:600 15px var(--cond);letter-spacing:.16em;text-transform:uppercase;color:#e6e6e6;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.3);padding-bottom:3px}
-.alt:hover{color:#fff;border-color:var(--orange)}
-.fine{margin:16px 0 0;font-size:14px;color:#9a9a9a;max-width:620px}
-
-/* readout strip */
-.spec{display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);margin:0}
-.spec div{padding:16px 18px 15px;border-left:1px solid var(--rule)}
-.spec div:first-child{border-left:0;padding-left:0}
-.spec dt{font:600 11.5px var(--cond);letter-spacing:.22em;text-transform:uppercase;color:var(--ink3)}
-.spec dd{margin:3px 0 0;font:600 17px var(--cond);letter-spacing:.06em;color:var(--ink)}
+.hero{position:relative;height:100svh;min-height:680px;max-height:1200px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#000}
+.hero picture,.hero picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:68% 45%}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:
+  linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.45) 32%,rgba(0,0,0,0) 58%),
+  linear-gradient(180deg,rgba(0,0,0,.5) 0%,rgba(0,0,0,0) 18%,rgba(0,0,0,0) 62%,var(--bg) 100%)}
+.hero .wrap{position:relative;z-index:1}
+.hero .copy{max-width:640px;padding-bottom:var(--s9)}
+.hero h1{font:500 clamp(64px,8.2vw,140px)/.9 var(--geo);letter-spacing:.14em;color:#fff;margin:var(--s5) 0 var(--s4) -.05em}
+.hero .tag{font:600 clamp(18px,1.8vw,26px)/1.2 var(--cond);letter-spacing:.32em;text-transform:uppercase;color:#e4e4e4}
+.hero .lead{margin-top:var(--s6);color:#c9cacd}
+.hero .acts{display:flex;flex-wrap:wrap;align-items:center;gap:var(--s5) var(--s7);margin-top:var(--s7)}
+.strip{position:relative;z-index:1;border-top:1px solid var(--line)}
+.strip .wrap{display:flex;gap:var(--s7);align-items:center;height:72px}
+.strip span{white-space:nowrap;font:600 12px/1 var(--cond);letter-spacing:.26em;text-transform:uppercase;color:var(--ink3)}
+.strip span b{color:var(--ink);font-weight:600;margin-left:var(--s3)}
+.strip .scroll{margin-left:auto;display:flex;align-items:center;gap:var(--s3)}
+.strip .scroll::after{content:"";width:1px;height:28px;background:linear-gradient(var(--orange),transparent)}
 
 /* sections */
-section{padding:88px 0 0}
-.head{display:grid;grid-template-columns:120px 1fr;gap:0 24px;align-items:end;border-bottom:1px solid var(--rule2);padding-bottom:14px;margin-bottom:34px}
-.head .n{font:700 15px var(--cond);letter-spacing:.2em;color:var(--orange)}
-.head h2{margin:0;font:700 clamp(30px,4vw,44px)/1 var(--cond);letter-spacing:.04em;text-transform:uppercase}
-.head p{grid-column:2;margin:10px 0 0;color:var(--ink2);max-width:720px}
-h3{margin:0 0 6px;font:700 19px var(--cond);letter-spacing:.07em;text-transform:uppercase}
-.lbl{font:600 12px var(--cond);letter-spacing:.22em;text-transform:uppercase;color:var(--ink3)}
+.sec{padding:var(--sec) 0}
+.sec.flush{padding:0}
+.sec.nob{padding-bottom:0}
+.sec.not{padding-top:0}
+.panel{background:var(--bg2)}
+.grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s6)}
 
-/* cast */
-.cast{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-left:1px solid var(--rule)}
-.who{border-right:1px solid var(--rule);padding:0 18px 4px}
-.who .pic{height:150px;display:flex;align-items:center;justify-content:center;margin:0 -18px 14px;background:radial-gradient(ellipse at center,#202326 0%,var(--paper) 70%)}
-.who .pic img{max-height:140px;width:auto}
-.who .lbl{display:block;border-top:3px solid;padding-top:10px}
-.who h3{margin:4px 0 4px}
-.who p{margin:0;font-size:15px;color:var(--ink2)}
+/* premise */
+.premise .k{grid-column:1/4;padding-top:14px}
+.premise .h2{grid-column:4/13;max-width:13em}
+.premise .lead{grid-column:4/10;margin-top:var(--s7)}
+.premise .who{grid-column:4/13;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s6);margin-top:var(--s9);border-top:1px solid var(--line);padding-top:var(--s6)}
+.who div{display:flex;flex-direction:column;gap:var(--s2)}
+.who img{width:100%;aspect-ratio:16/9;object-fit:contain;margin-bottom:var(--s4);filter:drop-shadow(0 18px 30px rgba(0,0,0,.6))}
+.who b{font:700 20px/1.1 var(--cond);letter-spacing:.06em;text-transform:uppercase}
+.who em{font:600 12px/1 var(--cond);font-style:normal;letter-spacing:.26em;text-transform:uppercase}
+.who p{font-size:15px;line-height:1.55;color:var(--ink3)}
 .c-own{color:var(--own)}.c-prot{color:var(--prot)}.c-unk{color:var(--unk)}
 
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:56px}
-.step{border-top:1px solid var(--rule2);padding-top:16px}
-.step .num{display:block;font:700 56px/1 var(--cond);color:var(--orange);margin-bottom:10px}
-.step p{margin:0;color:var(--ink2)}
-.quote{margin:56px 0 0;padding:22px 0 0;border-top:1px solid var(--rule);display:grid;grid-template-columns:120px 1fr;gap:24px}
-.quote p{margin:0;font-size:21px;line-height:1.45;color:var(--ink);max-width:820px;font-style:italic}
-.quote .lbl{padding-top:6px}
+/* trailer */
+.film{position:relative;display:block;width:100%;aspect-ratio:21/9;background:#000 center/cover no-repeat;border:0;padding:0;cursor:pointer;overflow:hidden}
+.film img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1),opacity .4s;opacity:.78}
+.film:hover img{transform:scale(1.025);opacity:.9}
+.film .play{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s5);color:#fff}
+.film .play i{display:grid;place-items:center;width:104px;height:104px;border-radius:50%;border:1px solid rgba(255,255,255,.55);background:rgba(0,0,0,.25);backdrop-filter:blur(4px);transition:transform .3s,border-color .3s,background .3s}
+.film .play i svg{width:22px;height:22px;margin-left:4px}
+.film:hover .play i{transform:scale(1.06);border-color:var(--orange);background:rgba(236,106,52,.2)}
+.film .play span{font:600 14px/1 var(--cond);letter-spacing:.3em;text-transform:uppercase}
+.film video{position:absolute;inset:0;width:100%;height:100%;background:#000}
+.film-meta{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s5);margin-top:var(--s5)}
 
-/* framed media */
-.frame{position:relative;background:#000}
-.frame::before,.frame::after{content:"";position:absolute;width:18px;height:18px;border:1px solid var(--orange);pointer-events:none;z-index:2}
-.frame::before{top:-7px;left:-7px;border-right:0;border-bottom:0}
-.frame::after{bottom:-7px;right:-7px;border-left:0;border-top:0}
-.cap{margin:12px 0 0;font-size:14px;color:var(--ink3)}
-.cap b{font:600 12px var(--cond);letter-spacing:.2em;text-transform:uppercase;color:var(--ink2);margin-right:10px}
+/* features */
+.feat-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s6);margin-bottom:var(--s10)}
+.feat-head .k{grid-column:1/4;padding-top:14px}
+.feat-head .h2{grid-column:4/13}
+.feat{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s6);align-items:center}
+.feat+.feat{margin-top:var(--s10)}
+.feat .media{grid-column:1/8;position:relative}
+.feat .text{grid-column:9/13}
+.feat.flip .media{grid-column:6/13;grid-row:1}
+.feat.flip .text{grid-column:1/5;grid-row:1}
+.media img,.media video{width:100%;aspect-ratio:16/9;object-fit:cover;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.media::before{content:"";position:absolute;left:-12px;top:-12px;width:28px;height:28px;border-left:1px solid var(--orange);border-top:1px solid var(--orange);pointer-events:none}
+.feat .n{font:300 15px/1 var(--geo);letter-spacing:.2em;color:var(--orange2)}
+.feat .h3{margin:var(--s5) 0}
+.feat .text p{color:var(--ink2);font-size:17px}
+.feat .spec{margin-top:var(--s6);padding-top:var(--s5);border-top:1px solid var(--line);font:600 12px/1.7 var(--cond);letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
 
-/* build */
-.build{display:grid;grid-template-columns:1fr 1fr;gap:28px 40px}
-.build figure{margin:0}
-.build ul{list-style:none;margin:0;padding:0;grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);gap:28px 40px}
-.build li{border-top:1px solid var(--rule2);padding-top:14px;color:var(--ink2);font-size:16px}
-.build li b{display:block;font:700 18px var(--cond);letter-spacing:.06em;text-transform:uppercase;color:var(--ink);margin-bottom:4px}
-.more{display:inline-block;margin-top:30px;font:600 14px var(--cond);letter-spacing:.2em;text-transform:uppercase;text-decoration:none}
-figcaption{margin-top:10px;font-size:14px;color:var(--ink3)}
+/* numbers band */
+.band{position:relative;overflow:hidden;background:#000}
+.band>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%;opacity:.55}
+.band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0%,rgba(11,12,13,.35) 30%,rgba(11,12,13,.35) 70%,var(--bg) 100%)}
+.band .wrap{position:relative;z-index:1}
+.band .h2{max-width:14em}
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s6);margin-top:var(--s9)}
+.nums div{border-top:1px solid var(--line2);padding-top:var(--s5)}
+.nums b{display:block;font:300 clamp(44px,4.6vw,72px)/1 var(--geo);letter-spacing:.02em;color:#fff}
+.nums span{display:block;margin-top:var(--s4);font-size:15px;line-height:1.5;color:var(--ink2);max-width:16em}
+.band .more{margin-top:var(--s8)}
 
 /* gallery */
-.gal{display:grid;grid-template-columns:repeat(3,1fr);gap:22px 14px}
-.gal figure{margin:0}
-.gal figure:first-child{grid-column:span 2;grid-row:span 2}
-.gal img{width:100%;aspect-ratio:16/9;object-fit:cover;cursor:zoom-in;border:1px solid var(--rule)}
-.gal figure:first-child img{height:auto}
-.gal img:hover{border-color:var(--rule2)}
+.gal-head{display:flex;justify-content:space-between;align-items:flex-end;gap:var(--s6);margin-bottom:var(--s8)}
+.gal{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--s4)}
+.gal figure{margin:0;position:relative;overflow:hidden;background:#000;cursor:zoom-in}
+.gal figure:nth-child(1){grid-column:1/9;grid-row:1/3}
+.gal figure:nth-child(2),.gal figure:nth-child(3){grid-column:9/13}
+.gal figure:nth-child(n+4){grid-column:span 4}
+.gal img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/9;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.gal figure:hover img{transform:scale(1.03)}
+.gal figcaption{position:absolute;left:0;right:0;bottom:0;padding:var(--s7) var(--s5) var(--s4);background:linear-gradient(transparent,rgba(0,0,0,.85));font:600 12px/1.3 var(--cond);letter-spacing:.22em;text-transform:uppercase;color:#ddd;opacity:0;transform:translateY(6px);transition:opacity .3s,transform .3s}
+.gal figure:hover figcaption,.gal figure:focus-within figcaption{opacity:1;transform:none}
 
-/* how to play */
-.play{display:grid;grid-template-columns:5fr 6fr;gap:48px;align-items:start}
-.play ol{list-style:none;margin:0;padding:0;counter-reset:s}
-.play li{counter-increment:s;display:grid;grid-template-columns:44px 1fr;gap:4px;padding:14px 0;border-bottom:1px solid var(--rule)}
-.play li:first-child{padding-top:0}
-.play li::before{content:counter(s,decimal-leading-zero);font:700 20px/1.3 var(--cond);color:var(--orange)}
-kbd{display:inline-block;min-width:1.8em;text-align:center;font:600 13px/1 var(--body);color:var(--ink);background:#2a2d31;border:1px solid #4a4e54;border-bottom-width:2px;border-radius:3px;padding:4px 6px 3px;vertical-align:1px}
-.keys{display:grid;grid-template-columns:auto 1fr;gap:9px 18px;margin:26px 0 0;font-size:15px;color:var(--ink2);align-items:center}
-.keys dt{white-space:nowrap}
+/* field manual */
+.docs{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s6);row-gap:var(--s9)}
+.docs .intro{grid-column:1/6}
+.docs .intro .lead{margin-top:var(--s5)}
+.doc{grid-column:10/13;display:flex;flex-direction:column}
+.doc.d1{grid-column:7/10}
+.doc .cv{display:block;position:relative;aspect-ratio:612/792;margin-bottom:var(--s6);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.doc .cv img{width:100%;height:100%;object-fit:cover;box-shadow:24px 34px 60px rgba(0,0,0,.6),0 0 0 1px var(--line)}
+.doc .cv:hover{transform:translateY(-6px)}
+.doc .k{margin-bottom:var(--s3)}
+.doc .h3{font-size:28px}
+.doc p{margin:var(--s4) 0 var(--s5);font-size:16px;color:var(--ink2)}
+.doc .links{display:flex;gap:var(--s6);flex-wrap:wrap;margin-top:auto}
 
-/* documents */
-.docs{display:grid;grid-template-columns:1fr 1fr;gap:40px}
-.doc{display:grid;grid-template-columns:190px 1fr;gap:26px;align-items:start}
-.doc .cover{display:block;border:1px solid var(--rule2);box-shadow:0 18px 40px rgba(0,0,0,.45);transition:transform .2s}
-.doc .cover:hover{transform:translateY(-3px)}
-.doc p{margin:6px 0 16px;color:var(--ink2);font-size:16px}
-.doc .links{display:flex;flex-wrap:wrap;gap:10px 22px}
-.doc .links a{font:600 14px var(--cond);letter-spacing:.18em;text-transform:uppercase;text-decoration:none}
-.doc .links a small{font:500 13px var(--body);letter-spacing:0;text-transform:none;color:var(--ink3);margin-left:6px}
+/* final call */
+.end{position:relative;overflow:hidden;background:#000;padding:var(--sec) 0}
+.end>picture,.end>picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 50%}
+.end::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.7) 0%,rgba(0,0,0,.2) 45%,rgba(0,0,0,0) 65%),linear-gradient(180deg,var(--bg2) 0%,rgba(0,0,0,0) 22%)}
+.end .wrap{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;min-height:clamp(420px,40vw,640px);justify-content:center}
+.end .h2{margin:var(--s5) 0 var(--s7);max-width:9em}
+.end .small{margin-top:var(--s5);max-width:30em}
+.fb{margin-top:var(--s8);max-width:30em;padding:var(--s5) var(--s6);border:1px solid var(--line);background:rgba(11,12,13,.6);backdrop-filter:blur(6px);font-size:15px;color:var(--ink2);text-align:left}
+.fb b{display:block;font:700 14px/1 var(--cond);letter-spacing:.22em;text-transform:uppercase;color:var(--ink);margin-bottom:var(--s3)}
 
-/* tables */
-table{width:100%;border-collapse:collapse;font-size:15px}
-th{text-align:left;font:600 12px var(--cond);letter-spacing:.2em;text-transform:uppercase;color:var(--ink3);padding:0 14px 10px 0;border-bottom:1px solid var(--rule2)}
-td{padding:14px 14px 14px 0;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink2)}
-td:first-child{color:var(--ink)}
-td.f a{font:600 15px var(--cond);letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
-td.s,th.s{white-space:nowrap;color:var(--ink3);text-align:right;padding-right:0}
-.model td:first-child{font:700 15px var(--cond);letter-spacing:.14em;color:var(--orange2);white-space:nowrap}
+/* footer */
+footer{border-top:1px solid var(--line);padding:var(--s8) 0 var(--s9);background:var(--bg)}
+footer .grid{row-gap:var(--s6)}
+footer .word{font-size:18px}
+footer .a{grid-column:1/5}
+footer .b{grid-column:6/9;display:flex;flex-direction:column;gap:var(--s3)}
+footer .c{grid-column:9/13}
+footer .b a{font:600 13px/1.6 var(--cond);letter-spacing:.22em;text-transform:uppercase;color:var(--ink2);text-decoration:none}
+footer .b a:hover{color:#fff}
+footer p{font-size:14px;line-height:1.6;color:var(--ink3)}
+footer .a p{margin-top:var(--s5)}
 
-/* science */
-.sci{display:grid;grid-template-columns:1fr 1fr;gap:0 48px}
-.law{padding:20px 0;border-top:1px solid var(--rule)}
-.law p{margin:0;color:var(--ink2);font-size:16px}
-.law small{display:block;margin-top:8px;font-size:13px;line-height:1.5;color:var(--ink3)}
-.law small a{color:var(--ink3)}
-.sub{margin:48px 0 14px}
-
-/* feedback + footer */
-.note{display:grid;grid-template-columns:120px 1fr;gap:24px;border-left:3px solid var(--orange);background:var(--soft);padding:22px 26px;margin-top:88px}
-.note p{margin:0;color:var(--ink2)}
-.note h3{margin:0 0 6px}
-footer{margin-top:88px;border-top:1px solid var(--rule);background:var(--night);padding:34px 0 56px;color:var(--ink3);font-size:13.5px}
-footer .wrap{display:grid;grid-template-columns:120px 1fr;gap:24px}
-footer p{margin:0 0 8px;max-width:820px}
-footer a{color:var(--ink3)}
-footer .mark{font-size:15px;color:var(--ink2)}
-
-/* changelog page */
-.log{display:grid;grid-template-columns:200px 1fr;gap:0 32px;margin:0}
-.log dt{padding:26px 0 0;border-top:1px solid var(--rule2);font:700 34px/1 var(--cond);color:var(--ink)}
-.log dt small{display:block;margin-top:8px;font:600 12px/1.4 var(--cond);letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
-.log dt .latest{display:inline-block;margin-top:10px;font:700 11px var(--cond);letter-spacing:.2em;color:var(--orange);border:1px solid var(--orange);padding:3px 7px 2px}
-.log dd{margin:0;padding:26px 0 30px;border-top:1px solid var(--rule2);color:var(--ink2)}
+/* changelog */
+.pagehead{padding:calc(var(--nav) + var(--s10)) 0 var(--s9);border-bottom:1px solid var(--line)}
+.pagehead h1{font:700 clamp(56px,7vw,112px)/.9 var(--cond);text-transform:uppercase;margin:var(--s5) 0 var(--s6)}
+.log{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s6);margin:0}
+.log dt{grid-column:1/4;padding:var(--s8) 0 0;position:sticky;top:calc(var(--nav) + var(--s6));align-self:start}
+.log dt .bn{display:block;font:300 clamp(36px,3.4vw,52px)/1 var(--geo);letter-spacing:.04em;color:#fff}
+.log dt small{display:block;margin-top:var(--s4);font:600 12px/1.6 var(--cond);letter-spacing:.24em;text-transform:uppercase;color:var(--ink3)}
+.log dt .latest{display:inline-block;margin-top:var(--s4);font:600 12px/1 var(--cond);letter-spacing:.22em;text-transform:uppercase;color:var(--orange2)}
+.log dd{grid-column:4/13;margin:0;padding:var(--s8) 0;border-bottom:1px solid var(--line);color:var(--ink2);font-size:17px}
+.log ul{margin:0;padding:0;list-style:none}
+.log li{position:relative;padding-left:var(--s5);margin-bottom:var(--s4)}
+.log li::before{content:"";position:absolute;left:0;top:.72em;width:8px;height:1px;background:var(--orange)}
 .log li b{color:var(--ink);font-weight:600}
-.log ul{margin:0;padding-left:18px}
-.log li{margin-bottom:10px}
-.log li::marker{color:var(--orange)}
-.cl-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start;padding:20px 0;border-top:1px solid var(--rule)}
-.cl-pair:first-child{border-top:0;padding-top:0}
+.cl-pair{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s7);align-items:start}
+.cl-pair+.cl-pair{margin-top:var(--s7);padding-top:var(--s7);border-top:1px solid var(--line)}
 .cl-pair.flip .cl-note{order:2}
-.cl-pair figure{margin:0}
-.cl-pair img{width:100%;border:1px solid var(--rule);cursor:zoom-in}
-.log figcaption{font-size:13px}
-.dn{margin:14px 0 0;padding:12px 16px;border-left:3px solid var(--orange);background:var(--soft)}
-.dn b{display:block;font:700 13px var(--cond);letter-spacing:.16em;text-transform:uppercase;color:var(--ink);margin-bottom:4px}
-.pagehead{padding:64px 0 0}
-.pagehead h1{margin:6px 0 10px;font:700 clamp(44px,6vw,72px)/1 var(--cond);letter-spacing:.04em;text-transform:uppercase}
-.pagehead p{margin:0 0 40px;color:var(--ink2);max-width:680px}
+.cl-pair figure{margin:0;cursor:zoom-in}
+.cl-pair img{width:100%;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.cl-pair figcaption{margin-top:var(--s3);font:600 12px/1.4 var(--cond);letter-spacing:.2em;text-transform:uppercase;color:var(--ink3)}
+.dn{margin-top:var(--s4);padding:var(--s4) var(--s5);border-left:2px solid var(--orange);background:var(--bg2)}
+.dn b{display:block;font:700 13px var(--cond);letter-spacing:.2em;text-transform:uppercase;color:var(--ink);margin-bottom:var(--s1)}
 
 /* lightbox */
-dialog.lb{padding:0;border:1px solid var(--rule2);background:var(--night);color:var(--ink);max-width:96vw;max-height:94vh;overflow:auto}
-dialog.lb::backdrop{background:rgba(0,0,0,.9)}
-dialog.lb img{max-width:94vw;max-height:84vh;width:auto;margin:0 auto;cursor:zoom-out}
-.lbbar{display:flex;align-items:center;gap:10px;padding:10px 14px;border-top:1px solid var(--rule);font-size:14px;color:var(--ink2)}
-.lbbar span{flex:1}
-dialog.lb button{font:600 13px var(--cond);letter-spacing:.16em;color:var(--ink);background:none;border:1px solid var(--rule2);padding:8px 12px;cursor:pointer;min-width:44px}
-dialog.lb button:hover{border-color:var(--orange)}
+dialog.lb{padding:0;border:0;background:transparent;max-width:none;max-height:none;width:100vw;height:100vh;color:var(--ink)}
+dialog.lb::backdrop{background:rgba(0,0,0,.94)}
+.lb .in{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:var(--s4);width:100%;height:100%;padding:var(--s7) var(--gut)}
+.lb img{max-width:100%;max-height:calc(100vh - 160px);width:auto;cursor:zoom-out}
+.lb .bar{display:flex;align-items:center;gap:var(--s4);width:min(100%,1200px)}
+.lb .bar span{flex:1;font:600 13px/1.4 var(--cond);letter-spacing:.22em;text-transform:uppercase;color:var(--ink2)}
+.lb button{font:600 13px/1 var(--cond);letter-spacing:.22em;color:var(--ink);background:none;border:1px solid var(--line2);height:44px;min-width:44px;padding:0 var(--s4);cursor:pointer}
+.lb button:hover{border-color:var(--orange)}
 
-@media (max-width:900px){
-  .cast{grid-template-columns:1fr 1fr;border-left:0;gap:30px 0}
-  .who{border-right:0;padding:0 14px 0 0}
-  .steps,.build ul{grid-template-columns:1fr;gap:26px}
-  .build,.play,.docs,.sci{grid-template-columns:1fr}
-  .spec{grid-template-columns:repeat(3,1fr)}
-  .spec div:nth-child(4){border-left:0;padding-left:0}
-  .spec div:nth-child(n+4){border-top:1px solid var(--rule)}
+@media (max-width:1100px){
+  .nav nav{display:none}
+  .strip .wrap{flex-wrap:wrap;height:auto;padding-top:var(--s5);padding-bottom:var(--s5);gap:var(--s3) var(--s6)}
+  .premise .k,.feat-head .k{grid-column:1/-1;padding:0 0 var(--s5)}
+  .premise .h2,.premise .lead,.premise .who,.feat-head .h2{grid-column:1/-1}
+  .premise .who{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:var(--s7)}
+  .feat .media,.feat.flip .media{grid-column:1/-1;grid-row:auto}
+  .feat .text,.feat.flip .text{grid-column:1/-1;grid-row:auto;margin-top:var(--s7);max-width:36em}
+  .nums{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:var(--s7)}
+  .docs .intro{grid-column:1/-1}
+  .doc,.doc.d1{grid-column:span 6}
+  footer .a{grid-column:1/-1}footer .b{grid-column:1/5}footer .c{grid-column:5/-1}
+  .log dt{grid-column:1/-1;position:static;padding-top:var(--s8)}
+  .log dd{grid-column:1/-1;padding-top:var(--s5)}
 }
-@media (max-width:640px){
-  body{font-size:16px}
-  .wrap{padding:0 16px}
-  .bar nav{display:none}
-  .bar .go{margin-left:auto}
-  .hero{min-height:0;padding-top:96px}
-  .hero .art{background-position:62% 0;background-size:auto 64%}
-  .hero .art::after{background:linear-gradient(180deg,rgba(0,0,0,.4) 0%,rgba(0,0,0,0) 20%,rgba(0,0,0,.2) 34%,#000 62%,var(--paper) 100%)}
-  .hero .wrap{padding-top:clamp(180px,48vw,300px);padding-bottom:36px}
-  .hero h1{letter-spacing:.08em}
-  .spec{grid-template-columns:1fr 1fr}
-  .spec div{border-left:0;padding-left:0;border-top:1px solid var(--rule)}
-  .spec div:nth-child(-n+2){border-top:0}
-  .spec div:nth-child(even){border-left:1px solid var(--rule);padding-left:14px}
-  .head,.quote,.note,footer .wrap{grid-template-columns:1fr;gap:6px}
-  .head p{grid-column:1}
-  .cast{grid-template-columns:1fr;gap:18px}
-  .who{display:grid;grid-template-columns:118px 1fr;gap:0 14px;align-content:start}
-  .who .pic{grid-row:1/span 3;height:86px;margin:0;align-self:start}
-  .who .pic img{max-height:80px}
-  .who .lbl,.who h3,.who p{grid-column:2}
+@media (max-width:720px){
+  body{font-size:17px}
+  :root{--nav:64px;--sec:88px}
+  .nav .btn{height:38px;padding:0 var(--s4);font-size:13px}
+  .word{font-size:18px}
+  .hero{height:auto;min-height:0;max-height:none;padding-top:var(--nav)}
+  .hero picture{position:relative;inset:auto;height:62vw;min-height:260px;display:block}
+  .hero picture img{object-position:78% 40%}
+  .hero::after{background:linear-gradient(180deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,0) 14%,rgba(0,0,0,0) 30%,var(--bg) 52%)}
+  .hero .copy{padding:0 0 var(--s8);margin-top:var(--s2)}
+  .hero h1{letter-spacing:.1em}
+  .hero .acts{gap:var(--s4) var(--s6)}
+  .strip .wrap{height:auto;flex-wrap:wrap;gap:var(--s3) var(--s5);padding-top:var(--s5);padding-bottom:var(--s5)}
+  .strip .scroll{display:none}
+  .premise .who{grid-template-columns:1fr}
+  .who div{display:grid;grid-template-columns:120px 1fr;column-gap:var(--s4);align-items:start}
+  .who img{grid-row:1/4;margin:0}
+  .film{aspect-ratio:16/10}
+  .film .play i{width:76px;height:76px}
+  .film-meta{flex-direction:column;gap:var(--s2)}
+  .feat-head{margin-bottom:var(--s8)}
+  .feat+.feat{margin-top:var(--s9)}
+  .media::before{left:-8px;top:-8px;width:20px;height:20px}
+  .nums{grid-template-columns:1fr 1fr;column-gap:var(--s5)}
+  .gal-head{flex-direction:column;align-items:flex-start}
   .gal{grid-template-columns:1fr 1fr}
-  .doc{grid-template-columns:110px 1fr;gap:18px}
-  .log{grid-template-columns:1fr}
-  .log dd{border-top:0;padding-top:12px}
-  .cl-pair{grid-template-columns:1fr}
+  .gal figure:nth-child(n){grid-column:auto;grid-row:auto}
+  .gal figure:nth-child(1){grid-column:1/-1}
+  .gal figcaption{opacity:1;transform:none;padding:var(--s6) var(--s3) var(--s2);font-size:10px;letter-spacing:.16em}
+  .doc,.doc.d1{grid-column:1/-1}
+  .doc{display:grid;grid-template-columns:120px 1fr;column-gap:var(--s5);align-items:start}
+  .doc .cv{grid-row:1/6;margin:0;transform:none}
+  .doc .h3{font-size:24px}
+  .doc .links{margin-top:0;gap:var(--s5)}
+  footer .b,footer .c{grid-column:1/-1}
+  .cl-pair{grid-template-columns:1fr;gap:var(--s5)}
   .cl-pair.flip .cl-note{order:0}
-  td.s{display:none}
-  section{padding-top:64px}
 }
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.doc .cover{transition:none}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<header class="bar"><div class="wrap"><a class="mark" href="./">SATWAR</a><nav aria-label="Site"><a href="#operation">Operation</a><a href="#build">Build 0.10</a><a href="#documents">Handbook</a><a href="#science">Science</a></nav><a class="go" href="game/">Play</a></div></header>
-
-<div class="hero">
-  <div class="art" role="img" aria-label="HYDRA, a nuclear warship, high over Jupiter's cloud tops against a dark red haze."></div>
-  <div class="wrap">
-    <p class="kick">Playtest 0.10 &middot; An educational game of stealth satellites</p>
+<header class="nav" id="nav"><div class="wrap"><a class="word" href="./">SATWAR</a><nav aria-label="Sections"><a href="#operation">The Operation</a><a href="#features">Features</a><a href="#media">Media</a><a href="#manual">Field Manual</a></nav><a class="btn sm" href="game/">Play free</a></div></header>
+<main>
+<section class="hero" aria-label="SATWAR">
+  <picture><source media="(max-width:1280px)" srcset="images/site/hero-1280.jpg"><img src="images/site/hero.jpg" width="2560" height="1100" alt="Above Jupiter's dayside, a dark angular inspector hangs just beneath ORIEL-36, a box-shaped radar satellite with a long flat antenna." fetchpriority="high"></picture>
+  <div class="wrap"><div class="copy">
+    <span class="k">Alpha 0.5 &middot; Free in your browser</span>
     <h1>SATWAR</h1>
-    <h2>Nothing hides in space</h2>
-    <p class="lede">Jupiter, 2041. An unflagged inspector is closing on ORIEL-36, an allied radar satellite in low orbit, to park beside it. You have three days to make it leave, without starting a war.</p>
+    <p class="tag">Nothing hides in space</p>
+    <p class="lead">Jupiter, 2041. An unflagged inspector has parked beside an allied radar satellite. You have three days to make it leave, without starting a war.</p>
     <div class="acts">
-      <a class="btn" href="game/">Play in your browser <svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 1.5 12 7 2 12.5Z" fill="currentColor"/></svg></a>
-      <a class="alt" href="#trailer">Watch the trailer</a>
-      <a class="alt" href="manual/">Read the handbook</a>
+      <a class="btn" href="game/">Play the alpha <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1 11 6 1.5 11Z" fill="currentColor"/></svg></a>
+      <a class="ghost" href="#trailer"><i><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1 11 6 1.5 11Z" fill="currentColor"/></svg></i>Watch the trailer</a>
     </div>
-    <p class="fine">No account, no install. A desktop browser with WebGL 2, a keyboard and a mouse. Saves stay in your browser.</p>
+  </div></div>
+  <div class="strip"><div class="wrap"><span>Genre<b>Hard science strategy</b></span><span>Players<b>Single-player</b></span><span>Platform<b>Desktop browser</b></span><span class="scroll">Scroll</span></div></div>
+</section>
+
+<section class="sec premise" id="operation"><div class="wrap grid">
+  <span class="k">The operation</span>
+  <h2 class="h2">Something is parked beside our satellite. Nobody asked it to.</h2>
+  <p class="lead">TRK 4417 closed on ORIEL-36 in low Jupiter orbit and stopped a few kilometres away. A handler far off radios its every move. You command one warship and a listening station. Get close, stay unseen, find the link and cut it.</p>
+  <div class="who">
+    <div><img src="manual/img/p-sentinel.png" width="640" height="360" alt="HYDRA, a long white nuclear-drive warship." loading="lazy"><em class="c-own">You</em><b>HYDRA Bravo</b><p>Drive, telescope, radio ears, radar and a jammer.</p></div>
+    <div><img src="manual/img/p-oriel.png" width="640" height="360" alt="ORIEL-36, a box-shaped radar satellite with a long flat antenna." loading="lazy"><em class="c-prot">Protect</em><b>ORIEL-36</b><p>An allied radar satellite. Nothing may damage it.</p></div>
+    <div><img src="manual/img/p-kite.png" width="640" height="360" alt="TRK 4417, a dark angular inspector with a small dish." loading="lazy"><em class="c-unk">Unknown</em><b>TRK 4417</b><p>The inspector. Its command link is its weak point.</p></div>
+    <div><img src="manual/img/p-station.png" width="640" height="360" alt="Ganymede Station, a ground site with a large dish." loading="lazy"><em class="c-own">Your ears</em><b>Ganymede Station</b><p>A big dish that hears for millions of kilometres.</p></div>
   </div>
-</div>
+</div></section>
 
-<main class="wrap">
-  <dl class="spec">
-    <div><dt>Build</dt><dd>0.10 &middot; 25 Oct 2026</dd></div>
-    <div><dt>Operation</dt><dd>The Shadowing</dd></div>
-    <div><dt>Theatre</dt><dd>Low Jupiter orbit</dd></div>
-    <div><dt>Clock</dt><dd>3 days, paused at will</dd></div>
-    <div><dt>Download</dt><dd>108 MB, first load</dd></div>
-  </dl>
+<section class="sec flush" id="trailer"><div class="wrap">
+  <button class="film" id="film" type="button" aria-label="Play the SATWAR trailer, 86 seconds with sound. ORIEL-36 in low Jupiter orbit and the inspector beside it; the console and the planner; HYDRA lighting its drive; HYDRA alongside and dark; the SIGINT station picking out the inspector's report; a jamming beam on its command link; the inspector backing away; then the title.">
+    <img src="images/trailer.jpg?v=0.8" width="1920" height="1080" alt="" loading="lazy">
+    <span class="play"><i><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1 11 6 1.5 11Z" fill="currentColor"/></svg></i><span>Watch the trailer &middot; 1:26</span></span>
+  </button>
+  <div class="film-meta"><span class="k dim">Official trailer</span><span class="small">Every shot is the game itself, with its own score. 23 MB, loads when you press play.</span></div>
+</div></section>
 
-  <section id="operation">
-    <div class="head"><span class="n">01</span><h2>The operation</h2><p>Real orbits, and the real physics of seeing and being seen. No starfighters and no sound in space: only orbits, heat and patience.</p></div>
-    <div class="cast">
-      <div class="who"><div class="pic"><img src="manual/img/p-sentinel.png" alt="HYDRA, a long white nuclear-drive warship." width="640" height="360" loading="lazy"></div><span class="lbl c-own">You</span><h3>HYDRA BRAVO</h3><p>Your warship: drive, telescope, radio ears, radar and a jammer.</p></div>
-      <div class="who"><div class="pic"><img src="manual/img/p-oriel.png" alt="ORIEL-36, a box-shaped radar satellite with a long flat antenna." width="640" height="360" loading="lazy"></div><span class="lbl c-prot">Protect</span><h3>ORIEL-36</h3><p>An allied radar satellite. You can't command it, and nothing may damage it.</p></div>
-      <div class="who"><div class="pic"><img src="manual/img/p-kite.png" alt="TRK 4417, a dark angular inspector with a small dish." width="640" height="360" loading="lazy"></div><span class="lbl c-unk">The inspector</span><h3>TRK 4417</h3><p>Closing from behind. A distant handler radios its every move, and that link is its weak point.</p></div>
-      <div class="who"><div class="pic"><img src="manual/img/p-station.png" alt="Ganymede Station, a ground site with a large dish." width="640" height="360" loading="lazy"></div><span class="lbl c-own">Your ears</span><h3>Ganymede Station</h3><p>A big dish on Ganymede. It hears radio from millions of kilometres away, but can't move.</p></div>
+<section class="sec nob" id="features"><div class="wrap">
+  <div class="feat-head"><span class="k">How you win</span><h2 class="h2">Three moves. No shots fired.</h2></div>
+
+  <div class="feat">
+    <div class="media"><video data-loop src="images/play.webm?v=0.8" poster="images/play-poster.jpg?v=0.8" width="1280" height="720" autoplay muted loop playsinline aria-label="The planner opens on ORIEL-36, HYDRA turns and lights its drive, then drops to ORIEL-36's orbit."></video></div>
+    <div class="text"><span class="n">01</span><h3 class="h3">Fly by orbit, not by stick</h3><p>To catch something ahead of you, drop lower: lower is faster. The planner solves every intercept against Jupiter's real, flattened gravity, and MATCH parks you alongside.</p><p class="spec">Lambert intercepts &middot; Juno-measured gravity</p></div>
+  </div>
+
+  <div class="feat flip">
+    <div class="media"><img src="images/g10-heat.jpg" width="1600" height="900" loading="lazy" alt="The Thermal Forecast window: the verdict COLD, three countdowns and a chart of HYDRA's visibility over the next orbit."></div>
+    <div class="text"><span class="n">02</span><h3 class="h3">Stay cold. Stay unseen.</h3><p>The inspector carries an infrared camera. If it sees a warship coming, its handler tells it to go quiet. Dump your reactor's heat into the sink, hide in Jupiter's shadow, and keep it talking.</p><p class="spec">Planck's law in band &middot; Real sunlight and shadow</p></div>
+  </div>
+
+  <div class="feat">
+    <div class="media"><img src="images/g8-sigint.jpg?v=0.8" width="1600" height="900" loading="lazy" alt="The SIGINT station hearing TRK 4417's report from afar."></div>
+    <div class="text"><span class="n">03</span><h3 class="h3">Cut the link</h3><p>Hear its report, identify the signal, and spot-jam its command uplink. Cut off for three hours, it backs away on its own. Reversible, deniable, and nothing breaks.</p><p class="spec">Friis link budgets &middot; ITU antenna patterns</p></div>
+  </div>
+</div></section>
+
+<section class="sec band" aria-label="The science">
+  <img src="manual/img/keyart_signals.jpg" width="1600" height="900" alt="" loading="lazy">
+  <div class="wrap">
+    <span class="k">Built on real physics</span>
+    <h2 class="h2" style="margin-top:var(--s5)">Every number cites its source.</h2>
+    <div class="nums">
+      <div><b>762</b><span>comparisons against published references, all passing</span></div>
+      <div><b>4.4 h</b><span>ORIEL-36's orbit, at 1.3 Jupiter radii</span></div>
+      <div><b>900 s</b><span>specific impulse of the nuclear-thermal drives</span></div>
+      <div><b>1/R&sup2;</b><span>a listener hears radar long before radar's 1/R&#8308; echo finds it</span></div>
     </div>
-    <div class="steps">
-      <div class="step"><span class="num">1</span><h3>Close</h3><p>HYDRA starts higher and behind. To catch something ahead of you, drop lower: lower is faster. The planner finds the transfer, and MATCH stops you alongside.</p></div>
-      <div class="step"><span class="num">2</span><h3>Stay cold</h3><p>The inspector carries an infrared camera. If it sees a warship coming, its handler tells it to go quiet. Go dark and send your reactor's heat into the sink, so it keeps talking.</p></div>
-      <div class="step"><span class="num">3</span><h3>Cut the link</h3><p>Hear its report, identify it and spot-jam its command uplink. Cut off for three hours, it backs away. A kill would end it too, and leave debris in the busiest orbit there is.</p></div>
-    </div>
-    <div class="quote"><span class="lbl">Based on</span><p>The steps of a real uncooperative approach reported in October 2026: stand off, close to a few kilometres, loiter within half a kilometre, then leave. The game shortens weeks to days.</p></div>
-  </section>
+    <div class="more"><a class="tl" href="research/">Read the research edition <small>23 pages</small></a></div>
+  </div>
+</section>
 
-  <section id="trailer">
-    <div class="head"><span class="n">02</span><h2>The trailer</h2><p>86 seconds, with sound. Every shot is the game itself, rendered by its own movie writer, and the score is the game's own.</p></div>
-    <div class="frame"><video controls preload="none" playsinline width="1920" height="1080" poster="images/trailer.jpg?v=0.8" aria-label="The SATWAR trailer, 86 seconds with sound. ORIEL-36 in low Jupiter orbit and the inspector parked beside it; the console and the planner; HYDRA lighting its drive; HYDRA alongside and dark; the SIGINT station picking out the inspector's report; a jamming beam on its command link; the inspector backing away; then the title."><source src="images/trailer.mp4?v=0.8" type="video/mp4"></video></div>
-    <p class="cap"><b>23 MB</b>Loads when you press play.</p>
-  </section>
+<section class="sec not nob" id="media"><div class="wrap">
+  <div class="gal-head"><div><span class="k">Media</span><h2 class="h2" style="margin-top:var(--s5)">At the console</h2></div><a class="tl" href="notes/">Every build since the first <small>Changelog</small></a></div>
+  <div class="gal" data-zoom>
+    <figure><img src="images/g9-console.jpg?v=0.9" width="1600" height="900" loading="lazy" alt="The console over Jupiter's dayside: black plates, the event log, the dock and HYDRA's gauges."><figcaption>The console over Jupiter's dayside</figcaption></figure>
+    <figure><img src="images/g10-system.jpg" width="1600" height="900" loading="lazy" alt="The map zoomed out to the inner solar system, each planet on its real orbit."><figcaption>The whole solar system, in 3D</figcaption></figure>
+    <figure><img src="images/g7-shadow.jpg?v=0.7" width="1600" height="900" loading="lazy" alt="TRK 4417 a few kilometres from ORIEL-36 over Jupiter."><figcaption>TRK 4417, a few km from ORIEL-36</figcaption></figure>
+    <figure><img src="images/g7-planner.jpg?v=0.7" width="1600" height="900" loading="lazy" alt="The planner's grid of waits and flight times to ORIEL-36."><figcaption>The planner</figcaption></figure>
+    <figure><img src="images/g9-jam.jpg?v=0.9" width="1600" height="900" loading="lazy" alt="The JAM card with each thing it needs ticked off."><figcaption>The JAM card</figcaption></figure>
+    <figure><img src="images/g8-orient.jpg?v=0.8" width="1600" height="900" loading="lazy" alt="HYDRA up close with the orientation panel."><figcaption>HYDRA up close</figcaption></figure>
+  </div>
+</div></section>
 
-  <section id="build">
-    <div class="head"><span class="n">03</span><h2>New in 0.10</h2><p>The solar system, a heat forecast, and a handbook for the first operation.</p></div>
-    <div class="build" data-zoom>
-      <figure><div class="frame"><img src="images/g10-system.jpg" width="1600" height="900" loading="lazy" alt="The map zoomed out to the inner solar system: the Sun, the planets' orbits with Jupiter's in amber, and each planet named."></div><figcaption>The map, zoomed out past Jupiter's moons</figcaption></figure>
-      <figure><div class="frame"><img src="images/g10-heat.jpg" width="1600" height="900" loading="lazy" alt="The Thermal Forecast window: the verdict COLD, three countdowns and a chart of HYDRA's visibility over the next orbit."></div><figcaption>The heat forecast (F7)</figcaption></figure>
-      <ul>
-        <li><b>The whole solar system, in 3D</b>Zoom out from Jupiter and the map carries on to Neptune, every planet on its real orbit. Double-click one to fly there.</li>
-        <li><b>Real sunlight and shadows</b>The Sun is a disc, so Jupiter and its moons cast a full shadow and a soft edge. Your hull's heat takes its light from where the Sun really is.</li>
-        <li><b>A heat forecast</b>COLD, WARM or SEEN now, with countdowns to the next shadow, the next cold window and the next time you'll be seen.</li>
-      </ul>
-    </div>
-    <a class="more" href="notes/">Every build since 0.1 &rarr;</a>
-  </section>
+<section class="sec panel" id="manual"><div class="wrap docs">
+  <div class="intro"><span class="k">Field manual</span><h2 class="h2" style="margin-top:var(--s5)">Read up before you launch</h2><p class="lead">Both print in colour on dark pages, or read them on screen.</p></div>
+  <div class="doc d1"><a class="cv" href="manual/"><img src="images/doc-handbook.jpg" width="612" height="792" loading="lazy" alt="The cover of the Operator's Handbook: HYDRA over Jupiter."></a>
+    <span class="k">For players</span><h3 class="h3">Operator's Handbook</h3><p>The cast, the console, every control, and a walkthrough of the first operation with pictures.</p>
+    <div class="links"><a class="tl" href="manual/SATWAR-Operators-Handbook.pdf">PDF <small>12 pages</small></a><a class="tl" href="manual/">Read online</a></div></div>
+  <div class="doc"><a class="cv" href="research/"><img src="images/doc-research.jpg" width="612" height="792" loading="lazy" alt="The first page of the Research Edition."></a>
+    <span class="k">For the curious</span><h3 class="h3">Research Edition</h3><p>Every model behind the game, the sources it rests on, and the checks that hold it to them.</p>
+    <div class="links"><a class="tl" href="research/SATWAR-Research-Edition.pdf">PDF <small>23 pages</small></a><a class="tl" href="research/">Read online</a></div></div>
+</div></section>
 
-  <section id="console">
-    <div class="head"><span class="n">04</span><h2>At the console</h2><p>Click a picture to enlarge it.</p></div>
-    <div class="gal" data-zoom>
-      <figure><img src="images/g9-console.jpg?v=0.9" width="1600" height="900" loading="lazy" alt="The console over Jupiter's dayside: black plates, the event log, the dock and HYDRA's gauges."><figcaption>The console over Jupiter's dayside</figcaption></figure>
-      <figure><img src="images/g8-sigint.jpg?v=0.8" width="1600" height="900" loading="lazy" alt="The SIGINT station hearing TRK 4417's report from afar."><figcaption>Hearing TRK 4417 from afar</figcaption></figure>
-      <figure><img src="images/g9-jam.jpg?v=0.9" width="1600" height="900" loading="lazy" alt="The JAM card with each thing it needs ticked off."><figcaption>The JAM card: what it needs, ticked off</figcaption></figure>
-      <figure><img src="images/g7-planner.jpg?v=0.7" width="1600" height="900" loading="lazy" alt="The planner's grid of waits and flight times to ORIEL-36."><figcaption>The planner on ORIEL-36</figcaption></figure>
-      <figure><img src="images/g8-orient.jpg?v=0.8" width="1600" height="900" loading="lazy" alt="HYDRA up close with the orientation panel."><figcaption>HYDRA up close</figcaption></figure>
-      <figure><img src="images/g7-shadow.jpg?v=0.7" width="1600" height="900" loading="lazy" alt="TRK 4417 a few kilometres from ORIEL-36 over Jupiter."><figcaption>TRK 4417, a few km from ORIEL-36</figcaption></figure>
-    </div>
-  </section>
-
-  <section id="how">
-    <div class="head"><span class="n">05</span><h2>How to play</h2><p>The first operation in four moves. The handbook has the whole plan, every control and a reference card.</p></div>
-    <div class="play">
-      <div>
-        <ol>
-          <li><span>Press <b>New campaign</b>. The tutorial opens, and time is paused until you're ready.</span></li>
-          <li><span>Click ORIEL-36, then TRK 4417, and set time running with <kbd>]</kbd>.</span></li>
-          <li><span>Open the planner (<kbd>F3</kbd>) on ORIEL-36, take a pick and burn. When you arrive, press <b>MATCH</b>, then <b>DARK</b>.</span></li>
-          <li><span>Open the SIGINT station (<kbd>F2</kbd>), click TRK 4417's report and identify it. Then press <b>JAM</b> and hold it until it leaves.</span></li>
-        </ol>
-        <dl class="keys">
-          <dt><kbd>Space</kbd></dt><dd style="margin:0">Pause</dd>
-          <dt><kbd>[</kbd> <kbd>]</kbd></dt><dd style="margin:0">Slower, faster</dd>
-          <dt><kbd>F2</kbd> <kbd>F3</kbd> <kbd>F5</kbd> <kbd>F7</kbd></dt><dd style="margin:0">SIGINT, planner, database, heat</dd>
-          <dt><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> <kbd>Q</kbd><kbd>E</kbd></dt><dd style="margin:0">Turn and zoom the view (or drag and wheel)</dd>
-        </dl>
-      </div>
-      <div>
-        <div class="frame"><video id="loop" src="images/play.webm?v=0.8" poster="images/play-poster.jpg?v=0.8" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.8 in motion: the planner opens on ORIEL-36, HYDRA turns and lights its drive, then drops to ORIEL-36's orbit."></video></div>
-        <p class="cap"><b>In motion</b>Plan a rendezvous with ORIEL-36, light HYDRA's drive and drop to its orbit.</p>
-        <script>(function(){var v=document.getElementById('loop');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
-      </div>
-    </div>
-  </section>
-
-  <section id="documents">
-    <div class="head"><span class="n">06</span><h2>Documents</h2><p>Both print in colour on dark pages, or read them on screen.</p></div>
-    <div class="docs">
-      <div class="doc"><a class="cover" href="manual/"><img src="images/doc-handbook.jpg" width="612" height="792" alt="The cover of the Operator's Handbook: HYDRA over Jupiter." loading="lazy"></a>
-        <div><span class="lbl">For players</span><h3>Operator's handbook</h3><p>What you need to win the first operation: the cast, the console, the controls and a step-by-step walkthrough with pictures.</p>
-        <div class="links"><a href="manual/SATWAR-Operators-Handbook.pdf">PDF<small>12 pages</small></a><a href="manual/">Read online</a></div></div></div>
-      <div class="doc"><a class="cover" href="research/"><img src="images/doc-research.jpg" width="612" height="792" alt="The first page of the Research Edition." loading="lazy"></a>
-        <div><span class="lbl">For the curious</span><h3>Research edition</h3><p>Every model behind the game, the sources it rests on, and the checks that hold it to them.</p>
-        <div class="links"><a href="research/SATWAR-Research-Edition.pdf">PDF<small>23 pages</small></a><a href="research/">Read online</a></div></div></div>
-    </div>
-    <h3 class="sub">All downloads</h3>
-    <table>
-      <thead><tr><th>If you want to</th><th>Open</th><th class="s">Size</th></tr></thead>
-      <tbody>
-        <tr><td>Play 0.10, THE SHADOWING, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">108 MB</td></tr>
-        <tr><td>Learn to play and win the first operation</td><td class="f"><a href="manual/SATWAR-Operators-Handbook.pdf">Handbook PDF</a></td><td class="s">12 pages</td></tr>
-        <tr><td>Read the models, sources and verification</td><td class="f"><a href="research/SATWAR-Research-Edition.pdf">Research PDF</a></td><td class="s">23 pages</td></tr>
-        <tr><td>Play 0.1, the campaign map, in your browser</td><td class="f"><a href="play/">play/</a></td><td class="s">64 KB</td></tr>
-        <tr><td>0.1 offline on any computer: double-click to open it</td><td class="f"><a href="satwar-0.1.html" download>satwar-0.1.html</a></td><td class="s">64 KB</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <section id="science">
-    <div class="head"><span class="n">07</span><h2>The science</h2><p>The physics is real and every number cites its source. Where the game simplifies or invents, it says so.</p></div>
-    <div class="sci"><div class="law"><h3>Kepler'S Third Law</h3><p>The moons move by T = 2π√(a³/GM) with NASA's and JPL's values. The game's periods match NASA's observed ones to better than 0.1 %, and the tests check it.</p><small>NASA NSSDCA Jupiter and Jovian Satellite Fact Sheets; JPL SSD satellite elements (JUP365, Jacobson 2021)</small></div><div class="law"><h3>Low Orbit and J2</h3><p>ORIEL-36 circles at 1.3 Jupiter radii, once every 4.4 hours. Jupiter is flattened, and so close in its pull bends a three-hour coast by thousands of kilometres: every burn is corrected through the full gravity. Down there is deep in the radiation belts; how hardened each craft is, is a design value.</p><small>Folkner et al. (2017), <i>GRL</i> 44, Juno gravity field; Vallado (2013), <i>Fundamentals of Astrodynamics and Applications</i></small></div><div class="law"><h3>Lambert'S Problem</h3><p>Every intercept is the orbit that joins here-and-now to there-and-then. The solver is the universal-variable method, and reproduces the textbook's worked example.</p><small>Curtis (2020), <i>Orbital Mechanics for Engineering Students</i>, 4th ed., Alg. 5.2; Bate, Mueller &amp; White (1971)</small></div><div class="law"><h3>Delta-v and Nuclear Thermal</h3><p>Fuel is delta-v, set by the rocket equation. The 2040-era drives heat hydrogen in a reactor to about 900 s of specific impulse, twice the best chemical rockets, as NASA's Rover/NERVA reactors showed.</p><small>NASA Glenn, Ideal Rocket Equation; Borowski, McCurdy &amp; Packard (2012), NASA NTRS 20120003776</small></div><div class="law"><h3>Why Nothing Hides</h3><p>Every warm hull glows, and a telescope sees the share of that glow in its band, by Planck's law. A reactor's waste heat must leave through radiators; laid flat, they show only their edge. Stealth is cold, shiny and edge-on; a burn is megawatts anyone can see.</p><small>Mainzer et al. (2023), NEO Surveyor, <i>PSJ</i> 4:224; Widger &amp; Woodall (1976), <i>BAMS</i> 57; Mason (2003), NASA/TM-2003-212596</small></div><div class="law"><h3>Bearings, Radar and Listening</h3><p>One passive sensor gives a line; two give a fix, kept by a Kalman filter. Radar's echo fades as 1/R⁴ but a listener only needs 1/R², so it hears you first.</p><small>Bar-Shalom, Li &amp; Kirubarajan (2001); Skolnik (2001), <i>Introduction to Radar Systems</i>, 3rd ed.</small></div></div>
-    <h3 class="sub">What the game simplifies</h3>
-    <table class="model">
-      <thead><tr><th>Part</th><th>Real</th><th>Simplified or invented</th></tr></thead>
-      <tbody>
-        <tr><td>MOONS</td><td>0.6: positions fitted to JPL Horizons, within 1° of JPL's prediction for 2041</td><td>One plane (real tilts are under half a degree); average orbits, not a full ephemeris</td></tr>
-        <tr><td>SHIPS</td><td>0.3: Jupiter's J2 and all four moons' pull, integrated; Lambert intercepts; rocket equation at 900 s</td><td>Burns are instant; every ship is fiction (0.1 ignored the moons' pull)</td></tr>
-        <tr><td>SENSORS</td><td>0.6: Planck's law in band, inverse square, Gaussian noise; reactor waste heat; reflected sunlight; ITU antenna patterns; Jupiter blocks the view</td><td>Radiators lie flat to the plane and temperatures change at once; equipment beyond NEO Surveyor and GEODSS, glare and plume sizes are design values</td></tr>
-        <tr><td>EFFECTS</td><td>0.3: jamming by Friis link budgets, dazzle by diffraction, microwave field strength √(30PG)/R</td><td>Equipment specs and thresholds (J/S needed, kill fluence, escalation) are design values</td></tr>
-      </tbody>
-    </table>
-  </section>
-
-  <div class="note"><span class="lbl">Playtest</span><div><h3>Tell us how it went</h3><p>Note the seed (bottom right of the map), whether you won and how, anything confusing, and any place the physics felt wrong, and send it to whoever shared this page with you.</p></div></div>
+<section class="end" aria-label="Play">
+  <picture><source media="(max-width:1280px)" srcset="images/site/end-1280.jpg"><img src="images/site/end.jpg" width="2560" height="1100" alt="" loading="lazy"></picture>
+  <div class="wrap">
+    <span class="k">Alpha 0.5 &middot; Build 10</span>
+    <h2 class="h2">The inspector is already closing.</h2>
+    <a class="btn" href="game/">Play the alpha <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1 11 6 1.5 11Z" fill="currentColor"/></svg></a>
+    <p class="small">Free, no account, no install. Needs a desktop browser with WebGL 2, a keyboard and a mouse, and a 108 MB download on first load. Saves stay in your browser.</p>
+    <div class="fb"><b>Playtesting?</b>Note the seed (bottom right of the map), whether you won and how, anything confusing, and anywhere the physics felt wrong, and send it to whoever shared this page with you.</div>
+  </div>
+</section>
 </main>
-<footer><div class="wrap"><span class="mark">SATWAR</span><div>
-<p>&copy; 2026 Kevin Williamson. All rights reserved. SATWAR is an independent educational project.</p>
-<p>Planetary data from NASA's Space Science Data Coordinated Archive and JPL Solar System Dynamics, used as published; NASA and JPL have not reviewed or endorsed this game. All ships, operators and events are original fiction. Full credits are under SOURCES in the game.</p>
-<p><a href="manual/">Handbook</a> &middot; <a href="research/">Research edition</a> &middot; <a href="notes/">Changelog</a> &middot; <a href="play/">Playtest 0.1</a></p>
-</div></div></footer>
-<dialog class="lb" id="lb" aria-label="Picture"><img id="lbImg" alt=""><div class="lbbar"><span id="lbCap"></span><button id="lbPrev" aria-label="Previous">&lsaquo;</button><button id="lbNext" aria-label="Next">&rsaquo;</button><button id="lbX">CLOSE</button></div></dialog>
+<footer><div class="wrap grid">
+  <div class="a"><a class="word" href="./">SATWAR</a><p>&copy; 2026 Kevin Williamson. All rights reserved. An independent educational project.</p></div>
+  <div class="b"><a href="game/">Play the alpha</a><a href="manual/">Operator's handbook</a><a href="research/">Research edition</a><a href="notes/">Changelog</a></div>
+  <div class="c"><p>Planetary data from NASA's Space Science Data Coordinated Archive and JPL Solar System Dynamics, used as published; NASA and JPL have not reviewed or endorsed this game. All ships, operators and events are original fiction. Full credits are under SOURCES in the game.</p></div>
+</div></footer>
+<dialog class="lb" id="lb" aria-label="Picture"><div class="in"><img id="lbImg" alt=""><div class="bar"><span id="lbCap"></span><button id="lbPrev" aria-label="Previous">&larr;</button><button id="lbNext" aria-label="Next">&rarr;</button><button id="lbX">Close</button></div></div></dialog>
 <script>
 (function(){
- var lb=document.getElementById('lb');if(!lb||!lb.showModal){return;}
+ var n=document.getElementById('nav');
+ if(n&&!n.classList.contains('solid')){var f=function(){n.classList.toggle('on',window.scrollY>40);};f();window.addEventListener('scroll',f,{passive:true});}
+ var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+ [].forEach.call(document.querySelectorAll('video[data-loop]'),function(v){if(still){v.removeAttribute('autoplay');v.pause();v.controls=true;}});
+ var film=document.getElementById('film');
+ if(film){film.addEventListener('click',function(){
+   if(film.querySelector('video'))return;
+   var v=document.createElement('video');v.controls=true;v.autoplay=true;v.playsInline=true;v.setAttribute('aria-label',film.getAttribute('aria-label'));
+   v.innerHTML='<source src="images/trailer.mp4?v=0.8" type="video/mp4">';film.appendChild(v);v.play&&v.play().catch(function(){});film.style.cursor='default';});}
+ var lb=document.getElementById('lb');if(!lb||!lb.showModal)return;
  var imgs=[].slice.call(document.querySelectorAll('[data-zoom] img')),cur=0;
  function show(i){cur=(i+imgs.length)%imgs.length;var im=imgs[cur],fc=im.closest('figure'),big=document.getElementById('lbImg');
-  big.src=im.currentSrc||im.src;big.alt=im.alt;
-  document.getElementById('lbCap').textContent=fc&&fc.querySelector('figcaption')?fc.querySelector('figcaption').textContent:(im.alt||'');}
- imgs.forEach(function(im,i){im.tabIndex=0;im.setAttribute('role','button');im.setAttribute('aria-label','Enlarge: '+(im.alt||'picture'));
-  im.addEventListener('click',function(){show(i);lb.showModal();});
-  im.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();show(i);lb.showModal();}});});
+  big.src=im.currentSrc||im.src;big.alt=im.alt;document.getElementById('lbCap').textContent=fc&&fc.querySelector('figcaption')?fc.querySelector('figcaption').textContent:(im.alt||'');}
+ imgs.forEach(function(im,i){var t=im.closest('figure')||im;t.tabIndex=0;t.setAttribute('role','button');t.setAttribute('aria-label','Enlarge: '+(im.alt||'picture'));
+  t.addEventListener('click',function(){show(i);lb.showModal();});
+  t.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();show(i);lb.showModal();}});});
  document.getElementById('lbX').onclick=function(){lb.close();};
  document.getElementById('lbPrev').onclick=function(){show(cur-1);};
  document.getElementById('lbNext').onclick=function(){show(cur+1);};
  document.getElementById('lbImg').onclick=function(){lb.close();};
- lb.addEventListener('click',function(e){if(e.target===lb){lb.close();}});
- lb.addEventListener('keydown',function(e){if(e.key==='ArrowLeft'){show(cur-1);}else if(e.key==='ArrowRight'){show(cur+1);}});
- lb.addEventListener('close',function(){var im=imgs[cur];if(im){im.focus();}});
+ lb.addEventListener('click',function(e){if(e.target===lb||e.target.classList.contains('in'))lb.close();});
+ lb.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')show(cur-1);else if(e.key==='ArrowRight')show(cur+1);});
 })();
 </script>
 </body>

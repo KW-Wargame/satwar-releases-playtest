@@ -1,14 +1,15 @@
-# SATWAR · Playtest downloads
+# SATWAR · Alpha 0.5
 
-![Playtest 0.9: the console over Jupiter on black plates, with the event log and HYDRA alongside TRK 4417.](images/g9-console.jpg)
+![Above Jupiter's dayside, a dark inspector hangs just beneath ORIEL-36, an allied radar satellite.](images/site/hero-1280.jpg)
 
-An educational game of near-future stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics and sensor physics. It runs in your browser.
+A hard-science game of stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics and sensor physics. It runs in your browser.
 
 | | |
 |---|---|
-| Play 0.9, THE SHADOWING with its walkthrough | [game/](game/) |
-| Play 0.1, the campaign map | [play/](play/) |
-| Game as one HTML file | [satwar-0.1.html](satwar-0.1.html) |
+| Play Alpha 0.5 (build 10), THE SHADOWING | [game/](game/) |
+| Operator's Handbook | [manual/](manual/) · [PDF](manual/SATWAR-Operators-Handbook.pdf) |
+| Research Edition | [research/](research/) · [PDF](research/SATWAR-Research-Edition.pdf) |
+| Changelog | [notes/](notes/) |
 
 This repository holds released builds only. © 2026 Kevin Williamson. All rights reserved.
 
