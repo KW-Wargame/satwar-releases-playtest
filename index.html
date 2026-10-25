@@ -22,7 +22,7 @@
   --geo:'Satwar Geo','Barlow Condensed',sans-serif;--cond:'Barlow Condensed','Arial Narrow',sans-serif;--body:'Barlow','Segoe UI',system-ui,sans-serif;
   /* one spacing scale for the whole site */
   --s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:24px;--s6:32px;--s7:48px;--s8:64px;--s9:96px;--s10:128px;--s11:192px;
-  --gut:clamp(20px,5vw,80px);--max:1400px;--sec:clamp(96px,11vw,176px);--nav:76px}
+  --gut:clamp(20px,5vw,80px);--max:1400px;--sec:clamp(80px,8vw,128px);--nav:76px}
 *,*::before,*::after{box-sizing:border-box}
 html{background:var(--bg);scroll-behavior:smooth;scroll-padding-top:var(--nav)}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 18px/1.65 var(--body);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
@@ -90,13 +90,23 @@ h1,h2,h3{margin:0;font-weight:700}
 .panel{background:var(--bg2)}
 .grid{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s6)}
 
+/* section head: the section's name is the headline */
+.sh .idx{display:flex;align-items:center;gap:var(--s4);font:600 14px/1 var(--cond);letter-spacing:.3em;text-transform:uppercase;color:var(--orange2)}
+.sh .idx::after{content:"";width:56px;height:1px;background:var(--orange)}
+.sh h2{margin:var(--s4) 0 0;font:700 clamp(60px,8vw,128px)/.86 var(--cond);letter-spacing:0;text-transform:uppercase}
+.sh .sub{margin-top:var(--s5);font:500 clamp(22px,2.1vw,32px)/1.2 var(--cond);letter-spacing:.02em;color:var(--ink);max-width:26em;text-wrap:balance}
+.sh .lead{margin-top:var(--s5)}
+/* deep-space backdrops behind sections, faded into the page at both edges */
+.has-art{position:relative;isolation:isolate;overflow:hidden}
+.art{position:absolute;inset:0;z-index:-1;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 18%,#000 78%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0%,#000 18%,#000 78%,transparent 100%)}
+.art picture,.art img{width:100%;height:100%;object-fit:cover}
+.art.dim img{opacity:.75}
 /* premise */
-.premise .k{grid-column:1/4;padding-top:14px}
-.premise .h2{grid-column:4/13;max-width:13em}
-.premise .lead{grid-column:4/10;margin-top:var(--s7)}
-.premise .who{grid-column:4/13;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s6);margin-top:var(--s9);border-top:1px solid var(--line);padding-top:var(--s6)}
-.who div{display:flex;flex-direction:column;gap:var(--s2)}
-.who img{width:100%;aspect-ratio:16/9;object-fit:contain;margin-bottom:var(--s4);filter:drop-shadow(0 18px 30px rgba(0,0,0,.6))}
+.premise .pg{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:var(--s8);align-items:center}
+.premise .who{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s4)}
+.who div{display:flex;flex-direction:column;gap:var(--s2);background:rgba(14,15,17,.72);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-top:2px solid var(--line2);padding:var(--s4) var(--s5) var(--s5)}
+.who div.o{border-top-color:var(--own)}.who div.p{border-top-color:var(--prot)}.who div.u{border-top-color:var(--unk)}
+.who img{width:100%;aspect-ratio:16/9;object-fit:contain;margin:0 0 var(--s3);filter:drop-shadow(0 18px 30px rgba(0,0,0,.6))}
 .who b{font:700 20px/1.1 var(--cond);letter-spacing:.06em;text-transform:uppercase}
 .who em{font:600 12px/1 var(--cond);font-style:normal;letter-spacing:.26em;text-transform:uppercase}
 .who p{font-size:15px;line-height:1.55;color:var(--ink3)}
@@ -115,11 +125,9 @@ h1,h2,h3{margin:0;font-weight:700}
 .film-meta{display:flex;justify-content:space-between;align-items:baseline;gap:var(--s5);margin-top:var(--s5)}
 
 /* features */
-.feat-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s6);margin-bottom:var(--s10)}
-.feat-head .k{grid-column:1/4;padding-top:14px}
-.feat-head .h2{grid-column:4/13}
+.feat-head{margin-bottom:var(--s9)}
 .feat{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s6);align-items:center}
-.feat+.feat{margin-top:var(--s10)}
+.feat+.feat{margin-top:var(--s9)}
 .feat .media{grid-column:1/8;position:relative}
 .feat .text{grid-column:9/13}
 .feat.flip .media{grid-column:6/13;grid-row:1}
@@ -136,8 +144,8 @@ h1,h2,h3{margin:0;font-weight:700}
 .band>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 50%;opacity:.55}
 .band::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,var(--bg) 0%,rgba(11,12,13,.35) 30%,rgba(11,12,13,.35) 70%,var(--bg) 100%)}
 .band .wrap{position:relative;z-index:1}
-.band .h2{max-width:14em}
-.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s6);margin-top:var(--s9)}
+
+.nums{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s6);margin-top:var(--s8)}
 .nums div{border-top:1px solid var(--line2);padding-top:var(--s5)}
 .nums b{display:block;font:300 clamp(44px,4.6vw,72px)/1 var(--geo);letter-spacing:.02em;color:#fff}
 .nums span{display:block;margin-top:var(--s4);font-size:15px;line-height:1.5;color:var(--ink2);max-width:16em}
@@ -158,7 +166,7 @@ h1,h2,h3{margin:0;font-weight:700}
 /* field manual */
 .docs{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s6);row-gap:var(--s9)}
 .docs .intro{grid-column:1/6}
-.docs .intro .lead{margin-top:var(--s5)}
+
 .doc{grid-column:10/13;display:flex;flex-direction:column}
 .doc.d1{grid-column:7/10}
 .doc .cv{display:block;position:relative;aspect-ratio:612/792;margin-bottom:var(--s6);transition:transform .5s cubic-bezier(.2,.7,.2,1)}
@@ -172,7 +180,7 @@ h1,h2,h3{margin:0;font-weight:700}
 /* final call */
 .end{position:relative;overflow:hidden;background:#000;padding:var(--sec) 0}
 .end>picture,.end>picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 50%}
-.end::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.7) 0%,rgba(0,0,0,.2) 45%,rgba(0,0,0,0) 65%),linear-gradient(180deg,var(--bg2) 0%,rgba(0,0,0,0) 22%)}
+.end::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.7) 0%,rgba(0,0,0,.2) 45%,rgba(0,0,0,0) 65%),linear-gradient(180deg,var(--bg) 0%,rgba(0,0,0,0) 22%)}
 .end .wrap{position:relative;z-index:1;display:flex;flex-direction:column;align-items:flex-start;min-height:clamp(420px,40vw,640px);justify-content:center}
 .end .h2{margin:var(--s5) 0 var(--s7);max-width:9em}
 .end .small{margin-top:var(--s5);max-width:30em}
@@ -226,9 +234,7 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
 @media (max-width:1100px){
   .nav nav{display:none}
   .strip .wrap{flex-wrap:wrap;height:auto;padding-top:var(--s5);padding-bottom:var(--s5);gap:var(--s3) var(--s6)}
-  .premise .k,.feat-head .k{grid-column:1/-1;padding:0 0 var(--s5)}
-  .premise .h2,.premise .lead,.premise .who,.feat-head .h2{grid-column:1/-1}
-  .premise .who{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:var(--s7)}
+  .premise .pg{grid-template-columns:1fr}
   .feat .media,.feat.flip .media{grid-column:1/-1;grid-row:auto}
   .feat .text,.feat.flip .text{grid-column:1/-1;grid-row:auto;margin-top:var(--s7);max-width:36em}
   .nums{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:var(--s7)}
@@ -253,19 +259,20 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
   .strip .wrap{height:auto;flex-wrap:wrap;gap:var(--s3) var(--s5);padding-top:var(--s5);padding-bottom:var(--s5)}
   .strip .scroll{display:none}
   .premise .who{grid-template-columns:1fr}
-  .who div{display:grid;grid-template-columns:120px 1fr;column-gap:var(--s4);align-items:start}
+  .who div{display:grid;grid-template-columns:110px 1fr;column-gap:var(--s4);align-items:start}
   .who img{grid-row:1/4;margin:0}
   .film{aspect-ratio:16/10}
   .film .play i{width:76px;height:76px}
   .film-meta{flex-direction:column;gap:var(--s2)}
-  .feat-head{margin-bottom:var(--s8)}
+  .feat-head{margin-bottom:var(--s7)}
+  .sh .idx::after{width:40px}
   .feat+.feat{margin-top:var(--s9)}
   .media::before{left:-8px;top:-8px;width:20px;height:20px}
   .nums{grid-template-columns:1fr 1fr;column-gap:var(--s5)}
   .gal-head{flex-direction:column;align-items:flex-start}
   .gal{grid-template-columns:1fr 1fr}
   .gal figure:nth-child(n){grid-column:auto;grid-row:auto}
-  .gal figure:nth-child(1){grid-column:1/-1}
+  .gal figure:nth-child(1),.gal figure:last-child:nth-child(even){grid-column:1/-1}
   .gal figcaption{opacity:1;transform:none;padding:var(--s6) var(--s3) var(--s2);font-size:10px;letter-spacing:.16em}
   .doc,.doc.d1{grid-column:1/-1}
   .doc{display:grid;grid-template-columns:120px 1fr;column-gap:var(--s5);align-items:start}
@@ -297,15 +304,13 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
   <div class="strip"><div class="wrap"><span>Genre<b>Hard science strategy</b></span><span>Players<b>Single-player</b></span><span>Platform<b>Desktop browser</b></span><span class="scroll">Scroll</span></div></div>
 </section>
 
-<section class="sec premise" id="operation"><div class="wrap grid">
-  <span class="k">The operation</span>
-  <h2 class="h2">Something is parked beside our satellite. Nobody asked it to.</h2>
-  <p class="lead">TRK 4417 closed on ORIEL-36 in low Jupiter orbit and stopped a few kilometres away. A handler far off radios its every move. You command one warship and a listening station. Get close, stay unseen, find the link and cut it.</p>
+<section class="sec premise has-art" id="operation"><div class="art" aria-hidden="true"><picture><source media="(max-width:1280px)" srcset="images/site/bg-limb-1280.jpg"><img src="images/site/bg-limb.jpg" width="2560" height="1440" alt="" loading="lazy" style="object-position:60% 85%"></picture></div><div class="wrap pg">
+  <div class="sh"><span class="idx">01</span><h2>The operation</h2><p class="sub">Something is parked beside our satellite. Nobody asked it to.</p><p class="lead">TRK 4417 closed on ORIEL-36 in low Jupiter orbit and stopped a few kilometres away. A handler far off radios its every move. You command one warship and a listening station. Get close, stay unseen, find the link and cut it.</p></div>
   <div class="who">
-    <div><img src="manual/img/p-sentinel.png" width="640" height="360" alt="HYDRA, a long white nuclear-drive warship." loading="lazy"><em class="c-own">You</em><b>HYDRA Bravo</b><p>Drive, telescope, radio ears, radar and a jammer.</p></div>
-    <div><img src="manual/img/p-oriel.png" width="640" height="360" alt="ORIEL-36, a box-shaped radar satellite with a long flat antenna." loading="lazy"><em class="c-prot">Protect</em><b>ORIEL-36</b><p>An allied radar satellite. Nothing may damage it.</p></div>
-    <div><img src="manual/img/p-kite.png" width="640" height="360" alt="TRK 4417, a dark angular inspector with a small dish." loading="lazy"><em class="c-unk">Unknown</em><b>TRK 4417</b><p>The inspector. Its command link is its weak point.</p></div>
-    <div><img src="manual/img/p-station.png" width="640" height="360" alt="Ganymede Station, a ground site with a large dish." loading="lazy"><em class="c-own">Your ears</em><b>Ganymede Station</b><p>A big dish that hears for millions of kilometres.</p></div>
+    <div class="o"><img src="manual/img/p-sentinel.png" width="640" height="360" alt="HYDRA, a long white nuclear-drive warship." loading="lazy"><em class="c-own">You</em><b>HYDRA Bravo</b><p>Drive, telescope, radio ears, radar and a jammer.</p></div>
+    <div class="p"><img src="manual/img/p-oriel.png" width="640" height="360" alt="ORIEL-36, a box-shaped radar satellite with a long flat antenna." loading="lazy"><em class="c-prot">Protect</em><b>ORIEL-36</b><p>An allied radar satellite. Nothing may damage it.</p></div>
+    <div class="u"><img src="manual/img/p-kite.png" width="640" height="360" alt="TRK 4417, a dark angular inspector with a small dish." loading="lazy"><em class="c-unk">Unknown</em><b>TRK 4417</b><p>The inspector. Its command link is its weak point.</p></div>
+    <div class="o"><img src="manual/img/p-station.png" width="640" height="360" alt="Ganymede Station, a ground site with a large dish." loading="lazy"><em class="c-own">Your ears</em><b>Ganymede Station</b><p>A big dish that hears for millions of kilometres.</p></div>
   </div>
 </div></section>
 
@@ -317,8 +322,8 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
   <div class="film-meta"><span class="k dim">Official trailer</span><span class="small">Every shot is the game itself, with its own score. 23 MB, loads when you press play.</span></div>
 </div></section>
 
-<section class="sec nob" id="features"><div class="wrap">
-  <div class="feat-head"><span class="k">How you win</span><h2 class="h2">Three moves. No shots fired.</h2></div>
+<section class="sec nob has-art" id="features"><div class="art dim" aria-hidden="true"><picture><source media="(max-width:1280px)" srcset="images/site/bg-deep-1280.jpg"><img src="images/site/bg-deep.jpg" width="2560" height="1440" alt="" loading="lazy" style="object-position:50% 50%"></picture></div><div class="wrap">
+  <div class="feat-head sh"><span class="idx">02</span><h2>How you win</h2><p class="sub">Three moves. No shots fired.</p></div>
 
   <div class="feat">
     <div class="media"><video data-loop src="images/play.webm?v=0.8" poster="images/play-poster.jpg?v=0.8" width="1280" height="720" autoplay muted loop playsinline aria-label="The planner opens on ORIEL-36, HYDRA turns and lights its drive, then drops to ORIEL-36's orbit."></video></div>
@@ -339,8 +344,7 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
 <section class="sec band" aria-label="The science">
   <img src="manual/img/keyart_signals.jpg" width="1600" height="900" alt="" loading="lazy">
   <div class="wrap">
-    <span class="k">Built on real physics</span>
-    <h2 class="h2" style="margin-top:var(--s5)">Every number cites its source.</h2>
+    <div class="sh"><span class="idx">03</span><h2>The science</h2><p class="sub">Built on real physics. Every number cites its source.</p></div>
     <div class="nums">
       <div><b>762</b><span>comparisons against published references, all passing</span></div>
       <div><b>4.4 h</b><span>ORIEL-36's orbit, at 1.3 Jupiter radii</span></div>
@@ -352,7 +356,7 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
 </section>
 
 <section class="sec not nob" id="media"><div class="wrap">
-  <div class="gal-head"><div><span class="k">Media</span><h2 class="h2" style="margin-top:var(--s5)">At the console</h2></div><a class="tl" href="notes/">Every build since the first <small>Changelog</small></a></div>
+  <div class="gal-head"><div class="sh"><span class="idx">04</span><h2>Media</h2><p class="sub">At the console. Click a picture to enlarge it.</p></div><a class="tl" href="notes/">Every build since the first <small>Changelog</small></a></div>
   <div class="gal" data-zoom>
     <figure><img src="images/g9-console.jpg?v=0.9" width="1600" height="900" loading="lazy" alt="The console over Jupiter's dayside: black plates, the event log, the dock and HYDRA's gauges."><figcaption>The console over Jupiter's dayside</figcaption></figure>
     <figure><img src="images/g10-system.jpg" width="1600" height="900" loading="lazy" alt="The map zoomed out to the inner solar system, each planet on its real orbit."><figcaption>The whole solar system, in 3D</figcaption></figure>
@@ -363,8 +367,8 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
   </div>
 </div></section>
 
-<section class="sec panel" id="manual"><div class="wrap docs">
-  <div class="intro"><span class="k">Field manual</span><h2 class="h2" style="margin-top:var(--s5)">Read up before you launch</h2><p class="lead">Both print in colour on dark pages, or read them on screen.</p></div>
+<section class="sec has-art" id="manual"><div class="art" aria-hidden="true"><picture><source media="(max-width:1280px)" srcset="images/site/bg-moons-1280.jpg"><img src="images/site/bg-moons.jpg" width="2560" height="1440" alt="" loading="lazy" style="object-position:70% 40%"></picture></div><div class="wrap docs">
+  <div class="intro sh"><span class="idx">05</span><h2>Field manual</h2><p class="sub">Read up before you launch.</p><p class="lead">Both print cleanly, or read them on screen.</p></div>
   <div class="doc d1"><a class="cv" href="manual/"><img src="images/doc-handbook.jpg" width="612" height="792" loading="lazy" alt="The cover of the Operator's Handbook: HYDRA over Jupiter."></a>
     <span class="k">For players</span><h3 class="h3">Operator's Handbook</h3><p>The cast, the console, every control, and a walkthrough of the first operation with pictures.</p>
     <div class="links"><a class="tl" href="manual/SATWAR-Operators-Handbook.pdf">PDF <small>12 pages</small></a><a class="tl" href="manual/">Read online</a></div></div>
