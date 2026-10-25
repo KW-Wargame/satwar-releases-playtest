@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SATWAR · Playtest</title>
 <meta name="description" content="SATWAR: an educational game of stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics. Play in your browser or download.">
-<meta property="og:title" content="SATWAR · Playtest 0.9">
+<meta property="og:title" content="SATWAR · Playtest 0.10">
 <meta property="og:description" content="Nothing hides in space. An unflagged inspector is shadowing an allied radar satellite in low Jupiter orbit: rendezvous, stay cold, find its command link and jam it until it leaves, with real orbital mechanics and sensor physics.">
 <meta property="og:image" content="images/trailer.jpg?v=0.8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,6 +34,9 @@ header.top{border-bottom:1px solid var(--line);background:rgba(5,7,9,.85);}
 header.top .wrap{display:flex;justify-content:space-between;align-items:center;height:56px;gap:16px;}
 .brand{font-family:var(--display);font-size:16px;letter-spacing:.3em;color:#f1f3f5;white-space:nowrap;}
 .tag{font-family:var(--display);font-size:12px;letter-spacing:.13em;color:var(--sand);white-space:nowrap;}
+nav.links{display:flex;gap:18px;margin-left:auto;font-family:var(--display);font-size:12px;letter-spacing:.13em;}
+nav.links a{color:var(--dim);text-decoration:none;text-transform:uppercase;}
+nav.links a:hover{color:var(--sand);}
 .hero{padding:56px 0 32px;}
 .kick{font-family:var(--display);font-size:13px;letter-spacing:.16em;color:var(--sand);text-transform:uppercase;margin:0 0 14px;}
 h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,5vw,52px);letter-spacing:.06em;line-height:1.15;margin:0 0 18px;color:#f4f5f7;
@@ -115,21 +118,23 @@ dialog.lb button:hover{border-color:var(--sand);}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.9</span></div></header>
+<header class="top"><div class="wrap"><span class="brand">SATWAR</span><nav class="links" aria-label="Site"><a href="manual/">Handbook</a><a href="research/">Research</a><a href="game/">Play</a></nav><span class="tag">PLAYTEST BUILD 0.10</span></div></header>
 
 <main class="wrap">
   <div class="hero">
-    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.9</b> Black panels, tooltip cards, an event log, and jamming you can read. <span>What's new ↓</span></a>
+    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.10</b> The whole solar system in 3D, a heat forecast, and an operator's handbook. <span>What's new ↓</span></a>
     <p class="kick">An educational game of stealth satellites and electronic warfare</p>
     <h1>Nothing hides in space.<br><em>Three days</em> to make it leave.</h1>
     <p class="lede">Jupiter, 2041. An unflagged inspector has slipped into the orbit of ORIEL-36, an allied radar satellite in low Jupiter orbit, and is closing in to park beside it. Nobody asked it to. You run the console: listen to it before it knows you are there, get alongside and go dark, find its command link and cut it until it gives up and leaves, without starting a war. Real orbits, and the real physics of seeing and being seen.</p>
     <div class="ctas">
-      <a class="btn primary" href="game/">Play 0.9 in your browser ▸</a>
+      <a class="btn primary" href="game/">Play 0.10 in your browser ▸</a>
+      <a class="btn" href="manual/">Operator's handbook</a>
+      <a class="btn" href="research/">Research edition</a>
       <a class="btn" href="#trailer">Watch the trailer</a>
       <a class="btn" href="#science">The science</a>
       <a class="btn" href="#downloads">All downloads</a>
     </div>
-    <p class="note">No account, no install. 0.9 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 108 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
+    <p class="note">No account, no install. 0.10 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 108 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
     <video class="shot" id="heroVid" src="images/play.webm?v=0.8" poster="images/play-poster.jpg?v=0.8" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.8 in motion. The console over Jupiter's dayside with TRK 4417 selected beside ORIEL-36 in low orbit; the planner opens on ORIEL-36 with its grid of waits and flight times; HYDRA turns and lights its drive, seen close up with its exhaust plume; then the view pulls out and time speeds up as HYDRA drops to ORIEL-36's orbit."></video>
     <script>/* A still picture for anyone who asks their device for reduced motion */ (function(){var v=document.getElementById('heroVid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
     <p class="cap">Recorded in playtest 0.8: plan a rendezvous with ORIEL-36, light HYDRA's drive, and drop to its orbit. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
@@ -146,7 +151,20 @@ dialog.lb button:hover{border-color:var(--sand);}
   <section id="whats-new">
     <h2>What's new</h2>
     <dl class="log">
-      <dt>0.9<small>25 Oct 2026 · the playtest pass</small><span class="latest">LATEST</span></dt>
+      <dt>0.10<small>25 Oct 2026 · the solar system</small><span class="latest">LATEST</span></dt>
+      <dd>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>The whole solar system, in 3D.</b> Keep zooming out from Jupiter and the map carries on to Neptune: the Sun, all eight planets on their real orbits, and their names. Double-click a planet or the Sun to fly there.</li>
+          <li><b>Real sunlight and shadows.</b> The Sun is a disc, so Jupiter and its moons cast both a full shadow and a soft edge. The map, the close-up views and your hull's heat all take their light from where the Sun really is.</li>
+          <li><b>Flights between planets</b>, for campaigns that allow them. The planner plans transfers from planet to planet, and corrects them in deep space. THE SHADOWING keeps them off: escaping Jupiter from HYDRA's low orbit takes far more fuel than it carries.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The map zoomed out to the inner solar system: the Sun, the orbits of the planets with Jupiter's in amber, and each planet named." loading="lazy" src="images/g10-system.jpg"><figcaption>The map, zoomed out past Jupiter's moons</figcaption></figure></div>
+        <div class="cl-pair flip"><div class="cl-note"><ul>
+          <li><b>A heat forecast</b> (HEAT, F7). It says whether you are COLD, WARM or SEEN now, counts down to the next shadow, the next cold window and the next time you'll be seen, and charts it over the next orbit. Stay hidden long enough to build a ghost streak.</li>
+          <li><b>The Solar System window</b> lists every planet's distance from your ship, the cheapest flight time and the fuel it would take, against the fuel you have. Window title bars no longer let the alert banner show through.</li>
+          <li><b>An operator's handbook</b> with what you need to win the first operation, and <b>a research edition</b> with every model, source and check behind the game.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The Thermal Forecast window over the console: the verdict COLD, three countdown tiles and a chart of HYDRA's visibility over the next orbit with sunlit and shadow bands." loading="lazy" src="images/g10-heat.jpg"><figcaption>The heat forecast</figcaption></figure></div>
+      </dd>
+      <dt>0.9<small>25 Oct 2026 · the playtest pass</small></dt>
       <dd>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>Black panels.</b> Every window, menu, the right-click menu and the callout sit on a near-black plate with a hairline edge, so they read against Jupiter's dayside. Each key on the left rail has a translucent tile of its own.</li>
@@ -360,11 +378,13 @@ dialog.lb button:hover{border-color:var(--sand);}
 
   <section id="downloads">
     <h2>Downloads</h2>
-    <p class="note" style="margin:0 0 14px">0.9 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
+    <p class="note" style="margin:0 0 14px">0.10 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
     <table>
       <thead><tr><th>If you want to…</th><th>Download</th><th>Size</th></tr></thead>
       <tbody>
-        <tr><td>Play 0.9, THE SHADOWING, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">108 MB</td></tr>
+        <tr><td>Play 0.10, THE SHADOWING, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">108 MB</td></tr>
+        <tr><td>Learn to play and win the first operation</td><td class="f"><a href="manual/">Operator's handbook</a></td><td class="s">web page</td></tr>
+        <tr><td>Read the models, sources and verification</td><td class="f"><a href="research/">Research edition</a></td><td class="s">web page</td></tr>
         <tr><td>Play 0.1, the campaign map, in your browser</td><td class="f"><a href="play/">play/</a></td><td class="s">64 KB</td></tr>
         <tr><td>0.1 offline on any computer: double-click to open in your browser</td><td class="f"><a href="satwar-0.1.html" download>satwar-0.1.html</a></td><td class="s">64 KB</td></tr>
       </tbody>
@@ -381,7 +401,8 @@ dialog.lb button:hover{border-color:var(--sand);}
           <li>Open the <b>planner</b> (F3) on ORIEL-36, take a pick and burn. When you arrive, press <b>MATCH</b>, then <b>DARK</b>.</li>
           <li>Open the <b>SIGINT station</b> (F2), click TRK 4417's report and <b>identify</b> it. Then press <b>JAM</b> and hold it until it leaves.</li>
         </ol>
-        <p class="note">Space pauses · [ and ] change the time rate · F2 SIGINT · F3 planner · F5 database · drag turns the view · wheel zooms · W A S D moves it.</p>
+        <p class="note">Space pauses · [ and ] change the time rate · F2 SIGINT · F3 planner · F5 database · F7 heat · drag or W A S D turns the view · wheel or Q E zooms · right-drag slides it.</p>
+        <p>The whole plan, the controls and a reference card are in the <a href="manual/">operator's handbook</a>.</p>
       </div>
       <img class="inline" src="images/after-action.jpg?v=0.1" alt="The after-action report: DECISIVE in large green letters, the operation's length, the delta-v spent, shots fired, the dodges forced, and what TRK 4417 really was." width="1600" height="1000" loading="lazy">
     </div>
