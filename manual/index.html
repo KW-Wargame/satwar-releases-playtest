@@ -2,741 +2,261 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>SATWAR · Operator's Handbook</title>
-<meta name="description" content="How to play SATWAR on PC and win the first operation, THE SHADOWING.">
+<meta name="description" content="A guided tour of SATWAR: the screen, the keys, and every step of the first operation, THE SHADOWING.">
 <meta property="og:title" content="SATWAR · Operator's Handbook">
 <meta property="og:image" content="img/keyart.jpg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Barlow+Condensed:wght@500;600;700&family=Barlow+Semi+Condensed:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{
-  --paper:#ece6d8; --paper2:#e1d9c5; --card:#f6f2e8; --rule:#c8bea7;
-  --ink:#1c1b18; --ink2:#4d4840; --ink3:#6f685d;
-  --orange:#c9471a; --orange2:#e2602c;
-  --night:#0c0d0f; --night2:#17191c; --night3:#24272b; --cream:#f1ece0;
-  --ours:#3f7fb0; --prot:#4f9a58; --unk:#c99a1c; --host:#c23a2e;
-  --cond:'Barlow Condensed','Arial Narrow',sans-serif;
-  --semi:'Barlow Semi Condensed','Arial Narrow',sans-serif;
-  --body:'Barlow',system-ui,'Segoe UI',sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box}
-html{background:var(--night);scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
-a{color:var(--orange)}
-.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
-kbd{display:inline-block;min-width:1.9em;text-align:center;font:600 14px/1 var(--body);color:var(--ink);background:#fbf8f0;border:1px solid #b3a88f;border-bottom-width:3px;border-radius:5px;padding:4px 7px 3px;margin:0 1px;white-space:nowrap;vertical-align:1px}
-.dark kbd,.scene kbd,.tile kbd{background:#2b2e33;color:#f1ece0;border-color:#4a4e55}
-.ico{width:1.1em;height:1.1em;vertical-align:-.18em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-
-/* top bar */
-.top{position:sticky;top:0;z-index:50;background:rgba(12,13,15,.92);backdrop-filter:blur(6px);border-bottom:1px solid #2a2d31}
-.top .wrap{display:flex;align-items:center;gap:22px;height:54px}
-.brand{font:700 20px var(--cond);letter-spacing:.28em;color:var(--cream);text-decoration:none}
-.top nav{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none;min-width:0}
-.top nav a{font:600 14px var(--cond);letter-spacing:.08em;text-transform:uppercase;color:#b9b3a6;text-decoration:none;padding:6px 10px;border-radius:4px;white-space:nowrap}
-.top nav a:hover{color:#fff;background:#24272b}
-.top nav a.play{background:var(--orange);color:#fff}
-
-/* ---------- visual-novel scenes ---------- */
-.scene{position:relative;min-height:min(92vh,860px);display:flex;align-items:flex-end;overflow:hidden;background:#000 center/cover no-repeat;color:var(--cream);isolation:isolate}
-.scene::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.15) 0%,rgba(0,0,0,0) 35%,rgba(0,0,0,.55) 70%,rgba(0,0,0,.9) 100%)}
-.scene.dim::before{background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,.45) 40%,rgba(0,0,0,.92))}
-.scene .chapter{position:absolute;top:28px;left:max(24px,calc((100vw - 1180px)/2 + 24px));font:600 15px var(--cond);letter-spacing:.24em;text-transform:uppercase;color:#d8d2c4}
-.scene .chapter b{display:block;font:700 clamp(40px,6vw,76px)/.95 var(--cond);letter-spacing:.04em;color:#fff;margin-top:6px}
-.sprite{position:absolute;z-index:0;right:max(2%,calc((100vw - 1180px)/2));bottom:150px;width:min(52vw,640px);filter:drop-shadow(0 30px 40px rgba(0,0,0,.7));pointer-events:none}
-.sprite.left{right:auto;left:max(2%,calc((100vw - 1180px)/2))}
-.sprite.badge{width:min(30vw,270px);bottom:250px}
-.dialogue{position:relative;z-index:2;width:calc(100% - 32px);max-width:1000px;margin:0 auto 34px;background:rgba(10,11,13,.88);border:1px solid rgba(241,236,224,.22);border-radius:3px;padding:30px 34px 24px;box-shadow:0 20px 50px rgba(0,0,0,.5)}
-.dialogue::after{content:"";position:absolute;inset:5px;border:1px solid rgba(241,236,224,.07);pointer-events:none}
-.nameplate{position:absolute;top:-17px;left:26px;font:700 15px/1 var(--cond);letter-spacing:.16em;text-transform:uppercase;background:var(--orange);color:#fff;padding:9px 16px 8px;box-shadow:0 6px 16px rgba(0,0,0,.4)}
-.nameplate.red{background:var(--host)}
-.nameplate.blue{background:var(--ours)}
-.nameplate small{font:500 12px var(--cond);letter-spacing:.12em;opacity:.85;margin-left:8px}
-.line{font:500 clamp(19px,2.1vw,24px)/1.45 var(--semi);margin:0 0 12px;color:#f4f0e6}
-.line.radio{font:500 clamp(16px,1.7vw,19px)/1.5 'Courier New',monospace;color:#ff8f7a;letter-spacing:.02em}
-.line em{font-style:normal;color:#f0b48f}
-.js .scene .line{opacity:0;transform:translateY(8px);transition:opacity .5s ease,transform .5s ease}
-.js .scene.on .line{opacity:1;transform:none}
-.js .scene.on .line:nth-child(3){transition-delay:.7s}.js .scene.on .line:nth-child(4){transition-delay:1.4s}.js .scene.on .line:nth-child(5){transition-delay:2.1s}
-.more{position:absolute;right:22px;bottom:14px;font-size:14px;color:var(--orange2);animation:bob 1.2s ease-in-out infinite}
-@keyframes bob{50%{transform:translateY(4px)}}
-@media (prefers-reduced-motion:reduce){.more{animation:none}.js .scene .line{transition:none}}
-
-/* title */
-.cover{min-height:min(100vh,940px);align-items:center}
-.cover::before{background:linear-gradient(90deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.45) 45%,rgba(0,0,0,.05) 75%),linear-gradient(0deg,rgba(0,0,0,.8),rgba(0,0,0,0) 40%)}
-.cover .wrap{width:100%}
-.cover .kick{font:600 15px var(--cond);letter-spacing:.3em;color:var(--orange2);text-transform:uppercase}
-.cover h1{margin:8px 0 0;font:700 clamp(64px,12vw,150px)/.85 var(--cond);letter-spacing:.14em;color:#fff}
-.cover h2{margin:14px 0 26px;font:600 clamp(22px,3vw,34px)/1.1 var(--cond);letter-spacing:.32em;text-transform:uppercase;color:#e7e1d3}
-.cover p{max-width:470px;font:500 19px/1.5 var(--semi);color:#d6d0c2;margin:0 0 30px}
-.cover .facts{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
-.chip{display:inline-flex;align-items:center;gap:8px;font:600 14px var(--cond);letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;border:1px solid rgba(241,236,224,.3);border-radius:2px;color:#ece6d8;background:rgba(0,0,0,.35)}
-.btn{display:inline-flex;align-items:center;gap:10px;font:700 17px var(--cond);letter-spacing:.14em;text-transform:uppercase;text-decoration:none;padding:15px 24px;border-radius:2px;background:var(--orange);color:#fff}
-.btn.ghost{background:transparent;border:1px solid rgba(241,236,224,.45);color:#f1ece0}
-.cover .btns{display:flex;flex-wrap:wrap;gap:12px}
-
-/* ---------- paper pages ---------- */
-.page{padding:84px 0 92px;position:relative}
-.page.alt{background:var(--paper2)}
-.page.dark{background:var(--night);color:var(--cream)}
-.page.dark .lede{color:#b9b3a6}
-.head{display:grid;grid-template-columns:auto 1fr;gap:6px 22px;align-items:end;margin-bottom:38px;border-bottom:2px solid var(--ink);padding-bottom:16px}
-.dark .head{border-color:#3a3d42}
-.head .num{grid-row:span 2;font:700 92px/.8 var(--cond);color:transparent;-webkit-text-stroke:2px var(--orange)}
-.head h2{margin:0;font:700 clamp(34px,4.4vw,54px)/.95 var(--cond);letter-spacing:.03em;text-transform:uppercase}
-.lede{margin:0;font:500 20px/1.4 var(--semi);color:var(--ink2);max-width:760px}
-h3{font:700 24px/1.1 var(--cond);letter-spacing:.06em;text-transform:uppercase;margin:44px 0 16px}
-.cap{font:600 13px var(--cond);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
-.dark .cap{color:#8f897d}
-
-/* cast */
-.cast{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
-.who{background:var(--night);color:var(--cream);border-radius:4px;overflow:hidden;display:flex;flex-direction:column}
-.who .pic{aspect-ratio:16/10;background:radial-gradient(ellipse at 50% 60%,#2b2f35 0%,#0c0d0f 70%);display:grid;place-items:center;position:relative}
-.who .pic img{width:100%}
-.who .pic img.emb{width:46%}
-.who .tag{position:absolute;top:12px;left:12px;font:700 12px var(--cond);letter-spacing:.16em;padding:5px 9px;border-radius:2px;color:#fff}
-.who .body{padding:16px 18px 18px;border-top:4px solid var(--c)}
-.who h4{margin:0;font:700 24px/1 var(--cond);letter-spacing:.06em}
-.who .role{font:600 13px var(--cond);letter-spacing:.14em;text-transform:uppercase;color:#9f998c;margin:4px 0 10px}
-.who p{margin:0;font-size:16px;color:#d9d3c6}
-.who .stat{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
-.who .stat span{font:600 13px var(--cond);letter-spacing:.08em;background:#22252a;padding:4px 8px;border-radius:2px;color:#e8e2d4}
-
-/* win */
-.win{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;align-items:stretch;gap:0;margin:6px 0 30px}
-.win .w{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:22px 20px;text-align:center}
-.win .w img{width:96px;margin:0 auto 8px}
-.win .w b{display:block;font:700 26px/1 var(--cond);letter-spacing:.06em;text-transform:uppercase}
-.win .w span{display:block;font-size:15px;color:var(--ink2);margin-top:6px}
-.win .arrow{display:grid;place-items:center;padding:0 10px;color:var(--orange)}
-.win .arrow svg{width:40px;height:40px}
-.timer{margin:10px auto 6px;max-width:220px}
-.timer .bar{height:12px;border-radius:6px;background:#d8cfba;overflow:hidden}
-.timer .bar i{display:block;height:100%;width:100%;background:repeating-linear-gradient(90deg,var(--orange) 0 32%,transparent 32% 33.3%);}
-.timer .ticks{display:flex;justify-content:space-between;font:600 12px var(--cond);color:var(--ink3);margin-top:4px}
-.big3{font:700 54px/1 var(--cond)!important;color:var(--orange)}
-.rules{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
-.rule{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:18px 16px;position:relative}
-.rule .ri{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:var(--ink);color:#fff;margin-bottom:12px}
-.rule .ri svg{width:26px;height:26px}
-.rule b{display:block;font:700 19px/1.1 var(--cond);letter-spacing:.04em;text-transform:uppercase}
-.rule span{display:block;font-size:15px;color:var(--ink2);margin-top:6px}
-.rule .lose{text-transform:uppercase;position:absolute;top:16px;right:14px;font:700 11px var(--cond);letter-spacing:.16em;color:var(--host);border:1.5px solid var(--host);padding:3px 6px;border-radius:2px;transform:rotate(4deg)}
-.rule.bonus .lose{color:var(--prot);border-color:var(--prot)}
-.rule.bonus .ri{background:var(--prot)}
-
-/* setup */
-.setup{display:grid;grid-template-columns:1.2fr 1fr;gap:34px;align-items:start}
-.needs{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-.need{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:14px 16px}
-.need svg{width:34px;height:34px;flex:none;color:var(--orange)}
-.need b{display:block;font:700 18px/1.1 var(--cond);letter-spacing:.05em;text-transform:uppercase}
-.need span{font-size:15px;color:var(--ink2)}
-.menu{background:var(--night);border-radius:4px;padding:26px 26px 20px;color:#ddd7ca;position:relative}
-.menu .t{font:700 34px var(--cond);letter-spacing:.3em;color:#fff;margin-bottom:16px}
-.menu ol{list-style:none;margin:0;padding:0}
-.menu li{display:flex;justify-content:space-between;gap:12px;align-items:baseline;padding:9px 0;border-top:1px solid #2a2d31}
-.menu li b{font:600 17px var(--cond);letter-spacing:.16em;color:#efe9dc}
-.menu li span{font-size:14px;color:#958f83;text-align:right}
-.menu li.go b{color:var(--orange2)}
-.menu li.go b::before{content:"▸ "}
-
-/* annotated figure */
-.anno{position:relative;border-radius:4px;overflow:hidden;background:#000;box-shadow:0 18px 40px rgba(0,0,0,.25)}
-.pin{position:absolute;transform:translate(-50%,-50%);width:34px;height:34px;border-radius:50%;background:var(--orange);color:#fff;font:700 17px/34px var(--cond);text-align:center;box-shadow:0 0 0 3px #fff,0 4px 10px rgba(0,0,0,.6);transition:transform .15s}
-.pin.hot{transform:translate(-50%,-50%) scale(1.3);background:#fff;color:var(--orange)}
-.legend{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px;margin-top:22px}
-.lg{color:var(--ink);display:grid;grid-template-columns:34px 1fr;gap:12px;align-items:start;background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:12px 14px;cursor:default}
-.lg:hover{border-color:var(--orange)}
-.lg .n{width:30px;height:30px;border-radius:50%;background:var(--orange);color:#fff;font:700 16px/30px var(--cond);text-align:center}
-.lg b{display:block;font:700 17px/1.15 var(--cond);letter-spacing:.06em;text-transform:uppercase}
-.lg span{display:block;font-size:15px;color:var(--ink2);line-height:1.4;margin-top:2px}
-.lg .thumb{grid-column:1 / -1;border-radius:3px;background:#000;margin-top:4px;max-height:96px;object-fit:cover;object-position:left center;width:100%}
-
-/* dock tiles */
-.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));gap:12px}
-.tile{position:relative;background:linear-gradient(180deg,#1b1d21,#111214);border:1px solid #2c2f34;border-radius:5px;padding:14px 14px 14px;color:var(--cream);display:flex;flex-direction:column}
-.tile img{width:84px;height:84px;margin:2px auto 8px}
-.tile > kbd{position:absolute;top:10px;left:10px}
-.tile > .rl{position:absolute;top:12px;left:10px;font:700 11px var(--cond);letter-spacing:.14em;color:#8f897d}
-.tile b{font:700 21px/1 var(--cond);letter-spacing:.1em;text-align:center}
-.tile span{font-size:14.5px;color:#b8b2a5;text-align:center;margin-top:6px;line-height:1.35;flex:1}
-.cost{margin:10px auto 0;font:700 12px var(--cond);letter-spacing:.14em;text-transform:uppercase;padding:4px 8px;border-radius:2px}
-.cost.q{background:rgba(79,154,88,.18);color:#86d18e}
-.cost.l{background:rgba(226,96,44,.18);color:#ff9a6c}
-.cost.x{background:rgba(194,58,46,.25);color:#ff8576}
-.tile.kv{border-color:#5a2520;background:linear-gradient(180deg,#24120f,#140b0a)}
-.rail{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:8px}
-.rail .tile{padding:12px 10px}
-.rail .tile img{width:64px;height:64px}
-.rail .tile b{font-size:17px}
-.rail .tile span{font-size:13.5px}
-
-/* controls */
-.kbwrap{background:var(--night);border-radius:6px;padding:18px;overflow-x:auto}
-.kb{display:block;min-width:820px;width:100%;height:auto}
-.kb .kl{font:600 15px var(--body)}
-.kb .ks{font:700 10.5px var(--cond);letter-spacing:.06em}
-.keys-legend{display:flex;flex-wrap:wrap;gap:10px 22px;margin:16px 0 0}
-.keys-legend span{display:inline-flex;align-items:center;gap:8px;font:600 15px var(--cond);letter-spacing:.08em;text-transform:uppercase}
-.keys-legend i{width:18px;height:18px;border-radius:4px;display:inline-block}
-.ctl{display:grid;grid-template-columns:330px 1fr;gap:34px;align-items:center;margin-top:34px}
-.mouse{width:100%;max-width:330px}
-.mrows{display:grid;gap:10px}
-.mrow{display:grid;grid-template-columns:22px 170px 1fr;gap:12px;align-items:center;background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:11px 14px}
-.mrow i{width:16px;height:16px;border-radius:3px}
-.mrow b{font:700 17px var(--cond);letter-spacing:.06em;text-transform:uppercase}
-.mrow span{font-size:15.5px;color:var(--ink2)}
-.mapkey{display:flex;flex-wrap:wrap;gap:10px}
-.sig{margin-top:26px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
-.sig .cap{margin-right:6px}
-.sig span{background:var(--card);border:1px solid var(--rule);border-radius:4px;padding:8px 12px;font-size:15px}
-
-/* steps */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:16px}
-.step{background:var(--card);border:1px solid var(--rule);border-radius:5px;overflow:hidden;display:flex;flex-direction:column}
-.step .shot{background:#050506;aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden;position:relative}
-.step .shot img{width:100%;height:100%;object-fit:cover}
-.step .shot img.icon{width:auto;height:78%;object-fit:contain}
-.step .shot img.top{object-position:center top}
-.step .shot img.left{object-position:left center}
-.step .shot img.fit{object-fit:contain}
-.steps.c5{grid-template-columns:repeat(5,1fr)}.steps.c4{grid-template-columns:repeat(4,1fr)}
-.steps.sq .shot{aspect-ratio:1/1}
-@media (max-width:980px){.steps.c5,.steps.c4{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:620px){.steps.c5,.steps.c4{grid-template-columns:1fr}}
-.step .no{position:absolute;top:10px;left:10px;width:38px;height:38px;border-radius:50%;background:var(--orange);color:#fff;font:700 20px/38px var(--cond);text-align:center;box-shadow:0 0 0 3px rgba(255,255,255,.9)}
-.step .txt{padding:14px 16px 16px}
-.step b{display:block;font:700 21px/1.1 var(--cond);letter-spacing:.05em;text-transform:uppercase}
-.step .do{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:8px 0 6px;font:600 14px var(--cond);letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
-.step p{margin:0;font-size:15.5px;color:var(--ink2);line-height:1.45}
-.step.wide{grid-column:span 2}
-.hold{display:flex;flex-direction:column;justify-content:flex-end;padding:56px 18px 18px;background:var(--night);color:var(--cream);height:100%;width:100%}
-.hold .clock{font:700 38px/1 var(--cond);letter-spacing:.06em;color:#fff}
-.hold .clock small{display:block;margin:6px 0 0;font-size:15px;color:#ff9a6c;letter-spacing:.14em;margin-left:8px}
-.hold .tl{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;margin-top:12px}
-.hold .tl i{height:10px;border-radius:2px;background:var(--orange)}
-.hold .tl i:last-child{background:linear-gradient(90deg,var(--orange) 60%,#3a3d42 60%)}
-.hold .lab{display:flex;justify-content:space-between;font:600 12px var(--cond);letter-spacing:.12em;color:#8f897d;margin-top:6px}
-.tip{display:grid;grid-template-columns:56px 1fr;gap:16px;align-items:start;margin-top:22px;background:var(--ink);color:var(--cream);border-radius:5px;padding:18px 22px}
-.tip .ti{width:56px;height:56px;border-radius:50%;background:var(--orange);display:grid;place-items:center}
-.tip .ti svg{width:30px;height:30px;color:#fff}
-.tip b{display:block;font:700 18px var(--cond);letter-spacing:.12em;text-transform:uppercase;color:#ff9a6c;margin-bottom:4px}
-.tip p{margin:0;font-size:16px;color:#ddd7ca}
-.tip ul{margin:6px 0 0;padding-left:18px;font-size:15.5px;color:#ddd7ca}
-
-/* endings */
-.ends{display:grid;grid-template-columns:1.4fr 1fr 1fr;grid-auto-rows:auto;gap:16px}
-.end{position:relative;border-radius:5px;overflow:hidden;background:#000 center/cover;color:var(--cream);min-height:220px;display:flex;flex-direction:column;justify-content:flex-end;padding:18px 20px;isolation:isolate}
-.end::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(0,0,0,.1),rgba(0,0,0,.88))}
-.end.good{grid-row:span 2;min-height:456px}
-.end .stamp{position:absolute;top:16px;right:16px;font:700 16px var(--cond);letter-spacing:.2em;padding:6px 10px;border:2px solid;transform:rotate(-4deg)}
-.end.good .stamp{color:#9be3a2;border-color:#9be3a2}
-.end.bad .stamp{color:#ff8576;border-color:#ff8576}
-.end b{font:700 24px/1.05 var(--cond);letter-spacing:.05em;text-transform:uppercase}
-.end.good b{font-size:34px}
-.end p{margin:8px 0 0;font-size:15px;color:#d6d0c2}
-.end .try{margin-top:10px;font:600 14px var(--cond);letter-spacing:.08em;text-transform:uppercase;color:#ffb38f}
-
-/* notes */
-.notes{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.note{background:var(--card);border:1px solid var(--rule);border-radius:5px;padding:18px;display:grid;grid-template-columns:64px 1fr;gap:14px;align-items:start}
-.note img{width:64px;height:64px;background:#111214;border-radius:4px;padding:4px}
-.note b{display:block;font:700 18px/1.1 var(--cond);letter-spacing:.06em;text-transform:uppercase}
-.note span{display:block;font-size:15px;color:var(--ink2);margin-top:4px}
-.ladder{margin-top:28px;background:var(--card);border:1px solid var(--rule);border-radius:5px;padding:20px 22px 14px}
-.ladder svg{width:100%;height:auto;display:block}
-
-/* reference card */
-.ref{background:#fbf8f0;color:var(--ink);border:2px solid var(--ink);border-radius:6px;padding:26px 28px;display:grid;grid-template-columns:1.1fr 1fr 1fr;gap:28px}
-.ref h4{margin:0 0 10px;font:700 17px var(--cond);letter-spacing:.16em;text-transform:uppercase;border-bottom:2px solid var(--orange);padding-bottom:6px}
-.ref ol{margin:0;padding:0;list-style:none;counter-reset:s}
-.ref ol li{counter-increment:s;display:grid;grid-template-columns:26px 1fr;gap:8px;align-items:center;padding:4px 0;font-size:15px;border-bottom:1px dashed #d6ccb6}
-.ref ol li::before{content:counter(s);font:700 15px var(--cond);color:#fff;background:var(--orange);border-radius:50%;width:22px;height:22px;text-align:center;line-height:22px}
-.ref dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:6px 12px;font-size:15px;align-items:center}
-.ref dd{margin:0;color:var(--ink2)}
-.printbtn{margin-top:16px;font:700 15px var(--cond);letter-spacing:.12em;text-transform:uppercase;background:var(--ink);color:#fff;border:0;border-radius:3px;padding:11px 18px;cursor:pointer}
-
-/* glossary */
-.terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
-.term{border-left:4px solid var(--orange);background:var(--card);padding:12px 16px;border-radius:0 4px 4px 0}
-.term b{font:700 19px var(--cond);letter-spacing:.06em}
-.term span{display:block;font-size:15px;color:var(--ink2);margin-top:2px}
-
-footer{background:var(--night);color:#8f897d;padding:34px 0;font-size:14px}
-footer a{color:#d6d0c2}
-
-@media (max-width:980px){
-  .cast{grid-template-columns:repeat(2,1fr)}
-  .rules{grid-template-columns:repeat(2,1fr)}
-  .setup,.ctl{grid-template-columns:1fr}
-  .notes{grid-template-columns:1fr 1fr}
-  .ends{grid-template-columns:1fr 1fr}.end.good{grid-column:1 / -1;grid-row:auto;min-height:300px}
-  .ref{grid-template-columns:1fr}
-  .win{grid-template-columns:1fr}.win .arrow{transform:rotate(90deg);padding:6px 0}
-  .sprite{width:78vw;bottom:auto;top:90px;opacity:.9}
-  .sprite.badge{width:46vw}
-}
-@media (max-width:620px){
-  body{font-size:16px}
-  .wrap{padding:0 16px}
-  .cast,.rules,.notes,.ends,.needs{grid-template-columns:1fr}
-  .step.wide{grid-column:auto}
-  .head .num{font-size:64px}
-  .dialogue{padding:28px 20px 20px}
-  .mrow{grid-template-columns:18px 1fr}.mrow span{grid-column:2}
-  .pin{width:24px;height:24px;font-size:13px;line-height:24px;box-shadow:0 0 0 2px #fff}
-}
-@media print{
-  .top,.scene,.page:not(#card),footer{display:none!important}
-  body,#card{background:#fff}
-  .printbtn{display:none}
-}
-</style>
+<link rel="preload" href="tour/keyart.webp" as="image">
+<link rel="stylesheet" href="hb.css">
 </head>
-<body>
+<body class="tour">
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M20 12H5M11 6l-6 6 6 6"/></symbol>
   <symbol id="i-sat" viewBox="0 0 24 24"><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M3 6l4 4M7 3l3 3M21 18l-4-4M17 21l-3-3M15 9l2-2M9 15l-2 2"/></symbol>
   <symbol id="i-debris" viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="2.5"/></symbol>
   <symbol id="i-flag" viewBox="0 0 24 24"><path d="M5 21V4M5 4h11l-2 4 2 4H5"/></symbol>
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
   <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
-  <symbol id="i-pc" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="1.5"/><path d="M8 20h8M12 16v4"/></symbol>
-  <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
   <symbol id="i-mouse" viewBox="0 0 24 24"><rect x="6" y="3" width="12" height="18" rx="6"/><path d="M12 7v3"/></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></symbol>
-  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6S2 12 2 12z"/><circle cx="12" cy="12" r="2.6"/></symbol>
-  <symbol id="i-warn" viewBox="0 0 24 24"><path d="M12 3l9.5 17h-19z"/><path d="M12 10v4M12 17v.5"/></symbol>
-  <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></symbol>
-  <symbol id="i-print" viewBox="0 0 24 24"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 19V5M8 7h7"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4l13 8-13 8z"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6h1M4 12h1M4 18h1"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
 </svg>
 
-<header class="top"><div class="wrap">
-  <a class="brand" href="../">SATWAR</a>
-  <nav aria-label="Handbook">
-    <a href="#cast">Cast</a><a href="#win">Win</a><a href="#console">Console</a><a href="#dock">Dock</a><a href="#controls">Controls</a><a href="#ch1">Walkthrough</a><a href="#endings">Endings</a><a href="#card">Card</a><a href="../research/">Research</a><a class="play" href="../game/">Play</a>
-  </nav>
-</div></header>
+<header class="bar">
+  <a class="brand" href="../" title="SATWAR home">SATWAR<small>Operator's Handbook</small></a>
+  <nav class="chapters" id="chapters" aria-label="Chapters"></nav>
+  <div class="bar-r">
+    <a class="lnk" href="reference.html"><svg class="ico"><use href="#i-book"/></svg><span>Reference</span></a>
+    <a class="btn sm" href="../game/"><svg class="ico"><use href="#i-play"/></svg><span>Play</span></a>
+  </div>
+  <div class="progress"><i id="prog"></i></div>
+</header>
 
-<!-- COVER -->
-<section class="scene cover" style="background-image:url(img/keyart.jpg)">
-  <div class="wrap">
-    <div class="kick">Operator's Handbook · PC</div>
-    <h1>SATWAR</h1>
-    <h2>The Shadowing</h2>
-    <p>Everything you need to fly your first operation and win it, in pictures. Ten minutes to read. One evening to play.</p>
-    <div class="facts">
-      <span class="chip"><svg class="ico"><use href="#i-globe"/></svg>Low Jupiter orbit · 2041</span>
-      <span class="chip"><svg class="ico"><use href="#i-clock"/></svg>3 game days</span>
-      <span class="chip"><svg class="ico"><use href="#i-pc"/></svg>Keyboard &amp; mouse</span>
+<main class="stage" id="stage" aria-live="polite">
+  <div class="view" id="view">
+    <div class="layer" id="layer"><img id="bgA" alt=""><img id="bgB" alt=""></div>
+    <div class="spot" id="spot" aria-hidden="true"><b></b><i></i><span class="tag" id="tag"></span></div>
+    <div class="chapcard" id="chapcard"><span id="chapno"></span><b id="chapname"></b></div>
+  </div>
+  <div class="cards" id="cards"></div>
+  <section class="dlg" id="dlg">
+    <div class="face"><img id="face" alt=""></div>
+    <div class="say">
+      <div class="who"><span id="who"></span><small id="where"></small></div>
+      <p class="line" id="line"></p>
+      <div class="do" id="do"></div>
     </div>
-    <div class="btns"><a class="btn" href="#brief">Begin briefing <svg class="ico"><use href="#i-arrow"/></svg></a><a class="btn ghost" href="#card">Skip to the cheat sheet</a></div>
-  </div>
-</section>
-
-<!-- BRIEFING SCENE -->
-<section class="scene" id="brief" style="background-image:url(img/keyart_signals.jpg)">
-  <div class="chapter">Prologue<b>The Briefing</b></div>
-  <img class="sprite badge left" src="img/insignia_blue.png" alt="">
-  <div class="dialogue">
-    <div class="nameplate">Jovian Command <small>Det JOVE</small></div>
-    <p class="line">Operator. You have the watch on <em>HYDRA BRAVO</em>, our only escort in low Jupiter orbit.</p>
-    <p class="line">An unflagged inspector is creeping up on <em>ORIEL-36</em>, one of ours. It hasn't fired a shot. It won't.</p>
-    <p class="line">Make it leave. <em>No debris. No war.</em> Listen first, stay cold, act quietly.</p>
-    <span class="more">▼</span>
-  </div>
-</section>
-
-<!-- CAST -->
-<section class="page" id="cast"><div class="wrap">
-  <div class="head"><span class="num">01</span><h2>The Cast</h2><p class="lede">Four craft matter in this operation. Learn their faces: the map shows each one as a coloured symbol.</p></div>
-  <div class="cast">
-    <article class="who" style="--c:var(--ours)">
-      <div class="pic"><span class="tag" style="background:var(--ours)">YOU</span><img src="img/p-sentinel.png" alt="HYDRA BRAVO, a long escort warship with solar wings."></div>
-      <div class="body"><h4>HYDRA BRAVO</h4><div class="role">Your warship</div>
-      <p>Engine, telescopes, radio ears, radar and a jammer. Starts in a higher orbit, out of the inspector's sight.</p>
-      <div class="stat"><span>Δv 8.66 km/s</span><span>Blue</span></div></div>
-    </article>
-    <article class="who" style="--c:var(--prot)">
-      <div class="pic"><span class="tag" style="background:var(--prot)">PROTECT</span><img src="img/p-oriel.png" alt="ORIEL-36, a flat radar satellite."></div>
-      <div class="body"><h4>ORIEL-36</h4><div class="role">Allied radar satellite</div>
-      <p>The one you're guarding. You can't command it. Nothing you do may damage it.</p>
-      <div class="stat"><span>Orbit 4 h 22 m</span><span>Green</span></div></div>
-    </article>
-    <article class="who" style="--c:var(--host)">
-      <div class="pic"><span class="tag" style="background:var(--host)">THE SHADOW</span><img src="img/p-kite.png" alt="The inspector, a small dark angular craft."></div>
-      <div class="body"><h4>TRK 4417</h4><div class="role">Unflagged inspector</div>
-      <p>Closing from 420 km behind. Every move is ordered by a distant handler over a radio link. <b>That link is its weak point.</b></p>
-      <div class="stat"><span>7 moves</span><span>Yellow → Red</span></div></div>
-    </article>
-    <article class="who" style="--c:var(--ours)">
-      <div class="pic"><span class="tag" style="background:var(--ours)">YOUR EARS</span><img src="img/p-station.png" alt="Ganymede Station, a flat base with a large dish."></div>
-      <div class="body"><h4>GANYMEDE STATION</h4><div class="role">Listening post</div>
-      <p>A big dish on Ganymede. Hears radio from tens of millions of kilometres away, but can't move.</p>
-      <div class="stat"><span>Fixed site</span><span>Blue</span></div></div>
-    </article>
-  </div>
-</div></section>
-
-<!-- WIN -->
-<section class="page alt" id="win"><div class="wrap">
-  <div class="head"><span class="num">02</span><h2>How You Win</h2><p class="lede">Cut the inspector off from its handler for three hours while it's close to ORIEL-36. It gives up and leaves.</p></div>
-  <div class="win">
-    <div class="w"><img src="img/i-jam.png" alt=""><b>Jam its link</b><span>Drown out its handler's orders.</span></div>
-    <div class="arrow"><svg class="ico"><use href="#i-arrow"/></svg></div>
-    <div class="w"><b class="big3">3 h</b><div class="timer"><div class="bar"><i></i></div><div class="ticks"><span>0</span><span>1 h</span><span>2 h</span><span>3 h</span></div></div><span>Keep it cut off, within 200 km of ORIEL-36.</span></div>
-    <div class="arrow"><svg class="ico"><use href="#i-arrow"/></svg></div>
-    <div class="w"><img src="img/p-kite.png" alt="" style="width:150px"><b>It backs away</b><span>Retreats at 4 m/s and departs. You win.</span></div>
-  </div>
-  <h3>…without breaking these</h3>
-  <div class="rules">
-    <div class="rule"><span class="lose">Lose if</span><div class="ri"><svg class="ico"><use href="#i-clock"/></svg></div><b>It finishes its look</b><span>Stop it before its seventh move.</span></div>
-    <div class="rule"><span class="lose">Lose if</span><div class="ri"><svg class="ico"><use href="#i-sat"/></svg></div><b>ORIEL-36 is hurt</b><span>Keep the fight away from it.</span></div>
-    <div class="rule"><span class="lose">Lose if</span><div class="ri"><svg class="ico"><use href="#i-debris"/></svg></div><b>Any debris</b><span>Wreckage would share its orbit for years.</span></div>
-    <div class="rule"><span class="lose">Lose if</span><div class="ri"><svg class="ico"><use href="#i-flag"/></svg></div><b>Open war</b><span>Escalation, top right, must stay under 100.</span></div>
-    <div class="rule bonus"><span class="lose">Bonus</span><div class="ri"><svg class="ico"><use href="#i-star"/></svg></div><b>Identify its radio</b><span>Also what lets you jam it precisely.</span></div>
-  </div>
-  <div class="tip"><div class="ti"><svg class="ico"><use href="#i-info"/></svg></div><div><b>Your orders are always one key away</b><p>Press <kbd>F1</kbd> for the CAMPAIGN window: the same goals, ticked off as you go. Fail a red one and the operation ends at once.</p></div></div>
-</div></section>
-
-<!-- SETUP -->
-<section class="page" id="start"><div class="wrap">
-  <div class="head"><span class="num">03</span><h2>Before You Play</h2><p class="lede">Nothing to install. Open the game page, wait for it to load, and click once inside it so it takes your keyboard.</p></div>
-  <div class="setup">
-    <div class="needs">
-      <div class="need"><svg class="ico"><use href="#i-pc"/></svg><div><b>A PC</b><span>Desktop or laptop. Phones and touch screens aren't supported.</span></div></div>
-      <div class="need"><svg class="ico"><use href="#i-globe"/></svg><div><b>A browser</b><span>Current Chrome, Edge or Firefox with WebGL 2. Safari works too.</span></div></div>
-      <div class="need"><svg class="ico"><use href="#i-mouse"/></svg><div><b>Mouse &amp; keys</b><span>A wheel or trackpad for zooming.</span></div></div>
-      <div class="need"><svg class="ico"><use href="#i-down"/></svg><div><b>108 MB</b><span>The first load takes a minute, then your browser keeps it.</span></div></div>
-      <div class="need" style="grid-column:1 / -1"><svg class="ico"><use href="#i-eye"/></svg><div><b>1920 × 1080 or bigger</b><span>Smaller works, but windows overlap. Press <kbd>F11</kbd> for full screen.</span></div></div>
+    <div class="nav">
+      <span class="count" id="count"></span>
+      <div class="navrow"><button class="nb" id="back" aria-label="Back"><svg class="ico"><use href="#i-back"/></svg></button>
+      <button class="btn" id="next"><span id="nextlabel">Next</span><svg class="ico"><use href="#i-arrow"/></svg></button></div>
     </div>
-    <div class="menu" aria-label="The main menu">
-      <div class="t">SATWAR</div>
-      <ol>
-        <li class="go"><b>NEW CAMPAIGN</b><span>Start here. Tutorial on, time paused.</span></li>
-        <li><b>CONTINUE</b><span>Saves itself every game day</span></li>
-        <li><b>HOW TO PLAY</b><span>One-page briefing</span></li>
-        <li><b>SETTINGS</b><span>Sound, plain words or military terms</span></li>
-        <li><b>LIBRARY · SOURCES</b><span>Where the numbers come from</span></li>
-        <li><b>QUIT</b><span></span></li>
-      </ol>
-    </div>
-  </div>
-  <div class="tip"><div class="ti"><svg class="ico"><use href="#i-star"/></svg></div><div><b>First time? Follow the tutorial card</b><p>Each step names one thing to press and why, and it carries you all the way to a win. This handbook is the same plan on paper, for a second run without it.</p></div></div>
-</div></section>
-
-<!-- CONSOLE -->
-<section class="page dark" id="console"><div class="wrap">
-  <div class="head"><span class="num">04</span><h2>Your Console</h2><p class="lede">One screen, eleven parts. Hover over anything in the game and a card explains it.</p></div>
-  <div class="anno" id="anno">
-    <img src="img/shot-console.jpg" width="1600" height="900" alt="The SATWAR console at the start of the operation, with numbered callouts.">
-    <span class="pin" data-n="1" style="left:46%;top:36%">1</span>
-    <span class="pin" data-n="2" style="left:33%;top:6%">2</span>
-    <span class="pin" data-n="3" style="left:77%;top:5%">3</span>
-    <span class="pin" data-n="4" style="left:5.6%;top:14%">4</span>
-    <span class="pin" data-n="5" style="left:66.5%;top:17.5%">5</span>
-    <span class="pin" data-n="6" style="left:66.5%;top:52%">6</span>
-    <span class="pin" data-n="7" style="left:22.5%;top:85.5%">7</span>
-    <span class="pin" data-n="8" style="left:22%;top:94%">8</span>
-    <span class="pin" data-n="9" style="left:48.5%;top:89.5%">9</span>
-    <span class="pin" data-n="10" style="left:79%;top:93%">10</span>
-    <span class="pin" data-n="11" style="left:4%;top:89%">11</span>
-  </div>
-  <div class="legend">
-    <div class="lg" data-n="1"><span class="n">1</span><div><b>The map</b><span>Jupiter, its moons and every craft you know of, in 3D. A ring round a contact is how unsure you are of where it is.</span></div></div>
-    <div class="lg" data-n="2"><span class="n">2</span><div><b>Clock &amp; time rate</b><span>T+ is time since the start. Pause, or run time up to 21,000×.</span></div><img class="thumb" src="img/c-clock.jpg" alt=""></div>
-    <div class="lg" data-n="3"><span class="n">3</span><div><b>EMCON &amp; escalation</b><span>QUIET means you only listen. Escalation counts toward war: 100 loses.</span></div><img class="thumb" src="img/c-escal.jpg" alt=""></div>
-    <div class="lg" data-n="4"><span class="n">4</span><div><b>The rail</b><span>Opens each window: tracker, heat, signals, SIGINT, planner and more.</span></div></div>
-    <div class="lg" data-n="5"><span class="n">5</span><div><b>Overview</b><span>Every contact, nearest first. Click a row to select it.</span></div><img class="thumb" src="img/c-overview.jpg" alt=""></div>
-    <div class="lg" data-n="6"><span class="n">6</span><div><b>Selected item</b><span>All you know about the contact you picked.</span></div><img class="thumb" src="img/c-selected.jpg" alt=""></div>
-    <div class="lg" data-n="7"><span class="n">7</span><div><b>Your assets</b><span>Click one to act from it. HYDRA moves; the station only listens.</span></div></div>
-    <div class="lg" data-n="8"><span class="n">8</span><div><b>Fuel (Δv)</b><span>How much you can still change your speed. Every burn spends it.</span></div></div>
-    <div class="lg" data-n="9"><span class="n">9</span><div><b>The dock</b><span>Your actions, keys 1–0. Grey means not now: hover to see why.</span></div><img class="thumb" src="img/c-dock.jpg" alt=""></div>
-    <div class="lg" data-n="10"><span class="n">10</span><div><b>Heat</b><span>How visible your hull is in infrared. SEEN, WARM or COLD.</span></div><img class="thumb" src="img/c-heatgauge.jpg" alt=""></div>
-    <div class="lg" data-n="11"><span class="n">11</span><div><b>Events</b><span>The latest news, graded ADVISORY, CAUTION or WARNING.</span></div></div>
-  </div>
-  <h3>Who's who on the map</h3>
-  <div class="mapkey">
-    <span class="chip" style="border-color:var(--ours);color:#9cc7e8">■ Blue · ours</span>
-    <span class="chip" style="border-color:var(--prot);color:#9be3a2">■ Green · protected</span>
-    <span class="chip" style="border-color:var(--unk);color:#f0cd6a">■ Yellow · unknown</span>
-    <span class="chip" style="border-color:var(--host);color:#ff8576">■ Red · hostile</span>
-    <span class="chip">◌ Dashed frame · last known position</span>
-  </div>
-</div></section>
-
-<!-- DOCK -->
-<section class="page" id="dock"><div class="wrap">
-  <div class="head"><span class="num">05</span><h2>The Dock</h2><p class="lede">Every action HYDRA can take, on the number keys. Green ones are quiet. Orange ones add escalation. Red loses the game here.</p></div>
-  <div class="tiles">
-    <div class="tile"><kbd>1</kbd><img src="img/i-plan.png" alt=""><b>PLAN</b><span>Open the planner on your target.</span><em class="cost q">Quiet · uses fuel</em></div>
-    <div class="tile"><kbd>2</kbd><img src="img/i-look.png" alt=""><b>LOOK</b><span>Point the camera at it. Also <kbd>I</kbd>.</span><em class="cost q">Quiet</em></div>
-    <div class="tile"><kbd>3</kbd><img src="img/i-match.png" alt=""><b>MATCH</b><span>Brake alongside your target.</span><em class="cost q">Burns are seen</em></div>
-    <div class="tile"><kbd>4</kbd><img src="img/i-buoy.png" alt=""><b>BUOY</b><span>Drop a second listener here.</span><em class="cost q">Quiet</em></div>
-    <div class="tile"><kbd>5</kbd><img src="img/i-radar.png" alt=""><b>RADAR</b><span>An exact range. Everyone hears it.</span><em class="cost l">+1 per hour</em></div>
-    <div class="tile"><kbd>6</kbd><img src="img/i-thermometer.png" alt=""><b>DARK</b><span>Hide your heat for about 3½ h. Once only.</span><em class="cost q">Quiet</em></div>
-    <div class="tile"><kbd>7</kbd><img src="img/i-jam.png" alt=""><b>JAM</b><span>Cut its orders. This is how you win.</span><em class="cost l">+2 per hour</em></div>
-    <div class="tile"><kbd>8</kbd><img src="img/i-spoof.png" alt=""><b>FAKE</b><span>Spoof its ranging so it drifts.</span><em class="cost l">+4</em></div>
-    <div class="tile"><kbd>9</kbd><img src="img/i-hpm.png" alt=""><b>PULSE</b><span>Microwave burst to burn out its receiver.</span><em class="cost l">+15</em></div>
-    <div class="tile"><kbd>0</kbd><img src="img/i-cyber.png" alt=""><b>TAKE</b><span>Take over its controls.</span><em class="cost l">+10</em></div>
-    <div class="tile kv"><kbd>–</kbd><img src="img/i-kinetic.png" alt=""><b>KV</b><span>Kinetic kill. No key, on purpose.</span><em class="cost x">+45 · debris = lose</em></div>
-  </div>
-  <h3>The rail: your windows</h3>
-  <div class="rail">
-    <div class="tile"><kbd>F1</kbd><img src="img/i-campaign.png" alt=""><b>CAMPAIGN</b><span>Your goals</span></div>
-    <div class="tile"><kbd>F2</kbd><img src="img/i-listening.png" alt=""><b>SIGINT</b><span>Listen, locate, identify</span></div>
-    <div class="tile"><kbd>F3</kbd><img src="img/i-planner.png" alt=""><b>PLANNER</b><span>Plan a move</span></div>
-    <div class="tile"><kbd>F4</kbd><img src="img/i-overview.png" alt=""><b>OVERVIEW</b><span>All contacts</span></div>
-    <div class="tile"><kbd>F5</kbd><img src="img/i-library.png" alt=""><b>DATABASE</b><span>Known classes</span></div>
-    <div class="tile"><kbd>F6</kbd><img src="img/i-tracker.png" alt=""><b>TRACKER</b><span>Track detail</span></div>
-    <div class="tile"><kbd>F7</kbd><img src="img/i-thermometer.png" alt=""><b>HEAT</b><span>When you'll be seen</span></div>
-    <div class="tile"><kbd>L</kbd><img src="img/i-layers.png" alt=""><b>LAYERS</b><span>What the map draws</span></div>
-    <div class="tile"><span class="rl">RAIL</span><img src="img/i-signals.png" alt=""><b>SIGNALS</b><span>Everything heard</span></div>
-    <div class="tile"><span class="rl">RAIL</span><img src="img/i-solar.png" alt=""><b>SOLAR</b><span>The planets</span></div>
-    <div class="tile"><span class="rl">RAIL</span><img src="img/i-language.png" alt=""><b>TERMS</b><span>Plain or military words</span></div>
-  </div>
-  <p class="cap" style="margin-top:12px">RAIL = no key: click it on the left-hand rail</p>
-</div></section>
-
-<!-- CONTROLS -->
-<section class="page alt" id="controls"><div class="wrap">
-  <div class="head"><span class="num">06</span><h2>Controls</h2><p class="lede">Only the coloured keys matter. Some browsers keep F1–F7 until you've clicked inside the game.</p></div>
-  <div class="kbwrap"><svg class="kb" viewBox="-14 -14 862 372" role="img" aria-label="Keyboard map: time keys Space and the square brackets; view keys W A S D Q E, Shift and Tab; window keys Esc, F1 to F7 and L; dock actions on 1 to 0; camera keys I and V."><rect x="-14" y="-14" width="862" height="372" rx="14" fill="#121316"/><g><rect x="0" y="0" width="50" height="50" rx="7" fill="#e9e2d0" stroke="rgba(0,0,0,.35)"/><rect x="3" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="9" y="21" fill="#1c1b18" class="kl">Esc</text><text x="25" y="41" fill="#1c1b18" class="ks" text-anchor="middle">BACK</text></g><g><rect x="90" y="0" width="50" height="50" rx="7" fill="#e9e2d0" stroke="rgba(0,0,0,.35)"/><rect x="93" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="99" y="21" fill="#1c1b18" class="kl">F1</text><text x="115" y="41" fill="#1c1b18" class="ks" text-anchor="middle">ORDERS</text></g><g><rect x="146" y="0" width="50" height="50" rx="7" fill="#e9e2d0" stroke="rgba(0,0,0,.35)"/><rect x="149" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="155" y="21" fill="#1c1b18" class="kl">F2</text><text x="171" y="41" fill="#1c1b18" class="ks" text-anchor="middle">SIGINT</text></g><g><rect x="202" y="0" width="50" height="50" rx="7" fill="#e9e2d0" stroke="rgba(0,0,0,.35)"/><rect x="205" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="211" y="21" fill="#1c1b18" class="kl">F3</text><text x="227" y="41" fill="#1c1b18" class="ks" text-anchor="middle">PLAN</text></g><g><rect x="258" y="0" width="50" height="50" rx="7" fill="#e9e2d0" stroke="rgba(0,0,0,.35)"/><rect x="261" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="267" y="21" fill="#1c1b18" class="kl">F4</text><text x="283" y="41" fill="#1c1b18" class="ks" text-anchor="middle">OVERVW</text></g><g><rect x="330" y="0" width="50" height="50" rx="7" fill="#e9e2d0" stroke="rgba(0,0,0,.35)"/><rect x="333" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="339" y="21" fill="#1c1b18" class="kl">F5</text><text x="355" y="41" fill="#1c1b18" class="ks" text-anchor="middle">DATA</text></g><g><rect x="386" y="0" width="50" height="50" rx="7" fill="#e9e2d0" stroke="rgba(0,0,0,.35)"/><rect x="389" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="395" y="21" fill="#1c1b18" class="kl">F6</text><text x="411" y="41" fill="#1c1b18" class="ks" text-anchor="middle">TRACK</text></g><g><rect x="442" y="0" width="50" height="50" rx="7" fill="#e9e2d0" stroke="rgba(0,0,0,.35)"/><rect x="445" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="451" y="21" fill="#1c1b18" class="kl">F7</text><text x="467" y="41" fill="#1c1b18" class="ks" text-anchor="middle">HEAT</text></g><g><rect x="498" y="0" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="501" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="507" y="21" fill="#7d8188" class="kl">F8</text></g><g><rect x="571" y="0" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="574" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="580" y="21" fill="#7d8188" class="kl">F9</text></g><g><rect x="627" y="0" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="630" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="636" y="21" fill="#7d8188" class="kl">F10</text></g><g><rect x="683" y="0" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="686" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="692" y="21" fill="#7d8188" class="kl">F11</text></g><g><rect x="739" y="0" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="742" y="3" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="748" y="21" fill="#7d8188" class="kl">F12</text></g><g><rect x="0" y="70" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="3" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="9" y="91" fill="#7d8188" class="kl">`</text></g><g><rect x="56" y="70" width="50" height="50" rx="7" fill="#4f9a58" stroke="rgba(0,0,0,.35)"/><rect x="59" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="65" y="91" fill="#fff" class="kl">1</text><text x="81" y="111" fill="#fff" class="ks" text-anchor="middle">PLAN</text></g><g><rect x="112" y="70" width="50" height="50" rx="7" fill="#4f9a58" stroke="rgba(0,0,0,.35)"/><rect x="115" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="121" y="91" fill="#fff" class="kl">2</text><text x="137" y="111" fill="#fff" class="ks" text-anchor="middle">LOOK</text></g><g><rect x="168" y="70" width="50" height="50" rx="7" fill="#4f9a58" stroke="rgba(0,0,0,.35)"/><rect x="171" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="177" y="91" fill="#fff" class="kl">3</text><text x="193" y="111" fill="#fff" class="ks" text-anchor="middle">MATCH</text></g><g><rect x="224" y="70" width="50" height="50" rx="7" fill="#4f9a58" stroke="rgba(0,0,0,.35)"/><rect x="227" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="233" y="91" fill="#fff" class="kl">4</text><text x="249" y="111" fill="#fff" class="ks" text-anchor="middle">BUOY</text></g><g><rect x="280" y="70" width="50" height="50" rx="7" fill="#4f9a58" stroke="rgba(0,0,0,.35)"/><rect x="283" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="289" y="91" fill="#fff" class="kl">5</text><text x="305" y="111" fill="#fff" class="ks" text-anchor="middle">RADAR</text></g><g><rect x="336" y="70" width="50" height="50" rx="7" fill="#4f9a58" stroke="rgba(0,0,0,.35)"/><rect x="339" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="345" y="91" fill="#fff" class="kl">6</text><text x="361" y="111" fill="#fff" class="ks" text-anchor="middle">DARK</text></g><g><rect x="392" y="70" width="50" height="50" rx="7" fill="#4f9a58" stroke="rgba(0,0,0,.35)"/><rect x="395" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="401" y="91" fill="#fff" class="kl">7</text><text x="417" y="111" fill="#fff" class="ks" text-anchor="middle">JAM</text></g><g><rect x="448" y="70" width="50" height="50" rx="7" fill="#4f9a58" stroke="rgba(0,0,0,.35)"/><rect x="451" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="457" y="91" fill="#fff" class="kl">8</text><text x="473" y="111" fill="#fff" class="ks" text-anchor="middle">FAKE</text></g><g><rect x="504" y="70" width="50" height="50" rx="7" fill="#4f9a58" stroke="rgba(0,0,0,.35)"/><rect x="507" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="513" y="91" fill="#fff" class="kl">9</text><text x="529" y="111" fill="#fff" class="ks" text-anchor="middle">PULSE</text></g><g><rect x="560" y="70" width="50" height="50" rx="7" fill="#4f9a58" stroke="rgba(0,0,0,.35)"/><rect x="563" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="569" y="91" fill="#fff" class="kl">0</text><text x="585" y="111" fill="#fff" class="ks" text-anchor="middle">TAKE</text></g><g><rect x="616" y="70" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="619" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="625" y="91" fill="#7d8188" class="kl">-</text></g><g><rect x="672" y="70" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="675" y="73" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="681" y="91" fill="#7d8188" class="kl">=</text></g><g><rect x="728" y="70" width="106" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="731" y="73" width="100" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="737" y="91" fill="#7d8188" class="kl">Back</text></g><g><rect x="0" y="126" width="78" height="50" rx="7" fill="#3f7fb0" stroke="rgba(0,0,0,.35)"/><rect x="3" y="129" width="72" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="9" y="147" fill="#fff" class="kl">Tab</text><text x="39" y="167" fill="#fff" class="ks" text-anchor="middle">NEXT SHIP</text></g><g><rect x="84" y="126" width="50" height="50" rx="7" fill="#3f7fb0" stroke="rgba(0,0,0,.35)"/><rect x="87" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="93" y="147" fill="#fff" class="kl">Q</text><text x="109" y="167" fill="#fff" class="ks" text-anchor="middle">ZOOM −</text></g><g><rect x="140" y="126" width="50" height="50" rx="7" fill="#3f7fb0" stroke="rgba(0,0,0,.35)"/><rect x="143" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="149" y="147" fill="#fff" class="kl">W</text><text x="165" y="167" fill="#fff" class="ks" text-anchor="middle">TURN</text></g><g><rect x="196" y="126" width="50" height="50" rx="7" fill="#3f7fb0" stroke="rgba(0,0,0,.35)"/><rect x="199" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="205" y="147" fill="#fff" class="kl">E</text><text x="221" y="167" fill="#fff" class="ks" text-anchor="middle">ZOOM +</text></g><g><rect x="252" y="126" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="255" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="261" y="147" fill="#7d8188" class="kl">R</text></g><g><rect x="308" y="126" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="311" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="317" y="147" fill="#7d8188" class="kl">T</text></g><g><rect x="364" y="126" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="367" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="373" y="147" fill="#7d8188" class="kl">Y</text></g><g><rect x="420" y="126" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="423" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="429" y="147" fill="#7d8188" class="kl">U</text></g><g><rect x="476" y="126" width="50" height="50" rx="7" fill="#c99a1c" stroke="rgba(0,0,0,.35)"/><rect x="479" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="485" y="147" fill="#1c1b18" class="kl">I</text><text x="501" y="167" fill="#1c1b18" class="ks" text-anchor="middle">INFRARED</text></g><g><rect x="532" y="126" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="535" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="541" y="147" fill="#7d8188" class="kl">O</text></g><g><rect x="588" y="126" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="591" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="597" y="147" fill="#7d8188" class="kl">P</text></g><g><rect x="644" y="126" width="50" height="50" rx="7" fill="#d4511c" stroke="rgba(0,0,0,.35)"/><rect x="647" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="653" y="147" fill="#fff" class="kl">[</text><text x="669" y="167" fill="#fff" class="ks" text-anchor="middle">SLOWER</text></g><g><rect x="700" y="126" width="50" height="50" rx="7" fill="#d4511c" stroke="rgba(0,0,0,.35)"/><rect x="703" y="129" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="709" y="147" fill="#fff" class="kl">]</text><text x="725" y="167" fill="#fff" class="ks" text-anchor="middle">FASTER</text></g><g><rect x="756" y="126" width="78" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="759" y="129" width="72" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="765" y="147" fill="#7d8188" class="kl">\</text></g><g><rect x="0" y="182" width="95" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="3" y="185" width="89" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="9" y="203" fill="#7d8188" class="kl">Caps</text></g><g><rect x="101" y="182" width="50" height="50" rx="7" fill="#3f7fb0" stroke="rgba(0,0,0,.35)"/><rect x="104" y="185" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="110" y="203" fill="#fff" class="kl">A</text><text x="126" y="223" fill="#fff" class="ks" text-anchor="middle">TURN</text></g><g><rect x="157" y="182" width="50" height="50" rx="7" fill="#3f7fb0" stroke="rgba(0,0,0,.35)"/><rect x="160" y="185" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="166" y="203" fill="#fff" class="kl">S</text><text x="182" y="223" fill="#fff" class="ks" text-anchor="middle">TURN</text></g><g><rect x="213" y="182" width="50" height="50" rx="7" fill="#3f7fb0" stroke="rgba(0,0,0,.35)"/><rect x="216" y="185" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="222" y="203" fill="#fff" class="kl">D</text><text x="238" y="223" fill="#fff" class="ks" text-anchor="middle">TURN</text></g><g><rect x="269" y="182" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="272" y="185" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="278" y="203" fill="#7d8188" class="kl">F</text></g><g><rect x="325" y="182" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="328" y="185" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="334" y="203" fill="#7d8188" class="kl">G</text></g><g><rect x="381" y="182" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="384" y="185" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="390" y="203" fill="#7d8188" class="kl">H</text></g><g><rect x="437" y="182" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="440" y="185" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="446" y="203" fill="#7d8188" class="kl">J</text></g><g><rect x="493" y="182" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="496" y="185" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="502" y="203" fill="#7d8188" class="kl">K</text></g><g><rect x="549" y="182" width="50" height="50" rx="7" fill="#e9e2d0" stroke="rgba(0,0,0,.35)"/><rect x="552" y="185" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="558" y="203" fill="#1c1b18" class="kl">L</text><text x="574" y="223" fill="#1c1b18" class="ks" text-anchor="middle">LAYERS</text></g><g><rect x="605" y="182" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="608" y="185" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="614" y="203" fill="#7d8188" class="kl">;</text></g><g><rect x="661" y="182" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="664" y="185" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="670" y="203" fill="#7d8188" class="kl">'</text></g><g><rect x="717" y="182" width="117" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="720" y="185" width="111" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="726" y="203" fill="#7d8188" class="kl">Enter</text></g><g><rect x="0" y="238" width="123" height="50" rx="7" fill="#3f7fb0" stroke="rgba(0,0,0,.35)"/><rect x="3" y="241" width="117" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="9" y="259" fill="#fff" class="kl">Shift</text><text x="61" y="279" fill="#fff" class="ks" text-anchor="middle">FASTER TURN</text></g><g><rect x="129" y="238" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="132" y="241" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="138" y="259" fill="#7d8188" class="kl">Z</text></g><g><rect x="185" y="238" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="188" y="241" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="194" y="259" fill="#7d8188" class="kl">X</text></g><g><rect x="241" y="238" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="244" y="241" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="250" y="259" fill="#7d8188" class="kl">C</text></g><g><rect x="297" y="238" width="50" height="50" rx="7" fill="#c99a1c" stroke="rgba(0,0,0,.35)"/><rect x="300" y="241" width="44" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="306" y="259" fill="#1c1b18" class="kl">V</text><text x="322" y="279" fill="#1c1b18" class="ks" text-anchor="middle">VISIBLE</text></g><g><rect x="353" y="238" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="356" y="241" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="362" y="259" fill="#7d8188" class="kl">B</text></g><g><rect x="409" y="238" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="412" y="241" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="418" y="259" fill="#7d8188" class="kl">N</text></g><g><rect x="465" y="238" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="468" y="241" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="474" y="259" fill="#7d8188" class="kl">M</text></g><g><rect x="521" y="238" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="524" y="241" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="530" y="259" fill="#7d8188" class="kl">,</text></g><g><rect x="577" y="238" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="580" y="241" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="586" y="259" fill="#7d8188" class="kl">.</text></g><g><rect x="633" y="238" width="50" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="636" y="241" width="44" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="642" y="259" fill="#7d8188" class="kl">/</text></g><g><rect x="689" y="238" width="145" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="692" y="241" width="139" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="698" y="259" fill="#7d8188" class="kl">Shift</text></g><g><rect x="0" y="294" width="72" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="3" y="297" width="66" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="9" y="315" fill="#7d8188" class="kl">Ctrl</text></g><g><rect x="78" y="294" width="61" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="81" y="297" width="55" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="87" y="315" fill="#7d8188" class="kl">Win</text></g><g><rect x="146" y="294" width="61" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="149" y="297" width="55" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="155" y="315" fill="#7d8188" class="kl">Alt</text></g><g><rect x="213" y="294" width="352" height="50" rx="7" fill="#d4511c" stroke="rgba(0,0,0,.35)"/><rect x="216" y="297" width="346" height="38" rx="5" fill="rgba(255,255,255,0.1)"/><text x="222" y="315" fill="#fff" class="kl">Space</text><text x="389" y="335" fill="#fff" class="ks" text-anchor="middle">PAUSE / RESUME</text></g><g><rect x="571" y="294" width="61" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="574" y="297" width="55" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="580" y="315" fill="#7d8188" class="kl">Alt</text></g><g><rect x="638" y="294" width="61" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="641" y="297" width="55" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="647" y="315" fill="#7d8188" class="kl">Fn</text></g><g><rect x="706" y="294" width="72" height="50" rx="7" fill="#2a2c30" stroke="#3a3d42"/><rect x="709" y="297" width="66" height="38" rx="5" fill="rgba(255,255,255,0.03)"/><text x="715" y="315" fill="#7d8188" class="kl">Ctrl</text></g></svg></div>
-  <div class="keys-legend">
-    <span><i style="background:#d4511c"></i>Time</span>
-    <span><i style="background:#3f7fb0"></i>Moving the view</span>
-    <span><i style="background:#e9e2d0;border:1px solid #9c937e"></i>Windows</span>
-    <span><i style="background:#4f9a58"></i>Dock actions</span>
-    <span><i style="background:#c99a1c"></i>Camera</span>
-  </div>
-  <div class="ctl">
-    <svg class="mouse" viewBox="0 0 420 300" role="img" aria-label="Mouse map: left drag turns the view and a click selects; right drag slides the view and a right-click on a contact opens its options; the wheel zooms; a double-click centres.">
-<path d="M150 40 h120 a70 70 0 0 1 70 70 v80 a90 90 0 0 1 -90 90 h-80 a90 90 0 0 1 -90 -90 v-80 a70 70 0 0 1 70 -70z" fill="#1d1f23" stroke="#45484e" stroke-width="2"/>
-<path d="M150 40 h57 v100 h-127 v-30 a70 70 0 0 1 70 -70z" fill="#3f7fb0"/>
-<path d="M213 40 h57 a70 70 0 0 1 70 70 v30 h-127z" fill="#d4511c"/>
-<rect x="200" y="62" width="20" height="50" rx="10" fill="#e9e2d0"/>
-</svg>
-    <div class="mrows">
-      <div class="mrow"><i style="background:#3f7fb0"></i><b>Left drag · click</b><span>Turn the view · select a contact (click empty space to clear)</span></div>
-      <div class="mrow"><i style="background:#d4511c"></i><b>Right drag · click</b><span>Slide the view · right-click a contact for every option and its cost</span></div>
-      <div class="mrow"><i style="background:#e9e2d0;border:1px solid #9c937e"></i><b>Wheel</b><span>Zoom. Keep going out to see the whole solar system.</span></div>
-      <div class="mrow"><i style="background:#1c1b18"></i><b>Double-click</b><span>Centre on a ship, moon or planet. The view then follows it.</span></div>
-    </div>
-  </div>
-  <div class="sig"><span class="cap">Inside SIGINT (F2)</span><span><kbd>↑</kbd><kbd>↓</kbd> recordings</span><span><kbd>D</kbd> find direction</span><span><kbd>I</kbd> identify</span><span><kbd>J</kbd> jam</span><span><kbd>B</kbd> next band</span></div>
-</div></section>
-
-<!-- CHAPTER 1 -->
-<section class="scene dim" id="ch1" style="background-image:url(img/shot-sigint.jpg)">
-  <div class="chapter">Chapter 1<b>Listen</b></div>
-  <img class="sprite badge left" src="img/insignia_blue.png" alt="">
-  <div class="dialogue">
-    <div class="nameplate">Jovian Command</div>
-    <p class="line">It reports home after every move it makes. Each report is a short radio burst.</p>
-    <p class="line">If it sees a warship coming, it goes <em>quiet for six hours</em>. So we listen first, from far away.</p>
-    <span class="more">▼</span>
-  </div>
-</section>
-<section class="page"><div class="wrap">
-  <div class="steps c5">
-    <div class="step"><div class="shot"><span class="no">1</span><img class="icon" src="img/i-buoy.png" alt=""></div><div class="txt"><b>Drop a buoy</b><div class="do">Press <kbd>4</kbd> BUOY</div><p>A second listener where you are. Two ears far apart can pinpoint a radio.</p></div></div>
-    <div class="step"><div class="shot"><span class="no">2</span><img class="fit" src="img/c-clock.jpg" alt="The time rate buttons."></div><div class="txt"><b>Start the clock</b><div class="do"><kbd>]</kbd> faster · <kbd>Space</kbd> pause</div><p>Run at 60× or more. Watch TRK 4417 creep toward ORIEL-36.</p></div></div>
-    <div class="step"><div class="shot"><span class="no">3</span><img class="top" src="img/c-waterfall.jpg" alt="The SIGINT waterfall with a burst marked."></div><div class="txt"><b>Hear it</b><div class="do"><kbd>F2</kbd> then click the newest report</div><p>Every bright dash on the waterfall is a burst. Pick TRK 4417's latest.</p></div></div>
-    <div class="step"><div class="shot"><span class="no">4</span><img class="fit" src="img/c-sigbuttons.jpg" alt="The FIND DIRECTION and IDENTIFY SIGNAL buttons."></div><div class="txt"><b>Find it</b><div class="do">FIND DIRECTION · <kbd>D</kbd></div><p>Bearings from your listeners cross where it is.</p></div></div>
-    <div class="step"><div class="shot"><span class="no">5</span><img class="top" src="img/c-signal.jpg" alt="The signal panel and threat library."></div><div class="txt"><b>Identify it</b><div class="do">IDENTIFY SIGNAL · <kbd>I</kbd></div><p>Names its command channel, so you can jam just that. Bonus goal done. <i>Too weak?</i> Wait for a closer burst.</p></div></div>
-  </div>
-</div></section>
-
-<!-- CHAPTER 2 -->
-<section class="scene dim" id="ch2" style="background-image:url(img/shot-planner.jpg)">
-  <div class="chapter">Chapter 2<b>Close In</b></div>
-  <img class="sprite" src="img/p-sentinel.png" alt="">
-  <div class="dialogue">
-    <div class="nameplate">Jovian Command</div>
-    <p class="line">Now get alongside. The planner does the orbital maths. You choose <em>when</em>, and <em>how much fuel</em>.</p>
-    <p class="line">Remember: arriving isn't stopping. Brake with MATCH.</p>
-    <span class="more">▼</span>
-  </div>
-</section>
-<section class="page"><div class="wrap">
-  <div class="steps c5">
-    <div class="step"><div class="shot"><span class="no">6</span><img class="fit" src="img/c-overview.jpg" alt="The Overview list."></div><div class="txt"><b>Pick ORIEL-36</b><div class="do">Click it in the Overview</div><p>You'll meet the inspector where it's going.</p></div></div>
-    <div class="step wide"><div class="shot"><span class="no">7</span><img class="top" src="img/c-planner.jpg" alt="The planner's porkchop grid."></div><div class="txt"><b>Plan the trip</b><div class="do"><kbd>F3</kbd> · choose CHEAPEST</div><p>Each cell is a real transfer: wait this long, fly this long, pay this much. CHEAPEST: wait 18 h, fly 3 h, 1.9 km/s.</p></div></div>
-    <div class="step"><div class="shot"><span class="no">8</span><img class="icon" src="img/i-plan.png" alt=""></div><div class="txt"><b>Burn</b><div class="do">BURN NOW / BURN AT T+…</div><p>A later burn is scheduled for you. Speed time up and coast.</p></div></div>
-    <div class="step"><div class="shot"><span class="no">9</span><img class="icon" src="img/i-match.png" alt=""></div><div class="txt"><b>Match</b><div class="do">Press <kbd>3</kbd> MATCH on arrival</div><p>Brakes you onto ORIEL-36's orbit, right beside it.</p></div></div>
-  </div>
-</div></section>
-
-<!-- CHAPTER 3 -->
-<section class="scene dim" id="ch3" style="background-image:url(img/shot-heat.jpg)">
-  <div class="chapter">Chapter 3<b>Stay Cold</b></div>
-  <img class="sprite" src="img/p-kite.png" alt="">
-  <div class="dialogue">
-    <div class="nameplate red">TRK 4417 <small>Intercept · 8418 MHz</small></div>
-    <p class="line radio">▌▌ MOVE COMPLETE ▌ TARGET IN VIEW ▌ NO ESCORT SEEN ▌▌</p>
-    <p class="line">As long as it thinks it's alone, it keeps talking. <em>Your warm hull is the brightest thing it can see.</em></p>
-    <span class="more">▼</span>
-  </div>
-</section>
-<section class="page"><div class="wrap">
-  <div class="steps c4">
-    <div class="step"><div class="shot"><span class="no">10</span><img class="fit" src="img/c-heatgauge.jpg" alt="The heat gauge reading SEEN."></div><div class="txt"><b>Go dark</b><div class="do">Press <kbd>6</kbd> DARK</div><p>Stores your waste heat for about 3½ h. SEEN turns COLD. You only get one, so use it alongside.</p></div></div>
-    <div class="step"><div class="shot"><span class="no">11</span><img class="icon" src="img/i-look.png" alt=""></div><div class="txt"><b>Look closer</b><div class="do">Select TRK 4417 · <kbd>2</kbd> or <kbd>I</kbd></div><p>Up close your telescope sees its hull. <kbd>V</kbd> visible light, <kbd>Esc</kbd> closes.</p></div></div>
-    <div class="step wide"><div class="shot"><span class="no">?</span><img src="img/shot-heat.jpg" alt="The heat forecast window."></div><div class="txt"><b>Plan around the shadow</b><div class="do"><kbd>F7</kbd> HEAT forecast</div><p>When you'll be seen, when Jupiter's shadow hides you, and when to go dark.</p></div></div>
-  </div>
-</div></section>
-
-<!-- CHAPTER 4 -->
-<section class="scene dim" id="ch4" style="background-image:url(img/shot-jam.jpg)">
-  <div class="chapter">Chapter 4<b>Cut the Line</b></div>
-  <img class="sprite badge" src="img/insignia_red.png" alt="">
-  <div class="dialogue">
-    <div class="nameplate">Jovian Command</div>
-    <p class="line">Its handler is millions of kilometres away. <em>Cut the line for three hours</em> and it gives up.</p>
-    <p class="line">Jamming is loud. Start when you're ready, stop the moment it's gone.</p>
-    <span class="more">▼</span>
-  </div>
-</section>
-<section class="page"><div class="wrap">
-  <div class="steps c4 sq">
-    <div class="step"><div class="shot"><span class="no">12</span><img class="fit" src="img/c-context.jpg" alt="The right-click menu on TRK 4417."></div><div class="txt"><b>See your options</b><div class="do">Right-click TRK 4417</div><p>Every effect and its cost. Destroying it leaves debris: never here.</p></div></div>
-    <div class="step"><div class="shot"><span class="no">13</span><img class="fit" src="img/c-hover.jpg" alt="The JAM card listing what it needs."></div><div class="txt"><b>Jam</b><div class="do">Press <kbd>7</kbd> JAM</div><p>You spot-jam its command channel. The target reads LINK CUT with a timer.</p></div></div>
-    <div class="step"><div class="shot"><span class="no">14</span><div class="hold"><div class="clock">03:00:00<small>LINK CUT</small></div><div class="tl"><i></i><i></i><i></i></div><div class="lab"><span>HOLD</span><span>HOLD</span><span>IT LEAVES</span></div></div></div><div class="txt"><b>Hold it</b><div class="do">Keep jamming · 600× is fine</div><p>Three hours cut off and it backs away into a higher orbit.</p></div></div>
-    <div class="step"><div class="shot"><span class="no">15</span><img class="fit" src="img/c-escal.jpg" alt="The escalation meter."></div><div class="txt"><b>Stop</b><div class="do">Press <kbd>7</kbd> again</div><p>Every hour of jamming adds 2 escalation. Switch it off once it's gone.</p></div></div>
-  </div>
-  <div class="tip"><div class="ti"><svg class="ico"><use href="#i-warn"/></svg></div><div><b>When the JAM key is grey</b><p>Hover over it. The card ticks off what it needs:</p>
-    <ul><li><b style="display:inline;color:#ff9a6c;font:inherit;letter-spacing:0;text-transform:none">Not a known enemy:</b> identify its signal first (step 5).</li>
-    <li><b style="display:inline;color:#ff9a6c;font:inherit;letter-spacing:0;text-transform:none">Can't aim:</b> your track is too loose. Get closer, or let the telescope see it.</li>
-    <li><b style="display:inline;color:#ff9a6c;font:inherit;letter-spacing:0;text-transform:none">Out of reach:</b> close in. Before you identify it you can only barrage-jam, which needs you much closer.</li></ul></div></div>
-</div></section>
-
-<!-- GOOD END -->
-<section class="scene" style="background-image:url(img/keyart_debrief.jpg)">
-  <div class="chapter">Epilogue<b>It's Gone</b></div>
-  <img class="sprite badge left" src="img/insignia_blue.png" alt="">
-  <div class="dialogue">
-    <div class="nameplate">Jovian Command</div>
-    <p class="line">The inspector is climbing away. ORIEL-36 is still imaging. Not one piece of debris.</p>
-    <p class="line">Good work, Operator. The debrief will grade <em>how</em> you did it.</p>
-  </div>
-</section>
-
-<!-- ENDINGS -->
-<section class="page dark" id="endings"><div class="wrap">
-  <div class="head"><span class="num">07</span><h2>Endings</h2><p class="lede">One good ending, four bad ones. The debrief says which goal failed and what to try next time.</p></div>
-  <div class="ends">
-    <div class="end good" style="background-image:url(img/keyart_debrief.jpg)"><span class="stamp">GOOD END</span><b>The inspector departs</b><p>It was cut off for three hours, backed away and left. No debris, below war, ORIEL-36 working.</p></div>
-    <div class="end bad" style="background-image:url(img/keyart_debrief_lost.jpg)"><span class="stamp">BAD END</span><b>It finished its look</b><p>All seven moves done.</p><div class="try">Try: get alongside sooner, jam earlier</div></div>
-    <div class="end bad" style="background-image:url(img/keyart_debrief_lost.jpg);background-position:right"><span class="stamp">BAD END</span><b>It went silent</b><p>It saw you coming and stopped talking.</p><div class="try">Try: listen before you move</div></div>
-    <div class="end bad" style="background-image:url(img/keyart_debrief_lost.jpg);background-position:left"><span class="stamp">BAD END</span><b>Open war</b><p>Escalation reached 100.</p><div class="try">Try: fewer loud acts, stop jamming once it's gone</div></div>
-    <div class="end bad" style="background-image:url(img/keyart_debrief_lost.jpg);background-position:center bottom"><span class="stamp">BAD END</span><b>Debris</b><p>Something was destroyed in the busiest orbit there is.</p><div class="try">Try: never use the KV here</div></div>
-  </div>
-</div></section>
-
-<!-- NOTES -->
-<section class="page alt" id="notes"><div class="wrap">
-  <div class="head"><span class="num">08</span><h2>Field Notes</h2><p class="lede">Six things veterans wish they'd known on their first run.</p></div>
-  <div class="notes">
-    <div class="note"><img src="img/i-plan.png" alt=""><div><b>Burns are seen</b><span>Your drive shows up from millions of km. Listen before you burn.</span></div></div>
-    <div class="note"><img src="img/i-thermometer.png" alt=""><div><b>Heat is your friend</b><span>F7 forecasts when you'll be seen and when the shadow hides you.</span></div></div>
-    <div class="note"><img src="img/i-tracker.png" alt=""><div><b>A track is a belief</b><span>Contacts sit where you last saw them. Unseen for a day, they're dropped.</span></div></div>
-    <div class="note"><img src="img/i-campaign.png" alt=""><div><b>Use the right speed</b><span>60× near a target, 600–3,000× while coasting, pause to think.</span></div></div>
-    <div class="note"><img src="img/i-signals.png" alt=""><div><b>Quiet beats loud</b><span>Radar and jamming cost every hour. Use them only as long as needed.</span></div></div>
-    <div class="note"><img src="img/i-details.png" alt=""><div><b>Click any number</b><span>Every number opens to show how it's worked out.</span></div></div>
-  </div>
-  <div class="ladder" aria-label="Escalation ladder">
-    <div class="cap" style="margin-bottom:8px">How loud is each act? Escalation, out of 100</div>
-    <svg viewBox="0 0 1000 120" role="img" aria-label="Escalation costs: radar 1 per hour, jam 2 per hour, spoof 4, dazzle 8, cyber 10, pulse 15, kinetic kill 45; war at 100.">
-      <defs><linearGradient id="lg1" x1="0" x2="1"><stop offset="0" stop-color="#4f9a58"/><stop offset=".5" stop-color="#c99a1c"/><stop offset="1" stop-color="#c23a2e"/></linearGradient></defs>
-      <rect x="20" y="52" width="960" height="14" rx="7" fill="url(#lg1)"/>
-      <g font-family="Barlow Condensed,Arial Narrow,sans-serif" font-weight="700" font-size="15" fill="#1c1b18">
-        <text x="20" y="96">0 · DENIABLE</text><text x="980" y="96" text-anchor="end" fill="#c23a2e">100 · WAR</text>
-        <g><line x1="29.6" y1="40" x2="29.6" y2="70" stroke="#1c1b18"/><text x="29.6" y="32" text-anchor="middle">RADAR 1/h</text></g>
-        <g><line x1="39.2" y1="66" x2="39.2" y2="80" stroke="#1c1b18"/><text x="70" y="116" text-anchor="middle">JAM 2/h</text><line x1="39.2" y1="80" x2="62" y2="102" stroke="#1c1b18" stroke-width=".8"/></g>
-        <g><line x1="58.4" y1="40" x2="58.4" y2="70" stroke="#1c1b18"/><text x="118" y="22" text-anchor="middle">SPOOF 4</text><line x1="58.4" y1="40" x2="110" y2="26" stroke="#1c1b18" stroke-width=".8"/></g>
-        <g><line x1="96.8" y1="66" x2="96.8" y2="80" stroke="#1c1b18"/><text x="150" y="116" text-anchor="middle">DAZZLE 8</text><line x1="96.8" y1="80" x2="140" y2="102" stroke="#1c1b18" stroke-width=".8"/></g>
-        <g><line x1="116" y1="40" x2="116" y2="70" stroke="#1c1b18"/><text x="200" y="32" text-anchor="middle">CYBER 10</text><line x1="116" y1="40" x2="185" y2="34" stroke="#1c1b18" stroke-width=".8"/></g>
-        <g><line x1="164" y1="66" x2="164" y2="80" stroke="#1c1b18"/><text x="240" y="116" text-anchor="middle">PULSE 15</text><line x1="164" y1="80" x2="226" y2="102" stroke="#1c1b18" stroke-width=".8"/></g>
-        <g><line x1="452" y1="40" x2="452" y2="70" stroke="#c23a2e" stroke-width="2"/><text x="452" y="32" text-anchor="middle" fill="#c23a2e">KINETIC KILL 45 · AND DEBRIS</text></g>
-      </g>
-    </svg>
-  </div>
-</div></section>
-
-<!-- CARD -->
-<section class="page" id="card"><div class="wrap">
-  <div class="head"><span class="num">09</span><h2>Cheat Sheet</h2><p class="lede">Keep this open beside the game, or print it.</p></div>
-  <div class="ref">
-    <div><h4>The winning order</h4><ol>
-      <li><span><kbd>4</kbd> BUOY</span></li>
-      <li><span><kbd>]</kbd> speed up time</span></li>
-      <li><span><kbd>F2</kbd> click TRK 4417's report</span></li>
-      <li><span><kbd>D</kbd> find direction</span></li>
-      <li><span><kbd>I</kbd> identify signal</span></li>
-      <li><span>Select ORIEL-36 · <kbd>F3</kbd> CHEAPEST · BURN</span></li>
-      <li><span><kbd>3</kbd> MATCH on arrival</span></li>
-      <li><span><kbd>6</kbd> DARK</span></li>
-      <li><span><kbd>2</kbd> LOOK at TRK 4417</span></li>
-      <li><span><kbd>7</kbd> JAM · hold 3 h</span></li>
-      <li><span><kbd>7</kbd> stop once it's gone</span></li>
-    </ol></div>
-    <div><h4>Keys</h4><dl>
-      <dt><kbd>Space</kbd></dt><dd>Pause</dd><dt><kbd>[</kbd><kbd>]</kbd></dt><dd>Time rate</dd>
-      <dt><kbd>F1</kbd></dt><dd>Campaign</dd><dt><kbd>F2</kbd></dt><dd>SIGINT</dd><dt><kbd>F3</kbd></dt><dd>Planner</dd><dt><kbd>F4</kbd></dt><dd>Overview</dd>
-      <dt><kbd>F5</kbd></dt><dd>Database</dd><dt><kbd>F6</kbd></dt><dd>Tracker</dd><dt><kbd>F7</kbd></dt><dd>Heat forecast</dd><dt><kbd>L</kbd></dt><dd>Layers</dd>
-      <dt><kbd>I</kbd> <kbd>V</kbd></dt><dd>Infrared / visible</dd><dt><kbd>Tab</kbd></dt><dd>Next ship</dd><dt><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></dt><dd>Turn view</dd>
-      <dt><kbd>Q</kbd><kbd>E</kbd></dt><dd>Zoom</dd><dt><kbd>Esc</kbd></dt><dd>Back / menu</dd>
-    </dl></div>
-    <div><h4>The dock</h4><dl>
-      <dt><kbd>1</kbd></dt><dd>PLAN · planner</dd><dt><kbd>2</kbd></dt><dd>LOOK · camera</dd><dt><kbd>3</kbd></dt><dd>MATCH · stop alongside</dd>
-      <dt><kbd>4</kbd></dt><dd>BUOY · listener</dd><dt><kbd>5</kbd></dt><dd>RADAR · +1/h</dd><dt><kbd>6</kbd></dt><dd>DARK · hide heat, once</dd>
-      <dt><kbd>7</kbd></dt><dd>JAM · +2/h</dd><dt><kbd>8</kbd></dt><dd>FAKE · +4</dd><dt><kbd>9</kbd></dt><dd>PULSE · +15</dd><dt><kbd>0</kbd></dt><dd>TAKE · +10</dd>
-      <dt><kbd>–</kbd></dt><dd>KV · +45, debris: never</dd>
-    </dl></div>
-  </div>
-  <button class="printbtn" onclick="window.print()"><svg class="ico"><use href="#i-print"/></svg> Print the cheat sheet</button>
-</div></section>
-
-<!-- TERMS -->
-<section class="page alt" id="terms"><div class="wrap">
-  <div class="head"><span class="num">10</span><h2>Words You'll See</h2><p class="lede">TERMS on the rail switches the console between plain words and military ones. Same game either way.</p></div>
-  <div class="terms">
-    <div class="term"><b>Δv</b><span>Delta-v: how much you can change your speed. Your fuel, in km/s.</span></div>
-    <div class="term"><b>Track</b><span>What you believe about a contact. Its ring is how unsure you are.</span></div>
-    <div class="term"><b>Rendezvous</b><span>Reaching another craft. Matching its orbit so you stay is the second half.</span></div>
-    <div class="term"><b>SIGINT</b><span>Signals intelligence: listening to other people's radio.</span></div>
-    <div class="term"><b>DF</b><span>Direction finding. Two bearings from different places cross at the transmitter.</span></div>
-    <div class="term"><b>Command link</b><span>The radio channel a handler uses to send a craft its orders.</span></div>
-    <div class="term"><b>Spot / barrage</b><span>All power on one known channel, or spread across a whole band (much weaker).</span></div>
-    <div class="term"><b>J/S</b><span>Jam-to-signal: how much louder you are than its handler, at its receiver.</span></div>
-    <div class="term"><b>EMCON</b><span>Emission control. QUIET means you only listen.</span></div>
-    <div class="term"><b>Escalation</b><span>How close the crisis is to open war. 100 is war.</span></div>
-    <div class="term"><b>Going dark</b><span>Storing waste heat instead of radiating it, so infrared loses you.</span></div>
-    <div class="term"><b>RPO</b><span>Rendezvous and proximity operations: one craft manoeuvring close to another.</span></div>
-  </div>
-</div></section>
-
-<footer><div class="wrap">SATWAR Operator's Handbook · Playtest 0.10 · <a href="../">Home</a> · <a href="../research/">Research edition</a> · <a href="../game/">Play</a><br>© 2026 Kevin Williamson. All rights reserved. SATWAR is an independent educational project. All ships, operators and events are original fiction.</div></footer>
+    <div class="hint">Click, <kbd>→</kbd> or <kbd>Space</kbd> to continue · <kbd>←</kbd> back</div>
+  </section>
+</main>
 
 <script>
 (function(){
-  document.documentElement.classList.add('js');
-  var sc=document.querySelectorAll('.scene');
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('on');io.unobserve(e.target);}});},{threshold:.35});
-    sc.forEach(function(s){io.observe(s);});
-  } else sc.forEach(function(s){s.classList.add('on');});
-  document.querySelectorAll('.lg').forEach(function(l){
-    var p=document.querySelector('.pin[data-n="'+l.dataset.n+'"]');
-    l.addEventListener('mouseenter',function(){p&&p.classList.add('hot');});
-    l.addEventListener('mouseleave',function(){p&&p.classList.remove('hot');});
-  });
+var W=1920,H=1080;
+var WHO={
+  cmd:{n:'Jovian Command',s:'Det JOVE · CIC',img:'img/insignia_blue.png'},
+  trk:{n:'TRK 4417',s:'Intercepted · X band',img:'img/p-kite.png',red:1},
+  you:{n:'Operator',s:'HYDRA BRAVO',img:'img/p-sentinel.png'}
+};
+var CH=['Briefing','The Screen','Listen','Close In','Stay Cold','Cut the Line','Debrief'];
+// spot: [x, y, w, h] in the 1920 × 1080 screenshot. keys: [[key, what], ...]
+var S=[
+ {c:0,bg:'keyart',panel:'title'},
+ {c:0,bg:'keyart_signals',who:'cmd',t:'Operator. You have the watch on <em>HYDRA BRAVO</em>, our only warship in low Jupiter orbit.'},
+ {c:0,bg:'keyart_signals',who:'cmd',panel:'cast',t:'Four craft matter today. Learn their colours: <em class="cb">blue</em> is ours, <em class="cp">pale blue</em> is ours to protect, <em class="cy">yellow</em> is unknown, <em class="cr">red</em> is hostile.'},
+ {c:0,bg:'keyart_signals',who:'cmd',panel:'win',t:'An unflagged inspector is creeping up on ORIEL-36. <em>Make it leave.</em> No debris. No war.'},
+
+ {c:1,bg:'console',who:'cmd',t:'This is your console. <em>Time starts paused</em>, so take a look around. Nothing moves until you start the clock.'},
+ {c:1,bg:'console',spot:[792,372,340,330],tag:'Map',who:'cmd',t:'The map. Jupiter sits in the middle, with HYDRA, ORIEL-36 and TRK 4417 close around it.',keys:[['Left drag','turn'],['Wheel','zoom'],['Double-click','centre']]},
+ {c:1,bg:'console',spot:[622,32,678,92],tag:'Clock',who:'cmd',t:'The clock. T+ counts from the start, and you have <em>3 days</em>.',keys:[['Space','pause'],['[ ]','slower / faster']]},
+ {c:1,bg:'console',spot:[1508,22,396,130],tag:'EMCON · Escalation',who:'cmd',t:'QUIET means you are only listening. Escalation counts toward war: <em>at 100 you lose</em>.'},
+ {c:1,bg:'console',spot:[1310,176,590,170],tag:'Overview · F4',who:'cmd',t:'Every contact, nearest first. Click a row to select it.',keys:[['F4','open']],click:1},
+ {c:1,bg:'console',spot:[1310,552,590,188],tag:'Selected item',who:'cmd',t:'Everything you know about what you picked. The <em>±</em> is how unsure you are of where it is.'},
+ {c:1,bg:'console',spot:[6,128,70,680],tag:'Rail',who:'cmd',t:'The rail opens your windows: tracker, heat, signals, SIGINT, planner and more.',keys:[['F1–F7','main windows'],['L','layers']]},
+ {c:1,bg:'console',spot:[443,902,1035,64],tag:'Your assets',who:'cmd',t:'Your assets. <em>HYDRA</em> moves and acts. <em>Ganymede Station</em> only listens. Click one to act from it.',click:1},
+ {c:1,bg:'console',spot:[622,972,642,76],tag:'Dock · 1–0',who:'cmd',t:'The dock: everything HYDRA can do, on keys <em>1 to 0</em>. Grey means not now. Hover over it to see why.',keys:[['1–0','actions']]},
+ {c:1,bg:'console',spot:[442,966,176,84],tag:'Δv · fuel',who:'cmd',t:'Your fuel, as Δv: <em>8.66 km/s</em> for the whole operation. Every burn spends some.'},
+ {c:1,bg:'console',spot:[1278,966,206,84],tag:'Heat',who:'cmd',t:'How bright you look in infrared. <em>SEEN</em> means the inspector can see you.'},
+ {c:1,bg:'console',spot:[84,928,292,142],tag:'Events',who:'cmd',t:'News, as it happens. This first report is how the operation starts.'},
+
+ {c:2,bg:'sigint',who:'cmd',t:'The inspector <em>reports home after every move</em>, in a short radio burst. If it sees a warship coming, it goes quiet for six hours. So we listen first.'},
+ {c:2,bg:'console',spot:[798,972,58,76],tag:'Key 4 · BUOY',who:'cmd',t:'Drop a buoy: a second listener. Two ears far apart can pinpoint a radio.',keys:[['4','BUOY']],click:1},
+ {c:2,bg:'console',spot:[784,86,336,32],tag:'Time rate',who:'cmd',t:'Start the clock. <em>60×</em> is a good speed. Watch TRK 4417 creep toward ORIEL-36.',keys:[[']','faster'],['Space','pause']],click:1},
+ {c:2,bg:'sigint',spot:[350,252,668,368],tag:'SIGINT · F2',who:'cmd',t:'F2 opens SIGINT. Every bright dash on the waterfall is a burst somebody sent.',keys:[['F2','SIGINT']]},
+ {c:2,bg:'sigint',spot:[350,692,668,158],tag:'Recordings',who:'cmd',t:'Your recordings, newest first. Click the latest one from TRK 4417.',keys:[['↑ ↓','choose']],click:1},
+ {c:2,bg:'sigint',spot:[1038,612,184,34],tag:'Find direction',who:'cmd',t:'FIND DIRECTION. Bearings from your two listeners cross where it is.',keys:[['D','find direction']],click:1},
+ {c:2,bg:'sigint',spot:[1036,484,612,162],tag:'Identify',who:'cmd',t:'IDENTIFY SIGNAL names its command channel: the bonus goal, and the key to jamming it. <em>Too weak?</em> Wait for a closer burst.',keys:[['I','identify']],click:1},
+
+ {c:3,bg:'planner',spot:[1318,289,572,22],tag:'ORIEL-36',who:'cmd',t:'Select <em>ORIEL-36</em> in the Overview. You will meet the inspector where it is going.',click:1},
+ {c:3,bg:'planner',spot:[96,280,612,250],tag:'Planner · F3',who:'cmd',t:'F3 opens the planner. Each cell is a real trip: <em>wait</em> this long, <em>fly</em> this long, pay this much fuel. Blue is cheap; red crashes into Jupiter.',keys:[['F3','planner']]},
+ {c:3,bg:'planner',spot:[364,240,262,26],tag:'Cheapest',who:'cmd',t:'Pick <em>CHEAPEST</em>: wait 18 hours, fly 3, pay 1.9 km/s.',click:1},
+ {c:3,bg:'planner',spot:[96,578,620,192],tag:'Burn',who:'cmd',t:'BURN AT T+18:00 schedules the burn for you. Then speed time up and coast.',click:1},
+ {c:3,bg:'console',spot:[740,972,58,76],tag:'Key 3 · MATCH',who:'cmd',t:'Arriving isn\'t stopping. When you get there, <em>MATCH</em> brakes you alongside ORIEL-36.',keys:[['3','MATCH']],click:1},
+
+ {c:4,bg:'heat',who:'trk',radio:1,t:'MOVE COMPLETE · TARGET IN VIEW · NO ESCORT SEEN'},
+ {c:4,bg:'heat',spot:[480,160,665,490],tag:'Thermal forecast · F7',who:'cmd',t:'As long as it thinks it\'s alone, it keeps talking. F7 shows <em>when you\'ll be seen</em> and when Jupiter\'s shadow hides you.',keys:[['F7','heat']]},
+ {c:4,bg:'console',spot:[912,972,58,76],tag:'Key 6 · DARK',who:'cmd',t:'Go dark: store your waste heat for about <em>3.5 hours</em>. You only get one, so use it once you are alongside.',keys:[['6','DARK']],click:1},
+ {c:4,bg:'ir',spot:[960,500,330,90],tag:'Telescope',who:'cmd',t:'LOOK points the telescope. Up close you\'ll see its hull.',keys:[['2','LOOK'],['I / V','infrared / visible'],['Esc','close']]},
+
+ {c:5,bg:'options',spot:[995,510,212,320],tag:'Right-click',who:'cmd',t:'Right-click TRK 4417 for every option and what it costs. Destroying it leaves debris: <em>never here</em>.',click:1},
+ {c:5,bg:'hover_jam',spot:[1018,668,330,318],tag:'Jam its orders · 7',who:'cmd',t:'Its handler is millions of kilometres away. <em>Cut the line for 3 hours</em> and it gives up. A red cross on the card means: not yet.',keys:[['7','JAM']]},
+ {c:5,bg:'jam',spot:[1508,22,396,130],tag:'Escalation',who:'cmd',t:'Jamming is loud: <em>+2 escalation an hour</em>. Hold it for 3 hours, then press 7 again to stop.',keys:[['7','start / stop']]},
+
+ {c:6,bg:'debrief',spot:[118,108,1052,562],tag:'Debrief',who:'cmd',t:'It\'s climbing away. ORIEL-36 is still imaging, and there is not one piece of debris. <em>Good work, Operator.</em>'},
+ {c:6,bg:'keyart_debrief_lost',who:'cmd',panel:'ends',t:'One good ending, four bad ones. The debrief always tells you which goal failed.'},
+ {c:6,bg:'keyart_debrief',panel:'finish'}
+];
+
+var $=function(i){return document.getElementById(i)};
+var stage=$('stage'),view=$('view'),layer=$('layer'),spot=$('spot'),dlg=$('dlg'),cards=$('cards');
+var imgs=[$('bgA'),$('bgB')],front=0,cur=-1,typing=null;
+
+// chapter tabs
+var firstOf=[];S.forEach(function(s,i){if(firstOf[s.c]==null)firstOf[s.c]=i;});
+$('chapters').innerHTML=CH.map(function(n,i){return '<a href="#s'+(firstOf[i]+1)+'" data-c="'+i+'"><span>'+(i?('0'+i):'00')+'</span>'+n+'</a>';}).join('');
+
+function kb(k){return k.split(' ').map(function(x){return '<kbd>'+x+'</kbd>';}).join('');}
+var PANELS={
+ title:function(){return '<div class="title"><div class="kick">Operator\'s Handbook · PC</div><h1>SATWAR</h1><h2>The Shadowing</h2>'+
+  '<p>A guided tour of the screen and every step of your first operation. About ten minutes.</p>'+
+  '<div class="btns"><button class="btn big" data-go="1">Begin the tour<svg class="ico"><use href="#i-arrow"/></svg></button>'+
+  '<a class="btn ghost big" href="reference.html"><svg class="ico"><use href="#i-book"/></svg>Quick reference</a></div>'+
+  '<div class="facts"><span>Low Jupiter orbit · 2041</span><span>3 game days</span><span>Keyboard &amp; mouse</span></div></div>';},
+ cast:function(){
+  var c=[['p-sentinel','HYDRA BRAVO','Your warship','own','You'],['p-oriel','ORIEL-36','Allied radar satellite','prot','Protect'],
+         ['p-kite','TRK 4417','Unflagged inspector','unk','The shadow'],['p-station','GANYMEDE STN','Listening post','own','Your ears']];
+  return '<div class="cast">'+c.map(function(x){return '<div class="who-c '+x[3]+'"><div class="pic"><img src="img/'+x[0]+'.png" alt=""></div><span class="flag">'+x[4]+'</span><b>'+x[1]+'</b><small>'+x[2]+'</small></div>';}).join('')+'</div>';},
+ win:function(){
+  return '<div class="win"><div class="flow">'+
+   '<div class="w"><img src="img/i-jam.png" alt=""><b>Jam its link</b><small>Key 7</small></div><svg class="ico ar"><use href="#i-arrow"/></svg>'+
+   '<div class="w"><div class="hrs">3<span>h</span></div><div class="bar3"><i></i><i></i><i></i></div><b>Hold it</b><small>within 200 km of ORIEL-36</small></div><svg class="ico ar"><use href="#i-arrow"/></svg>'+
+   '<div class="w"><img src="img/p-kite.png" alt="" class="kite"><b>It leaves</b><small>You win</small></div></div>'+
+   '<div class="lose"><span class="lt">You lose if</span>'+
+   [['i-clock','It finishes its look'],['i-sat','ORIEL-36 is hurt'],['i-debris','Any debris'],['i-flag','Escalation hits 100']].map(function(x){return '<span class="l"><svg class="ico"><use href="#'+x[0]+'"/></svg>'+x[1]+'</span>';}).join('')+
+   '<span class="l bonus"><svg class="ico"><use href="#i-star"/></svg>Bonus: identify its radio</span></div></div>';},
+ ends:function(){
+  var b=[['It finished its look','Get alongside sooner; jam earlier'],['It went silent','Listen before you move'],['Open war','Fewer loud acts; stop jamming once it leaves'],['Debris','Never use the KV here']];
+  return '<div class="ends"><div class="end good"><span class="stamp">Good end</span><b>The inspector departs</b><small>Cut off for 3 h · no debris · below war</small></div>'+
+   b.map(function(x){return '<div class="end bad"><span class="stamp">Bad end</span><b>'+x[0]+'</b><small>Try: '+x[1]+'</small></div>';}).join('')+'</div>';},
+ finish:function(){
+  return '<div class="title fin"><div class="kick">End of the tour</div><h2 class="h">You\'re ready, Operator.</h2>'+
+   '<ol class="order">'+[['4','Buoy'],[']','Time'],['F2','Hear'],['D','Find'],['I','Identify'],['F3','Plan'],['3','Match'],['6','Dark'],['2','Look'],['7','Jam 3 h']].map(function(x){return '<li>'+kb(x[0])+'<span>'+x[1]+'</span></li>';}).join('')+'</ol>'+
+   '<div class="btns"><a class="btn big" href="../game/"><svg class="ico"><use href="#i-play"/></svg>Play The Shadowing</a>'+
+   '<a class="btn ghost big" href="reference.html"><svg class="ico"><use href="#i-book"/></svg>Quick reference</a>'+
+   '<button class="btn ghost big" data-go="0"><svg class="ico"><use href="#i-back"/></svg>Start again</button></div></div>';}
+};
+
+function phone(){return window.matchMedia('(max-width:760px)').matches;}
+
+function layout(){
+  var s=S[cur]; if(!s)return;
+  var sw=view.clientWidth, sh=view.clientHeight;
+  var dl=(!phone()&&!dlg.hidden)?dlg.offsetHeight+28:0, fh=sh-dl;
+  var k0=Math.max(sw/W,sh/H), k=k0, tx, ty, r=s.spot;
+  if(r){
+    var auto=Math.min(.58*sw/r[2], .62*fh/r[3]);
+    k=Math.max(Math.min(auto, k0*(phone()?3:2.2), 2.4), Math.min(k0,auto));
+    var cx=r[0]+r[2]/2, cy=r[1]+r[3]/2;
+    tx=sw/2-cx*k; ty=fh/2-cy*k;
+    var ctx=Math.min(0,Math.max(sw-W*k,tx)), cty=Math.min(0,Math.max(sh-H*k,ty));
+    var inx=(r[0]*k+ctx>=8)&&((r[0]+r[2])*k+ctx<=sw-8), iny=(r[1]*k+cty>=8)&&((r[1]+r[3])*k+cty<=fh-8);
+    if(inx)tx=ctx; if(iny)ty=cty;
+  } else {
+    if(s.panel&&!phone()){k=k0*1.04;}
+    tx=(sw-W*k)/2; ty=(sh-H*k)/2;
+  }
+  layer.style.transform='translate('+tx.toFixed(1)+'px,'+ty.toFixed(1)+'px) scale('+k.toFixed(4)+')';
+  if(r){
+    var p=8; spot.className='spot on'+(s.click?' click':'');
+    spot.style.left=(r[0]*k+tx-p)+'px'; spot.style.top=(r[1]*k+ty-p)+'px';
+    spot.style.width=(r[2]*k+2*p)+'px'; spot.style.height=(r[3]*k+2*p)+'px';
+  } else {
+    spot.className='spot'+(s.panel||s.dim||s.who?' dim':'');
+    spot.style.left=sw/2+'px';spot.style.top=fh/2+'px';spot.style.width='0px';spot.style.height='0px';
+  }
+  stage.style.setProperty('--dl',dl+'px');
+}
+
+function setBg(name){
+  var src='tour/'+name+'.webp', a=imgs[front];
+  if(a.getAttribute('src')===src)return;
+  var b=imgs[1-front]; b.onload=function(){b.classList.add('show');a.classList.remove('show');};
+  b.src=src; front=1-front; if(b.complete&&b.naturalWidth)b.onload();
+}
+
+function words(html){
+  // wrap each word in a span so the line can be revealed word by word
+  var d=document.createElement('div');d.innerHTML=html;var n=0;
+  (function walk(el){Array.prototype.slice.call(el.childNodes).forEach(function(c){
+    if(c.nodeType===3){var f=document.createDocumentFragment();c.textContent.split(/(\s+)/).forEach(function(w){
+      if(!w)return; if(/^\s+$/.test(w)){f.appendChild(document.createTextNode(w));return;}
+      var sp=document.createElement('span');sp.className='wd';sp.style.animationDelay=(n++*28)+'ms';sp.textContent=w;f.appendChild(sp);});
+      el.replaceChild(f,c);} else walk(c);});})(d);
+  return d.innerHTML;
+}
+
+function show(i,push){
+  i=Math.max(0,Math.min(S.length-1,i)); var s=S[i], prev=S[cur]; cur=i;
+  setBg(s.bg);
+  document.body.classList.toggle('titled',s.panel==='title'||s.panel==='finish');
+  // chapter card on the first slide of a chapter
+  var cc=$('chapcard'); cc.classList.remove('show');
+  if(i===firstOf[s.c]&&s.c>0){$('chapno').textContent='Chapter '+s.c;$('chapname').textContent=CH[s.c];void cc.offsetWidth;cc.classList.add('show');}
+  cards.innerHTML=s.panel?PANELS[s.panel]():''; cards.className='cards'+(s.panel?' on p-'+s.panel:'');
+  dlg.hidden=!s.who;
+  if(s.who){
+    var w=WHO[s.who]; $('face').src=w.img; $('who').textContent=w.n; $('where').textContent=w.s;
+    dlg.classList.toggle('red',!!w.red);
+    var L=$('line'); L.className='line'+(s.radio?' radio':''); L.innerHTML=words(s.radio?'<b>|| </b>'+s.t+'<b> ||</b>':s.t);
+    dlg.classList.remove('done'); clearTimeout(typing); typing=setTimeout(function(){dlg.classList.add('done');},L.querySelectorAll('.wd').length*28+300);
+    $('do').innerHTML=s.keys?'<span class="dl">'+(s.click?'Do':'Keys')+'</span>'+s.keys.map(function(k){return '<span class="k">'+kb(k[0])+'<em>'+k[1]+'</em></span>';}).join(''):(s.click?'<span class="dl">Do</span><span class="k"><svg class="ico"><use href="#i-mouse"/></svg><em>Click the lit part in the game</em></span>':'');
+    $('count').textContent=(i<9?'0':'')+i+' / '+(S.length-1);
+    $('back').disabled=i===0;
+    $('nextlabel').textContent=i===S.length-2?'Finish':'Next';
+  }
+  $('tag').textContent=s.tag||'';
+  var chs=document.querySelectorAll('#chapters a');
+  for(var j=0;j<chs.length;j++){chs[j].classList.toggle('on',+chs[j].dataset.c===s.c);chs[j].classList.toggle('past',+chs[j].dataset.c<s.c);}
+  var on=document.querySelector('#chapters a.on'); if(on&&on.scrollIntoView&&phone())on.scrollIntoView({block:'nearest',inline:'center'});
+  $('prog').style.width=(100*i/(S.length-1))+'%';
+  layout(); requestAnimationFrame(layout);
+  if(push!==false)history.replaceState(null,'','#s'+(i+1));
+  // warm the next background
+  var nx=S[i+1]; if(nx){var im=new Image();im.src='tour/'+nx.bg+'.webp';}
+}
+
+function next(){ if(!dlg.hidden&&!dlg.classList.contains('done')){dlg.classList.add('done');return;} show(cur+1); }
+function back(){ show(cur-1); }
+$('next').onclick=function(e){e.stopPropagation();next();};
+$('back').onclick=function(e){e.stopPropagation();back();};
+stage.addEventListener('click',function(e){
+  var g=e.target.closest('[data-go]'); if(g){show(+g.dataset.go);return;}
+  if(e.target.closest('a,button,.cards.on'))return; next();
+});
+document.addEventListener('keydown',function(e){
+  if(e.altKey||e.ctrlKey||e.metaKey)return;
+  if(['ArrowRight','PageDown',' ','Enter'].indexOf(e.key)>=0){e.preventDefault();next();}
+  else if(['ArrowLeft','PageUp','Backspace'].indexOf(e.key)>=0){e.preventDefault();back();}
+  else if(e.key==='Home'){show(0);} else if(e.key==='End'){show(S.length-1);}
+});
+var tx0=null;
+stage.addEventListener('touchstart',function(e){tx0=e.touches[0].clientX;},{passive:true});
+stage.addEventListener('touchend',function(e){if(tx0==null)return;var dx=e.changedTouches[0].clientX-tx0;tx0=null;if(Math.abs(dx)>50){dx<0?show(cur+1):show(cur-1);}},{passive:true});
+document.getElementById('chapters').addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;e.preventDefault();show(firstOf[+a.dataset.c]);});
+window.addEventListener('resize',layout);
+window.addEventListener('hashchange',function(){var m=/^#s(\d+)$/.exec(location.hash);if(m&&+m[1]-1!==cur)show(+m[1]-1,false);});
+if(/[?&]still/.test(location.search))document.documentElement.classList.add('still');
+imgs[0].classList.add('show');
+var m=/^#s(\d+)$/.exec(location.hash); show(m?+m[1]-1:0,false);
 })();
 </script>
 </body>
