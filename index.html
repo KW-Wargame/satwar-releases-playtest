@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>SATWAR · Playtest</title>
 <meta name="description" content="SATWAR: an educational game of stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics. Play in your browser or download.">
-<meta property="og:title" content="SATWAR · Playtest 0.8">
+<meta property="og:title" content="SATWAR · Playtest 0.9">
 <meta property="og:description" content="Nothing hides in space. An unflagged inspector is shadowing an allied radar satellite in low Jupiter orbit: rendezvous, stay cold, find its command link and jam it until it leaves, with real orbital mechanics and sensor physics.">
 <meta property="og:image" content="images/trailer.jpg?v=0.8">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -115,21 +115,21 @@ dialog.lb button:hover{border-color:var(--sand);}
 </style>
 </head>
 <body>
-<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.8</span></div></header>
+<header class="top"><div class="wrap"><span class="brand">SATWAR</span><span class="tag">PLAYTEST BUILD 0.9</span></div></header>
 
 <main class="wrap">
   <div class="hero">
-    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.8</b> A tutorial for every control, telescopes that identify, and a cleaner console. <span>What's new ↓</span></a>
+    <a class="news" href="#whats-new"><b>NEW · PLAYTEST 0.9</b> Black panels, tooltip cards, an event log, and jamming you can read. <span>What's new ↓</span></a>
     <p class="kick">An educational game of stealth satellites and electronic warfare</p>
     <h1>Nothing hides in space.<br><em>Three days</em> to make it leave.</h1>
     <p class="lede">Jupiter, 2041. An unflagged inspector has slipped into the orbit of ORIEL-36, an allied radar satellite in low Jupiter orbit, and is closing in to park beside it. Nobody asked it to. You run the console: listen to it before it knows you are there, get alongside and go dark, find its command link and cut it until it gives up and leaves, without starting a war. Real orbits, and the real physics of seeing and being seen.</p>
     <div class="ctas">
-      <a class="btn primary" href="game/">Play 0.8 in your browser ▸</a>
+      <a class="btn primary" href="game/">Play 0.9 in your browser ▸</a>
       <a class="btn" href="#trailer">Watch the trailer</a>
       <a class="btn" href="#science">The science</a>
       <a class="btn" href="#downloads">All downloads</a>
     </div>
-    <p class="note">No account, no install. 0.8 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 108 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
+    <p class="note">No account, no install. 0.9 needs a desktop browser with WebGL 2 (Chrome, Edge, Firefox or Safari), a keyboard and mouse, and a 108 MB download on first load. Saves stay in your browser. Nothing leaves your machine.</p>
     <video class="shot" id="heroVid" src="images/play.webm?v=0.8" poster="images/play-poster.jpg?v=0.8" width="1280" height="720" autoplay muted loop playsinline aria-label="Playtest 0.8 in motion. The console over Jupiter's dayside with TRK 4417 selected beside ORIEL-36 in low orbit; the planner opens on ORIEL-36 with its grid of waits and flight times; HYDRA turns and lights its drive, seen close up with its exhaust plume; then the view pulls out and time speeds up as HYDRA drops to ORIEL-36's orbit."></video>
     <script>/* A still picture for anyone who asks their device for reduced motion */ (function(){var v=document.getElementById('heroVid');if(v&&window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches){v.removeAttribute('autoplay');v.pause();v.controls=true;}})();</script>
     <p class="cap">Recorded in playtest 0.8: plan a rendezvous with ORIEL-36, light HYDRA's drive, and drop to its orbit. Recorded in the game itself. (A still picture shows instead if your device asks for reduced motion.)</p>
@@ -146,7 +146,26 @@ dialog.lb button:hover{border-color:var(--sand);}
   <section id="whats-new">
     <h2>What's new</h2>
     <dl class="log">
-      <dt>0.8<small>24 Oct 2026 · the walkthrough</small><span class="latest">LATEST</span></dt>
+      <dt>0.9<small>25 Oct 2026 · the playtest pass</small><span class="latest">LATEST</span></dt>
+      <dd>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>Black panels.</b> Every window, menu, the right-click menu, the callout and the left rail sit on a near-black plate with a hairline edge, so they read against Jupiter's dayside.</li>
+          <li><b>Resize anything.</b> Every box you can drag now has a grip and remembers its size. Selected Item is shorter.</li>
+          <li><b>An event log</b> after a spacecraft's caution and warning display: a timeline of the last four events, each with its time and a WARNING, CAUTION, NOMINAL or ADVISORY tag.</li>
+          <li><b>Your speed on show</b> on your asset's card and its map label. Icons stay on when you zoom in close.</li>
+          <li><b>A steady dock.</b> Every action keeps its place. One you can't take stays greyed out, and its card says why.</li>
+          <li><b>The callout opens when you select</b> a target, not when you hover over it.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The console over Jupiter's limb: the left rail and every panel on near-black plates, the event log at bottom left with a timeline and ADVISORY and CAUTION tags, HYDRA and TRK 4417 labelled with their speeds, the jammer's reach ring at 7,163 km, and the dock with JAM, FAKE, PULSE, TAKE and KV greyed out." loading="lazy" src="images/g9-console.jpg?v=0.9"><figcaption>Black plates over Jupiter, and the new event log</figcaption></figure></div>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>Cards, not walls of text.</b> Every tooltip is now a short card: what it does, a tick or a cross for each thing it needs, and its price. The SIGINT station's are rewritten for anyone, not just specialists.</li>
+          <li><b>Is the jamming working?</b> The target reads LINK CUT with a timer, or JAMMER NOT GETTING THROUGH, and an effect that isn't biting says NO EFFECT on its key.</li>
+          <li><b>Honest jamming reach.</b> The jammer used to aim only at your track, so its reach could read 7,000 km far out and then shrink as you closed in. Now it allows for the aim from the start. Once HYDRA's own telescope sees the target, the beam follows the telescope, the way space laser terminals point. Against the inspector the reach holds at about 7,000 km all the way in.</li>
+          <li><b>Match speed holds.</b> MATCH puts you on the target's own orbit rather than just matching its speed, so you stay alongside instead of drifting apart.</li>
+          <li><b>The infrared look switches itself.</b> It picks infrared or the visible telescope by which shows the hull, falls back to infrared in Jupiter's shadow, and says why a hull is still a blur.</li>
+          <li><b>Small fixes.</b> Buoys drop out behind the hull. The tutorial comes back after you hide it. Wide screens run lighter.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The JAM card over the dock, 31 km from TRK 4417: Jam its orders, a line on what it does, ticks for a known enemy, our telescope sees it to aim, and in reach, it works out to 7,013 km, a note on barrage jamming, and the price in amber." loading="lazy" src="images/g9-jam.jpg?v=0.9"><figcaption>The JAM card: what it needs, ticked off</figcaption></figure></div>
+      </dd>
+      <dt>0.8<small>24 Oct 2026 · the walkthrough</small></dt>
       <dd>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>A tutorial for everything.</b> Thirty short steps in nine parts teach every control and every mechanic the shadowing uses: the view, tracks and their uncertainty, the database, your goals, map layers, your assets, fuel and heat, time, listening, bearings, identifying, the link budget, the planner, matching speed, the infrared camera, going dark, every effect and its price, and jamming.</li>
@@ -341,11 +360,11 @@ dialog.lb button:hover{border-color:var(--sand);}
 
   <section id="downloads">
     <h2>Downloads</h2>
-    <p class="note" style="margin:0 0 14px">0.8 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
+    <p class="note" style="margin:0 0 14px">0.9 runs in your browser. The earlier 0.1 map game is still here too, online or as one HTML file that works offline.</p>
     <table>
       <thead><tr><th>If you want to…</th><th>Download</th><th>Size</th></tr></thead>
       <tbody>
-        <tr><td>Play 0.8, THE SHADOWING, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">108 MB</td></tr>
+        <tr><td>Play 0.9, THE SHADOWING, in your browser</td><td class="f"><a href="game/">game/</a></td><td class="s">108 MB</td></tr>
         <tr><td>Play 0.1, the campaign map, in your browser</td><td class="f"><a href="play/">play/</a></td><td class="s">64 KB</td></tr>
         <tr><td>0.1 offline on any computer: double-click to open in your browser</td><td class="f"><a href="satwar-0.1.html" download>satwar-0.1.html</a></td><td class="s">64 KB</td></tr>
       </tbody>
