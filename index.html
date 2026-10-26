@@ -370,11 +370,11 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
 </div></section>
 
 <section class="sec flush" id="trailer"><div class="wrap">
-  <button class="film" id="film" type="button" aria-label="Play the xGEO Live trailer, 86 seconds with sound.">
-    <img src="images/trailer.jpg?v=0.13" width="1920" height="1080" alt="" loading="lazy">
-    <span class="play"><i><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1 11 6 1.5 11Z" fill="currentColor"/></svg></i><span>Watch the trailer &middot; 1:26</span></span>
+  <button class="film" id="film" type="button" aria-label="Play the xGEO Core trailer, 67 seconds with sound.">
+    <img src="images/trailer.jpg?v=0.14" width="1920" height="1080" alt="" loading="lazy">
+    <span class="play"><i><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1 11 6 1.5 11Z" fill="currentColor"/></svg></i><span>Watch the trailer &middot; 1:07</span></span>
   </button>
-  <div class="film-meta"><span class="k dim"><span class="nx">xGEO</span> Live &middot; Trailer</span><span class="small">Every shot is the game itself, with its own score. Loads when you press play.</span></div>
+  <div class="film-meta"><span class="k dim"><span class="nx">xGEO</span> Core &middot; Trailer</span><span class="small">Rendered from the engine's own models, with its console and its own score. Loads when you press play.</span></div>
 </div></section>
 
 <section class="sec nob has-art" id="features"><div class="art dim" aria-hidden="true"><picture><source media="(max-width:1280px)" srcset="images/site/bg-deep-1280.jpg"><img src="images/site/bg-deep.jpg" width="2560" height="1440" alt="" loading="lazy" style="object-position:50% 50%"></picture></div><div class="wrap">
@@ -476,7 +476,7 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
  if(film){film.addEventListener('click',function(){
    if(film.querySelector('video'))return;
    var v=document.createElement('video');v.controls=true;v.autoplay=true;v.playsInline=true;v.setAttribute('aria-label',film.getAttribute('aria-label'));
-   v.innerHTML='<source src="images/trailer.mp4?v=0.13" type="video/mp4">';film.appendChild(v);v.play&&v.play().catch(function(){});film.style.cursor='default';});}
+   v.innerHTML='<source src="images/trailer.mp4?v=0.14" type="video/mp4">';film.appendChild(v);v.play&&v.play().catch(function(){});film.style.cursor='default';});}
  var lb=document.getElementById('lb');if(!lb||!lb.showModal)return;
  var imgs=[].slice.call(document.querySelectorAll('[data-zoom] img')),cur=0;
  function show(i){cur=(i+imgs.length)%imgs.length;var im=imgs[cur],fc=im.closest('figure'),big=document.getElementById('lbImg');
