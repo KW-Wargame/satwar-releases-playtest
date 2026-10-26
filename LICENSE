@@ -1,9 +1,17 @@
 Copyright (c) 2026 Kevin Williamson. All rights reserved.
 
-SATWAR, including the game files, artwork, text and this website, is
-proprietary. You may play the game for personal, educational or evaluation
-use. No part may be copied, modified, redistributed, sold or used to make
-another product except as permitted in writing by the copyright holder.
+The xGEO Core folder (core/) is licensed separately under the Apache
+License, Version 2.0: see core/LICENSE and core/NOTICE. Those terms apply
+to core/ only.
 
-Data and published works the game draws on are credited under SOURCES in the
-game, with their own terms.
+Everything else in this repository, xGEO Live (the game files, artwork,
+text, manuals and this website), is proprietary. You may play the game for
+personal, educational or evaluation use. No part may be copied, modified,
+redistributed, sold or used to make another product except as permitted in
+writing by the copyright holder.
+
+The names "xGEO", "xGEO Core" and "xGEO Live" are not licensed under
+either set of terms.
+
+Data and published works the game draws on are credited under SOURCES in
+the game, with their own terms.

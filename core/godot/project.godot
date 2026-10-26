@@ -1,0 +1,8 @@
+; xGEO Core: the simulation engine on its own, no window, no art.
+config_version=5
+
+[application]
+
+config/name="xGEO Core"
+config/description="The simulation engine under xGEO: orbits, sensors, signals and tracking around Jupiter."
+config/features=PackedStringArray("4.7")

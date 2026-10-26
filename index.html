@@ -179,6 +179,19 @@ h1,h2,h3{margin:0;font-weight:700}
 .doc p{margin:var(--s4) 0 var(--s5);font-size:16px;color:var(--ink2)}
 .doc .links{display:flex;gap:var(--s6);flex-wrap:wrap;margin-top:auto}
 
+/* xGEO Core and reporting */
+.core{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--s6);row-gap:var(--s7)}
+.core .intro{grid-column:1/6}
+.core .cards{grid-column:7/13;display:grid;grid-template-columns:minmax(0,1fr);gap:var(--s5);min-width:0}
+.card{min-width:0;background:rgba(8,8,8,.72);border:1px solid var(--line);padding:var(--s6);display:flex;flex-direction:column;gap:var(--s4)}
+.card .h3{font-size:26px}
+.card p{font-size:16px;color:var(--ink2)}
+.card code,.card pre{font:500 13px/1.6 ui-monospace,'JetBrains Mono',Consolas,monospace;color:var(--ink)}
+.card pre{margin:0;padding:var(--s4);background:rgba(0,0,0,.6);border:1px solid var(--line);white-space:pre-wrap;word-break:break-word}
+.card .links{display:flex;gap:var(--s6);flex-wrap:wrap}
+@media (max-width:1024px){.core .intro,.core .cards{grid-column:1/-1}}
+@media (max-width:640px){.card{padding:var(--s5)}}
+
 /* final call */
 .end{position:relative;overflow:hidden;background:#000;padding:var(--sec) 0}
 .end>picture,.end>picture img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:70% 50%}
@@ -289,7 +302,7 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
 </style>
 </head>
 <body>
-<header class="nav" id="nav"><div class="wrap"><a class="word" href="./">xGEO</a><nav aria-label="Sections"><a href="#operation">The Operation</a><a href="#features">Features</a><a href="#media">Media</a><a href="#manual">Field Manual</a></nav><a class="btn sm" href="game/">Play free</a></div></header>
+<header class="nav" id="nav"><div class="wrap"><a class="word" href="./">xGEO</a><nav aria-label="Sections"><a href="#operation">The Operation</a><a href="#features">Features</a><a href="#media">Media</a><a href="#manual">Field Manual</a><a href="#core">xGEO Core</a><a href="#report">Report a bug</a></nav><a class="btn sm" href="game/">Play free</a></div></header>
 <main>
 <section class="hero" aria-label="xGEO">
   <picture><source media="(max-width:1280px)" srcset="images/site/hero-1280.jpg"><img src="images/site/hero.jpg" width="2560" height="1100" alt="Against Jupiter's cream limb, a black angular inspector hangs just behind ORIEL-36, a small radar satellite with a long flat antenna, both caught by a hard sun." fetchpriority="high"></picture>
@@ -365,6 +378,30 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
     <div class="links"><a class="tl" href="research/xGEO-Core-Research-Edition.pdf">PDF <small>39 pages</small></a><a class="tl" href="research/">Read online</a></div></div>
 </div></section>
 
+<section class="sec" id="core"><div class="wrap core">
+  <div class="intro sh"><span class="idx">05</span><h2>xGEO Core</h2><p class="sub">The engine under the game, free and open source.</p>
+    <p class="lead">Orbits, sensors, radio signals and tracking around Jupiter, with no graphics. Run it from the command line, read every model and the source it rests on, and use it for your own teaching, studies or research.</p></div>
+  <div class="cards">
+    <div class="card"><span class="k">Download</span><h3 class="h3">Get Core</h3>
+      <p>A zip of the engine, its tests and its sources. You need <a href="https://godotengine.org/download">Godot 4.7</a>, free. Then, in the unzipped folder:</p>
+      <pre>godot --headless --path core/godot --script res://cli/run.gd -- --scenario= --hours=24</pre>
+      <div class="links"><a class="tl" href="core/xgeo-core.zip">Download zip <small>184 KB</small></a><a class="tl" href="https://github.com/KW-Wargame/xgeo/tree/main/core">Browse the code</a><a class="tl" href="research/">How it works</a></div></div>
+    <div class="card"><span class="k">Licence</span><h3 class="h3">Yours to use</h3>
+      <p>Core is under the Apache License 2.0: use it for anything, and change your own copy as you like. Keep the licence notice, and don't call your version xGEO ("based on xGEO Core" is fine). The game itself, xGEO Live, is not open source.</p>
+      <div class="links"><a class="tl" href="https://github.com/KW-Wargame/xgeo/blob/main/core/LICENSE">The licence</a></div></div>
+  </div>
+</div></section>
+
+<section class="sec not" id="report"><div class="wrap core">
+  <div class="intro sh"><span class="idx">06</span><h2>Report a bug</h2><p class="sub">Found something wrong? Tell us.</p>
+    <p class="lead">Bugs in the game or in Core, physics or numbers that look wrong, and ideas for new features all go in one place.</p></div>
+  <div class="cards">
+    <div class="card"><span class="k">Bug tracker</span><h3 class="h3">Open an issue</h3>
+      <p>Pick bug, physics or feature request and fill in the form. For a game bug, note the seed (bottom right of the map) and what you did. You need a free GitHub account. Code changes sent in (pull requests) are not accepted; reports are always welcome.</p>
+      <div class="links"><a class="tl" href="https://github.com/KW-Wargame/xgeo/issues/new/choose">Report a bug</a><a class="tl" href="https://github.com/KW-Wargame/xgeo/issues">See open issues</a></div></div>
+  </div>
+</div></section>
+
 <section class="end" aria-label="Play">
   <picture><source media="(max-width:1280px)" srcset="images/site/end-1280.jpg"><img src="images/site/end.jpg" width="2560" height="1100" alt="" loading="lazy"></picture>
   <div class="wrap">
@@ -372,13 +409,13 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
     <h2 class="h2">The inspector is already closing.</h2>
     <a class="btn" href="game/">Play the alpha <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1 11 6 1.5 11Z" fill="currentColor"/></svg></a>
     <p class="small">Free, no account, no install. Needs a desktop browser with WebGL 2, a keyboard and a mouse, and a 108 MB download on first load. Saves stay in your browser.</p>
-    <div class="fb"><b>Playtesting?</b>Note the seed (bottom right of the map), whether you won and how, anything confusing, and anywhere the physics felt wrong, and send it to whoever shared this page with you.</div>
+    <div class="fb"><b>Playtesting?</b>Note the seed (bottom right of the map), whether you won and how, anything confusing, and anywhere the physics felt wrong, and <a href="https://github.com/KW-Wargame/xgeo/issues/new/choose">report it on the bug tracker</a>.</div>
   </div>
 </section>
 </main>
 <footer><div class="wrap grid">
-  <div class="a"><a class="word" href="./">xGEO</a><p>&copy; 2026 Kevin Williamson. All rights reserved. An independent educational project.</p></div>
-  <div class="b"><a href="game/">Play the alpha</a><a href="manual/">Operator's handbook</a><a href="research/">xGEO Core</a><a href="notes/">Changelog</a></div>
+  <div class="a"><a class="word" href="./">xGEO</a><p>&copy; 2026 Kevin Williamson. All rights reserved, except xGEO Core (Apache 2.0). An independent educational project.</p></div>
+  <div class="b"><a href="game/">Play the alpha</a><a href="manual/">Operator's handbook</a><a href="research/">Research edition</a><a href="#core">xGEO Core</a><a href="https://github.com/KW-Wargame/xgeo/issues/new/choose">Report a bug</a><a href="notes/">Changelog</a></div>
   <div class="c"><p>Planetary data from NASA's Space Science Data Coordinated Archive and JPL Solar System Dynamics, used as published; NASA and JPL have not reviewed or endorsed this game. All ships, operators and events are original fiction. Full credits are under Library &middot; sources in the game.</p></div>
 </div></footer>
 <dialog class="lb" id="lb" aria-label="Picture"><div class="in"><img id="lbImg" alt=""><div class="bar"><span id="lbCap"></span><button id="lbPrev" aria-label="Previous">&larr;</button><button id="lbNext" aria-label="Next">&rarr;</button><button id="lbX">Close</button></div></div></dialog>

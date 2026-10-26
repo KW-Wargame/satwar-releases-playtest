@@ -1,19 +1,21 @@
-# xGEO · Alpha 0.5
+# xGEO
 
 ![Above Jupiter's dayside, a dark inspector hangs just beneath ORIEL-36, an allied radar satellite.](images/site/hero-1280.jpg)
 
-A hard-science game of stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics and sensor physics. It runs in your browser.
+A hard-science game of stealth satellites and electronic warfare around Jupiter, built on real orbital mechanics and sensor physics. Everything is on the website: **https://kw-wargame.github.io/xgeo/**
 
 | | |
 |---|---|
-| Play Alpha 0.5 (build 10), THE SHADOWING | [game/](game/) |
-| Operator's Handbook | [manual/](manual/) · [PDF](manual/xGEO-Operators-Handbook.pdf) |
-| Research Edition | [research/](research/) · [PDF](research/xGEO-Research-Edition.pdf) |
-| Changelog | [notes/](notes/) |
-
-This repository holds released builds only. © 2026 Kevin Williamson. All rights reserved.
+| Play xGEO Live, Alpha 0.5, in your browser | [game/](https://kw-wargame.github.io/xgeo/game/) |
+| Operator's Handbook | [manual/](https://kw-wargame.github.io/xgeo/manual/) · [PDF](manual/xGEO-Operators-Handbook.pdf) |
+| xGEO Core · Research Edition | [research/](https://kw-wargame.github.io/xgeo/research/) · [PDF](research/xGEO-Core-Research-Edition.pdf) |
+| **xGEO Core**, the open-source engine | [core/](core/) · [download zip](core/xgeo-core.zip) |
+| Report a bug or request a feature | [Issues](https://github.com/KW-Wargame/xgeo/issues/new/choose) |
+| Changelog | [notes/](https://kw-wargame.github.io/xgeo/notes/) |
 
 ## Licence
 
-Copyright (c) 2026 Kevin Williamson. All rights reserved. See [LICENSE](LICENSE).
-This repository holds only the public playtest page and builds, not the game's source code.
+- **xGEO Core** (everything in [core/](core/)) is open source under the Apache License 2.0: see [core/LICENSE](core/LICENSE).
+- **Everything else** here (the game build, website, art, manuals) is © 2026 Kevin Williamson, all rights reserved: see [LICENSE](LICENSE).
+
+Open source, not open contribution: bug reports and requests are welcome as [issues](https://github.com/KW-Wargame/xgeo/issues); pull requests are not accepted ([CONTRIBUTING](.github/CONTRIBUTING.md)).
