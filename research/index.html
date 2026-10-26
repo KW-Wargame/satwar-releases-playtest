@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>xGEO · Research Edition</title>
+<title>xGEO Core · Research Edition</title>
 <meta name="description" content="The physical models, sources and verification behind xGEO.">
-<meta property="og:title" content="xGEO · Research Edition">
+<meta property="og:title" content="xGEO Core · Research Edition">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&family=Barlow+Condensed:wght@500;600;700&family=Barlow:wght@400;500;600&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
@@ -185,12 +185,12 @@ footer p{margin:0 0 6px}
 </div></header>
 
 <div class="cover"><div class="in">
-  <div class="doc">Technical report · Alpha 0.5 · 25 October 2026</div>
+  <div class="doc">Research edition · Alpha 0.5 · 25 October 2026</div>
   <div class="word">xGEO</div>
-  <div class="kind">Research Edition</div>
-  <h1>Physical models, sources and verification in a game of orbital electromagnetic warfare at Jupiter</h1>
+  <div class="kind">Core</div>
+  <h1>The simulation engine under xGEO: its physical models, the sources they rest on, how each is checked, and how to use it as an open-source tool</h1>
   <p class="by">K. Williamson · xGEO project</p>
-  <a class="dlpdf" href="xGEO-Research-Edition.pdf" download>Download the PDF</a>
+  <a class="dlpdf" href="xGEO-Core-Research-Edition.pdf" download>Download the PDF</a>
   <div class="ctrl">
     <div><span>Build</span><b>Alpha 0.5</b></div>
     <div><span>Tests</span><b>63</b></div>
@@ -212,6 +212,7 @@ footer p{margin:0 0 6px}
   <li><a href="#s9">9 · The scenario</a></li>
   <li><a href="#s10">10 · Verification</a></li>
   <li><a href="#s11">11 · Limits</a></li>
+  <li><a href="#s12">12 · The open-source tool</a></li>
   <li><a href="#refs">References</a></li>
 </ol></nav>
 
@@ -509,6 +510,35 @@ J/S = J − S − 10 log(B<sub>j</sub>/B<sub>v</sub>)          dB</div>
 </ul>
 </section>
 
+<section id="s12">
+<h2><span class="num">12</span>xGEO Core as an open-source tool</h2>
+<p>The models in this edition make up <b>xGEO Core</b>, the engine under the game. <b>xGEO Live</b>, the game, draws what Core computes and sends orders into it, and nothing more. Core runs with no window, and it is being prepared for release as an open-source simulation tool for teaching, concept studies and research. It is not a validated operational tool.</p>
+<h3>12.1 What is Core and what is Live</h3>
+<div class="tw"><table>
+<tr><th>Part</th><th>What it holds</th><th>Where</th></tr>
+<tr><td>Core: physical models</td><td>Two-body motion, Lambert, gravity with J2 and the moons, ephemerides, link budgets, antenna patterns, radar, heat and infrared, the heat forecast, sensing, the tracking filter, breakup and debris, civil traffic, and the world that ties them together</td><td><code>godot/core/</code></td></tr>
+<tr><td>Core: scenario rules</td><td>Blue's effects and their costs, Red's behaviour, objectives and the debrief, the log's wording, save and continue. They run headless, but they are rules of play, and most of their values are Notional</td><td><code>godot/core/</code></td></tr>
+<tr><td>Scenarios</td><td>Classes, equipment and constants; the current scenario's cast and objectives</td><td><code>godot/data/*.json</code></td></tr>
+<tr><td>Live</td><td>The console, the map, the windows, art, sound, the tutorial</td><td><code>godot/ui/</code>, <code>godot/scenes/</code>, <code>godot/assets/</code></td></tr>
+<caption>Table 6. The split. A check in the test suite fails if anything in Core names one of Live's classes.</caption>
+</table></div>
+<h3>12.2 Running Core without the game</h3>
+<p>A command-line runner loads a scenario, steps time and writes what happens as JSON lines, one object per line:</p>
+<pre style="font:14px/1.5 var(--mono);background:var(--paper2);border:1px solid var(--rule);padding:14px 16px;overflow-x:auto;white-space:pre">godot --headless --path godot --script res://cli/run.gd -- \
+      --hours=24 --step=600 --seed=4417 --out=run.jsonl</pre>
+<p>The first line describes the run (scenario, seed, start time, units). Each step line carries the time, escalation, Blue's ships (position, velocity and Δv left), Blue's tracks with their 1σ ellipses, and every log entry since the last step. The last line is the debrief. Tracks report Blue's belief, never the truth; <code>--truth=true</code> adds the true states for analysis. Units are kilometres, km/s and seconds, centred on Jupiter. The test suite runs it on every change.</p>
+<h3>12.3 Real, Projected and Notional</h3>
+<p>Every model and value carries one of three labels, which extend the source labels of §1:</p>
+<ul>
+  <li><b>Real:</b> sourced and checked against an independent reference (§10). The orbits, gravity, the radio and radar equations, Planck's law, the filter.</li>
+  <li><b>Projected:</b> near-future and grounded in programmes that exist today, such as nuclear-thermal drives at NASA's tested 900 s specific impulse.</li>
+  <li><b>Notional:</b> invented for a scenario, the way defence and industry studies fly notional systems: Red's classes and behaviour, equipment sizes, escalation scores, the compressed timescale.</li>
+</ul>
+<p>A Real model fed Notional inputs gives a Notional answer: the jamming equation is exact, but a Red jammer's power is a design value, and so is the range it yields. The project's fidelity table (<code>docs/FIDELITY.md</code>) gives each model's label, what it was checked against and what it leaves out.</p>
+<h3>12.4 Status of the release</h3>
+<p>As of this edition the code is still under an all-rights-reserved licence. Done: the asset licence audit, the Core and Live split with its check, the command-line runner, the fidelity table, and contribution, conduct and security guides. Still to do before release: choosing licences, an export-control review of the jamming and counterspace models by someone qualified, a trademark search for the name, and a review of the repository's history. Contributions will be welcome once a licence is chosen; they must cite public sources only.</p>
+</section>
+
 <section id="refs">
 <h2>References</h2>
 <p class="refnote">Every source the game cites, in its code, data and tests, grouped by the model that uses it. A link opens the document itself, or a free copy where the publisher's is behind a paywall. Works with no readable copy online are listed without one.</p>
@@ -723,7 +753,7 @@ J/S = J − S − 10 log(B<sub>j</sub>/B<sub>v</sub>)          dB</div>
 </div>
 
 <footer><div class="in">
-  <p>xGEO Research Edition · Alpha 0.5 · <a href="../">Home</a> · <a href="../manual/">Operator's Handbook</a> · <a href="../game/">Play</a></p>
+  <p>xGEO Core · Research Edition · Alpha 0.5 · <a href="../">Home</a> · <a href="../manual/">Operator's Handbook</a> · <a href="../game/">Play</a></p>
   <p>© 2026 Kevin Williamson. All rights reserved. Planetary data from NASA and JPL, used as published; NASA and JPL have not reviewed or endorsed this game. All ships, operators and events in the game are original fiction.</p>
 </div></footer>
 <script>
