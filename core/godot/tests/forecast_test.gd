@@ -91,7 +91,9 @@ func _timing(sim: Sim) -> void:
 	print("  compute from scratch: %.2f ms (84 samples, no cache)" % ms)
 	var calls := 0
 	var first := 0.0
-	while calls < 20:
+	# Close to Jupiter a sample costs more coast steps (Gravity.ETA_NEAR), so a
+	# fresh path takes more calls: about 30 at 1.5 Jupiter radii, half a second of frames.
+	while calls < 60:
 		fc.get_for(sim, "hydra")
 		first = maxf(first, fc.compute_ms)
 		calls += 1

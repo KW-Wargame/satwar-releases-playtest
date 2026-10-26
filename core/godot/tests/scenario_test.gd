@@ -22,6 +22,9 @@
 ##    others alone; another run of a seed is another world.
 ## 11. A course of action: the runner gives timed orders, reports which were
 ##    carried out and why not, changes the outcome, and replays byte for byte.
+## 12. Real time: a sim second is a second of UTC; a ship turns at its real
+##    orbital rate with J2 and Io at its real period. A scenario may compress
+##    its story, never the clock or the physics.
 ## Thresholds are design values for a test, chosen with margin over what the
 ## models give; each is stated where it is checked.
 extends SceneTree
@@ -316,6 +319,29 @@ func _init() -> void:
 		return JSON.stringify(snaps.back().ships) if not snaps.is_empty() else ""
 	_check(last_ships.call(ca[1]) != last_ships.call(plain[1]), "the course of action changes the outcome")
 	_check(ca[2] != "" and ca[2] == cb[2], "the same seed, run and orders replay byte for byte")
+
+	# 12. Real time. A scenario may compress its story (CLOSE PASS: weeks into
+	# days, by shorter holds and quicker hops paid for in real Δv); the clock and
+	# the physics never are: one sim second is one second of UTC and of orbit.
+	var rt := _world()
+	var u0 := rt.utc_ms()
+	var p0: PackedFloat64Array = rt.by_id.pelican.r
+	var io0: PackedFloat64Array = rt.moon_state("io", rt.t)[0]
+	rt.advance(6.0 * Sim.HOUR)
+	_check(rt.utc_ms() - u0 == 6.0 * Sim.HOUR * 1000.0, "six sim hours are six hours of UTC")
+	var p1: PackedFloat64Array = rt.by_id.pelican.r
+	var turned := absf(atan2(p0[0] * p1[1] - p0[1] * p1[0], V.dot(p0, p1)))
+	var a_p := V.norm(p0)
+	# A circular equatorial orbit's rate with J2: ω² = μ/a³ (1 + 3/2 J2 (R/a)²) (Vallado 2013, §8.6, the radial J2 term).
+	var w_j2 := sqrt(rt.mu / (a_p * a_p * a_p) * (1.0 + 1.5 * Gravity.J2 * pow(Gravity.R_REF / a_p, 2.0)))
+	var kepler_turn := absf(fposmod(w_j2 * 6.0 * Sim.HOUR + PI, TAU) - PI)
+	# 0.5%: a design value for a test, above what the moons and a slight eccentricity add in six hours.
+	_check(absf(turned - kepler_turn) < 0.005 * kepler_turn, "a ship turns through its real orbital rate √(μ/a³ (1 + 3/2 J2 (R/a)²)) (%.4f rad, expected %.4f)" % [turned, kepler_turn])
+	var io1: PackedFloat64Array = rt.moon_state("io", rt.t)[0]
+	var io_turn := absf(atan2(io0[0] * io1[1] - io0[1] * io1[0], V.dot(io0, io1)))
+	# Io's sidereal period, 1.769138 d (JPL Solar System Dynamics, planetary satellite mean elements).
+	_check(absf(io_turn - TAU * 6.0 / (1.769138 * 24.0)) < 0.01, "Io moves at its real rate (%.4f rad in 6 h)" % io_turn)
+	rt = null
 
 	# A finished world is freed (no reference cycles keep it).
 	var wr: WeakRef = weakref(sim)

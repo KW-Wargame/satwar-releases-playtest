@@ -43,7 +43,7 @@ Tolerances are relative unless a unit is given. The "Result" column is the worst
 | Lambert (`Lambert.solve`) | Universal variables, Curtis Alg. 5.2, bisection | hapsira `izzo` (Izzo 2015); 129 transfers including every ship from WARDEN | 1e-6 | 1.9e-12; every non-degenerate transfer solved |
 | Lambert worked example | — | Curtis (2020) Ex. 5.2 | 6e-5 | 8e-6 |
 | Force model (`Gravity.accel`) | μ/r² + J2 zonal + four moons as third bodies (direct − indirect) | hapsira `J2_perturbation`, `third_body`; central-difference gradient of the J2 potential | 1e-9 | 9e-11 |
-| Integrator (`Gravity.coast`, RK4) | RK4 at the sim's 60 s and the tracker's 120 s sub-steps, 1 day, J2 + moons | DOP853 at rtol 1e-13 on hapsira's force terms | 5 m (a tenth of the radar's 50 m range σ) | 0.03 m |
+| Integrator (`Gravity.coast`, RK4) | RK4 at the sim's 60 s and the tracker's 120 s sub-steps, capped at 0.01 √(r³/μ) close to Jupiter, 1 day, J2 + moons, test orbits and every ship of the scenario | DOP853 at rtol 1e-13 on hapsira's force terms | 5 m (a tenth of the radar's 50 m range σ) | 1.0 m (CLOSE PASS's inspector at 1.3 Jupiter radii; 44 m before the cap, 26 Oct 2026) |
 | J2 secular rates | Ω̇ = −3/2 nJ2(R/p)² cos i, ω̇ = 3/4 nJ2(R/p)²(5cos²i − 1) | Vallado (2013) eqs. 9-41/9-42; 20-day arc at a = 3.1 R_J, i = 30° | 1% | 0.40% / 0.36% (first-order theory) |
 
 ### Jupiter system

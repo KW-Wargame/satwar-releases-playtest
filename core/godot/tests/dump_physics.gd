@@ -310,9 +310,16 @@ func effects(cases: Dictionary) -> Dictionary:
 	var fx: Effects = sim.effects
 	var out := {}
 	var w := {}
+	# The laser of the scenario's ships, else of any class that carries one
+	# (CLOSE PASS fields none; EXCALIBUR's class is in game.json).
 	for s in sim.ships:
 		if fx.laser(s).size() > 0:
 			w = fx.laser(s)
+	if w.is_empty():
+		for k in sim.data.classes:
+			if fx.laser({"cls": sim.data.classes[k]}).size() > 0:
+				w = fx.laser({"cls": sim.data.classes[k]})
+				break
 	if not w.is_empty():
 		out.laser = {"w": w, "dazzle_range_km": fx.dazzle_range_km(w), "spots": cases.laser_R_km.map(func(R): return {"R_km": R, "spot_m": fx.spot_m(w, R), "irradiance": fx.irradiance(w, R)})}
 	out.hpm_range_km = fx.hpm_range_km()

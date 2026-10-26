@@ -358,5 +358,11 @@ still loads; the command-line runner's JSON lines; the random streams (their
 seeds against Python's SHA-256, a thousand extra draws on one leaving the
 others alone, another run giving another world); a course of action (each
 order given at its time, carried out or refused with the reason, changing the
-outcome, and replaying byte for byte); and that a finished world is freed. Its thresholds (4σ, 50 km, 2%) are design
+outcome, and replaying byte for byte); that time is real (a sim second is a
+second of UTC, a ship turns at its real orbital rate with J2, Io at its real
+period); and that a finished world is freed.
+
+A scenario may compress its story, as CLOSE PASS compresses weeks of the real
+inspection into days, but only through its schedule: shorter holds and quicker
+hops, paid for in real Δv. The clock and the physics are never scaled. Its thresholds (4σ, 50 km, 2%) are design
 values for a test, chosen with margin over what the models give.

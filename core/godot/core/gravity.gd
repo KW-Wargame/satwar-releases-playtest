@@ -34,6 +34,7 @@ const J2 := 14696.514e-6
 const R_REF := 71492.0
 const FAR := 3.0e6 # km from Jupiter: past Callisto (1.88e6) the planets join in
 const ETA := 0.004
+const ETA_NEAR := 0.01 # inside FAR: a cap on the step, with Jupiter alone (coast)
 
 var mu: float
 var moons: Array # of Dictionary (with gm)
@@ -138,14 +139,25 @@ func step(r: PackedFloat64Array, v: PackedFloat64Array, t: float, h: float) -> A
 
 ## Coast for dt seconds (either sign) in steps no longer than max_h.
 ## Beyond FAR the steps grow (and shrink again near a planet) with step_limit.
+## Close to Jupiter the steps also stay under ETA_NEAR × sqrt(r³/μ), the same
+## criterion as beyond FAR: at 1.3 Jupiter radii (CLOSE PASS, a 4.4 h orbit) a
+## flat 60 s drifted 44 m a day from DOP853 (tools/verify), against the radar's
+## 50 m. ETA_NEAR is a design value: 25 s there (about 1 m a day), and no change
+## above 2.3 Jupiter radii, where 60 s is already within millimetres.
 func coast(r: PackedFloat64Array, v: PackedFloat64Array, t: float, dt: float, max_h := 60.0) -> Array:
-	var n := maxi(1, ceili(absf(dt) / max_h))
-	var h := dt / n
 	var s := [r, v]
-	for i in n:
-		if V.norm(s[0]) > FAR:
-			return _coast_far(s[0], s[1], t + i * h, dt - i * h, max_h)
-		s = step(s[0], s[1], t + i * h, h)
+	var done := 0.0
+	var sg := signf(dt)
+	var left := absf(dt)
+	while left > 1e-9:
+		var rn := V.norm(s[0])
+		if rn > FAR:
+			return _coast_far(s[0], s[1], t + done, sg * left, max_h)
+		# Equal steps over what is left, each under the limit here.
+		var h := left / ceilf(left / minf(max_h, ETA_NEAR * sqrt(rn * rn * rn / mu)))
+		s = step(s[0], s[1], t + done, sg * h)
+		done += sg * h
+		left -= h
 	return s
 
 

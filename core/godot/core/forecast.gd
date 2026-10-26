@@ -142,6 +142,12 @@ static func compute(sim: Sim, ship_id: String, horizon_s := -1.0, n := SAMPLES, 
 		return {}
 	var H := horizon_s if horizon_s > 0.0 else horizon(sim, s)
 	var dt := maxf(60.0, snappedf(H / n, 60.0))
+	# The budget is in samples of 300 s steps. Close to Jupiter the coast takes
+	# shorter steps (Gravity.ETA_NEAR), so a sample costs more and fewer fit a call.
+	if budget > 0:
+		var rn := V.norm(s.r)
+		var per := ceilf(dt / minf(300.0, Gravity.ETA_NEAR * sqrt(rn * rn * rn / sim.mu)))
+		budget = maxi(1, roundi(budget * ceilf(dt / 300.0) / per))
 	if float(memo.get("dt", -1.0)) != dt:
 		memo.clear()
 		memo.dt = dt

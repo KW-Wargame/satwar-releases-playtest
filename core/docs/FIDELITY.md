@@ -17,7 +17,7 @@ jammer's power is Notional, and the range it yields is only as good as both.
 | Gravity: Jupiter J2 and the Galilean moons | `gravity.gd` | Real | hapsira J2 and third-body terms; DOP853 | higher harmonics (J4 and up), Sun and Saturn, relativity, radiation pressure |
 | Moon positions | `gravity.gd`, `ephem.gd` | Real, simplified | JPL Horizons, 2036–2046 | planar mean elements, no mutual perturbations: up to 23,000 km and 0.72° off |
 | Sun and planets | `ephem.gd` | Real | JPL approximate positions (Standish & Williams 1992) | arc-minute accuracy only |
-| Propagation overall | `sim.gd` | Real, not operational | RK4 against DOP853 at 60 s steps | not the high-fidelity propagation used in operations |
+| Propagation overall | `sim.gd` | Real, not operational | RK4 against DOP853 at 60 s steps, shorter close to Jupiter (Gravity.ETA_NEAR) | not the high-fidelity propagation used in operations |
 | Time | `sim.gd`, `ephem.gd` | Real, simplified | astropy.time | leap seconds are ignored: the clock runs 69.2 s from TT (0.16° of Io's orbit) |
 | Radio link budgets, noise, integration | `rf.gd` | Real | ITU-R P.525, published examples | atmospheric and plasma effects, multipath |
 | Antenna patterns | `antenna.gd` | Real | ITU-R reference patterns | real dishes' measured patterns |
@@ -34,7 +34,7 @@ jammer's power is Notional, and the range it yields is only as good as both.
 | Red's behaviour | `red_ai.gd` | Notional | | does not adapt by hopping, nulling or optical links |
 | Escalation scores, objectives | `effects.gd`, `campaign.gd` | Notional | | |
 | Civil radio traffic | `traffic.gd` | Notional | | |
-| Timescale (weeks compressed to days) | `campaign.json` | Notional | | |
+| Timescale (weeks compressed to days) | `campaign.json` | Notional | the schedule only: the inspector's holds are hours, not days, and its hops are quicker, paid for in real Δv. The clock and the physics run in real time (`scenario_test.gd`, section 12: UTC, a ship's orbital rate with J2, Io's period) | |
 
 Run the checks: the Godot tests listed in Core's README, and
 `node tools/verify.mjs` (every number against independent references; the

@@ -137,7 +137,7 @@ def _airy_jitter_peak(P, D, lam, R, jit):
 
 def test_laser(game, check):
     L = game["effects"].get("laser")
-    assert L, "no laser in the campaign"
+    assert L, "no laser in the scenario or the classes"
     w = L["w"]
     x1 = jn_zeros(1, 1)[0] / math.pi
     sat = game["constants"]["effects_cfg"]["dazzle"]["saturationWm2"]
