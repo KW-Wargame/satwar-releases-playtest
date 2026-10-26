@@ -51,8 +51,9 @@ func _init(path := "res://data/game.json", camp_path := "*", seed_ := -1) -> voi
 	interplanetary = bool(camp.get("interplanetary", false)) or OS.get_cmdline_user_args().has("--interplanetary")
 	mu = data.jupiter.gm
 	moons = data.moons
-	gravity = Gravity.new(mu, moons, moon_state)
-	gravity.utc_of = utc_ms
+	# Through a weak reference, so the force model does not keep this Sim alive.
+	gravity = Gravity.new(mu, moons, _weak_moon_state(weakref(self)))
+	gravity.utc_of = _weak_utc(weakref(self))
 	Track.gravity = gravity
 	rng.seed = int(data.scenario.seed) if seed_ < 0 else seed_
 	for k in camp.get("classes", {}):
@@ -63,7 +64,7 @@ func _init(path := "res://data/game.json", camp_path := "*", seed_ := -1) -> voi
 	for k in data.classes:
 		if not data.hulls.has(k):
 			data.hulls[k] = {"parts": []}
-	# A campaign may bring its own cast in place of the JS game's.
+	# A campaign may bring its own ships in place of the JS game's.
 	for s in camp.get("ships", data.scenario.ships):
 		var d: Dictionary = s.duplicate(true)
 		if d.has("orbit"):
@@ -180,6 +181,14 @@ func moon(id: String) -> Dictionary:
 
 
 ## Moon state from JPL mean elements at sim time at. Returns [r, v].
+static func _weak_moon_state(w: WeakRef) -> Callable:
+	return func(id: String, at: float) -> Array: return w.get_ref().moon_state(id, at)
+
+
+static func _weak_utc(w: WeakRef) -> Callable:
+	return func(at: float) -> float: return w.get_ref().utc_ms(at)
+
+
 func moon_state(id: String, at: float) -> Array:
 	var m := moon(id)
 	return Kepler.from_elements(m, float(data.epochOffset) + at, mu + float(m.gm))

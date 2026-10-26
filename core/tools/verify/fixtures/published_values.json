@@ -1,0 +1,27 @@
+{
+ "note": "Published reference values used by the verification suite, each with its source. Values fetched by fetch_fixtures.py (JPL Horizons, JPL SSD) live in horizons_moons.json / jpl_sat_elem.json instead.",
+ "jupiter": {
+  "gm_durante2020": {"value": 126686534.1, "sigma3": 8.4, "unit": "km^3/s^2",
+   "source": "Durante, D. et al. (2020), Jupiter's gravity field halfway through the Juno mission, GRL 47, e2019GL086572; PDS model description 'The Durante2020 Gravity Field Model'",
+   "url": "https://pdsatmospheres.nmsu.edu/data_and_services/atmospheres_data/JUNO/logs/The%20Durante2020%20Gravity%20Field%20Model.pdf"},
+  "reference_radius_km": {"value": 71492.0, "source": "Durante2020 model description (reference radius); IAU 2015 Resolution B3 nominal equatorial radius (astropy.constants.R_jup)",
+   "url": "https://pdsatmospheres.nmsu.edu/data_and_services/atmospheres_data/JUNO/logs/The%20Durante2020%20Gravity%20Field%20Model.pdf"},
+  "J2_iess2018": {"value": 0.014696572, "sigma": 0.000000014, "source": "Iess, L. et al. (2018), Measurement of Jupiter's asymmetric gravity field, Nature 555, 220-222 (unnormalized, R = 71,492 km), as tabulated in A&A 2019 (aa35938-19, Table 1)",
+   "url": "https://www.aanda.org/articles/aa/full_html/2019/12/aa35938-19/T1.html"},
+  "J2_folkner2017": {"value": 0.014696514, "source": "Folkner, W. M. et al. (2017), GRL 44, 4694-4700 (the game's own citation)",
+   "url": "https://doi.org/10.1002/2017GL073140"},
+  "pole_iau2015": {"ra0_deg": 268.056595, "ra_rate_deg_per_century": -0.006499, "dec0_deg": 64.495303, "dec_rate_deg_per_century": 0.002413,
+   "source": "Archinal, B. A. et al. (2018), Report of the IAU Working Group on Cartographic Coordinates and Rotational Elements: 2015, Celest. Mech. Dyn. Astr. 130:22, Table 2",
+   "url": "https://doi.org/10.1007/s10569-017-9805-5"}
+ },
+ "rf": {
+  "itu_r_p525_constant_db": {"value": 32.4, "source": "ITU-R P.525-4 (2019), Calculation of free-space attenuation, eq. (4): L_bf = 32.4 + 20 log f(MHz) + 20 log d(km)", "url": "https://www.itu.int/rec/R-REC-P.525/en"},
+  "boltzmann_dbw_per_k_hz": {"value": -228.6, "source": "10 log10 k with k = 1.380649e-23 J/K, exact since the 2019 SI (CODATA 2018/2022): -228.599 dBW/K/Hz", "url": "https://physics.nist.gov/cgi-bin/cuu/Value?k"},
+  "kT0_dbm_per_hz_290K": {"value": -174.0, "source": "Thermal noise floor k T0 at the reference temperature T0 = 290 K (ITU-R P.372-17 (08/2024) sec. 2, definitions under eq. (2)): -173.98 dBm/Hz", "url": "https://www.itu.int/dms_pubrec/itu-r/rec/p/R-REC-P.372-17-202408-S!!PDF-E.pdf"},
+  "x_band_turnaround": {"num": 880, "den": 749, "source": "CCSDS 401.0-B-32, Radio Frequency and Modulation Systems, Part 1, Rec. 2.6.2 (X-band up / X-band down turnaround ratio 880/749); DSN 810-005 Module 201", "url": "https://public.ccsds.org/Pubs/401x0b32.pdf"},
+  "x_uplink_band_hz": {"lo": 7145e6, "hi": 7190e6, "source": "DSN 810-005 Module 201 Rev. F (2022), Category B (deep space) X-band uplink 7145-7190 MHz; 7190-7235 is Category A", "url": "https://deepspace.jpl.nasa.gov/dsndocs/810-005/"},
+  "x_downlink_band_hz": {"lo": 8400e6, "hi": 8450e6, "source": "DSN 810-005 Module 201", "url": "https://deepspace.jpl.nasa.gov/dsndocs/810-005/"},
+  "monopulse_slope_km": {"value": 1.6, "source": "Barton, D. K. (2005), Radar System Analysis and Modeling (Artech House): angle-error σ = θ3/(km √(2 S/N)), km ≈ 1.6 a typical value for an amplitude-comparison monopulse (section not verified); readable corroboration: MIT Lincoln Laboratory, Introduction to Radar Systems, Tracking and Parameter Estimation (2008), slide EST&TRACK-27, accuracy ∝ beamwidth/√SNR", "url": "https://us.artechhouse.com/"},
+  "hpbw_tapered_deg_lambda_over_D": {"value": 70.0, "range": [58.9, 72.0], "source": "Balanis, C. A. (2016), Antenna Theory 4th ed., ch. 15: HPBW ≈ 70 λ/D degrees for a typically tapered paraboloid (58.9 for uniform illumination); readable corroboration: NAWCWD TP 8347 (2013) sec. 3-1, p. 3-1.1, BW = 70 λ/d", "url": "https://www.wiley.com/"}
+ }
+}

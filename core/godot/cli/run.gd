@@ -6,7 +6,8 @@
 ##   --hours=24        how long to run (sim hours)
 ##   --step=600        seconds between snapshots (the sensor look is 600 s)
 ##   --seed=N          the random seed (default: the scenario's)
-##   --out=path        write to a file instead of standard output
+##   --out=path        write to a file instead of standard output (a relative
+##                     path is relative to the godot/ folder: Godot starts there)
 ##   --truth=false     also report Red's and neutrals' true states
 ## Lines: {"type":"start",...}, then per step {"type":"step",...} with every
 ## log entry since the last step, Blue's ships and Blue's tracks (the belief,

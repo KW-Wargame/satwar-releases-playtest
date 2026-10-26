@@ -110,24 +110,32 @@ func _init() -> void:
 	if not sim.camp.is_empty():
 		check("first report heard by someone", sim.intercepts.size() >= 1, "%d intercepts" % sim.intercepts.size())
 
-	# --- an intercept flown under real gravity: Lambert aims, gravity drifts it, one correction fixes it ---
+	# --- an intercept flown under real gravity: Lambert aims for Jupiter alone, so
+	# J2 and the moons drift it off; execute() refines the burn under the full
+	# force model (Sim.refine). Halfway, it is re-aimed: by almost nothing when
+	# the target holds its orbit (Core alone), by more when the scenario moves it ---
 	var game := Sim.new()
 	var plan := game.plan_intercept("hydra", "h1", 18.0 * 3600.0, true)
 	check("intercept plan affordable", plan.ok, str(plan.get("why")))
+	var hy0: Dictionary = game.by_id["hydra"]
+	var tof0: float = plan.arrive - game.t
+	var lambert_only: Array = game.gravity.coast(hy0.r, V.add(hy0.v, plan.dv_vec), game.t, tof0, 60.0)
+	var miss_lambert := V.dist(lambert_only[0], plan.node)
+	check("Lambert alone misses under real gravity", miss_lambert > 50.0, "%f km" % miss_lambert)
 	game.execute(plan)
 	var best := INF
-	var miss_first := 0.0
+	var miss_mid := 0.0
 	for i in 18 * 6:
 		if i == 9 * 6:
 			var fix := game.plan_intercept("hydra", "h1", plan.arrive - game.t, true)
-			miss_first = V.dist(game.predict("hydra", (plan.arrive - game.t) / 3600.0, 54).back(), fix.node)
+			miss_mid = V.dist(game.predict("hydra", (plan.arrive - game.t) / 3600.0, 54).back(), fix.node)
 			game.execute(fix)
 		game.advance(600.0)
 		best = minf(best, game.range_km("hydra", "h1"))
 	for i in 60:
 		game.advance(30.0)
 		best = minf(best, game.range_km("hydra", "h1"))
-	print("without the correction HYDRA would miss by %.0f km; with it, closest %.1f km" % [miss_first, best])
-	check("correction brings HYDRA within 50 km", best < 50.0, "%f km" % best)
+	print("Lambert alone would miss by %.0f km; refined, re-aimed by %.0f km at mid-course, closest %.1f km" % [miss_lambert, miss_mid, best])
+	check("refined intercept brings HYDRA within 50 km", best < 50.0, "%f km" % best)
 	print("%d passed, %d failed" % [passes, fails])
 	quit(1 if fails > 0 else 0)

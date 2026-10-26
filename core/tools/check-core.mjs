@@ -40,4 +40,6 @@ if (bad.length) {
   console.log(`Core reaches into Live (${bad.length}):\n` + bad.join('\n'));
   process.exit(1);
 }
-console.log(`core boundary: godot/core and godot/cli use none of Live's ${live.size} classes`);
+console.log(live.size
+  ? `core boundary: godot/core and godot/cli use none of Live's ${live.size} classes and no ui/ or scenes/ path`
+  : 'core boundary: Live is not in this folder; godot/core and godot/cli name no ui/ or scenes/ path');

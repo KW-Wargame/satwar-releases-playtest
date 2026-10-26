@@ -60,7 +60,14 @@ const SUBSTEP := 60.0 # s, skin-temperature integration step
 ## (annulus area × limb darkening), normalised. Built once.
 static var _disc: Array = []
 
-var sim: Sim
+## The world this belongs to, held weakly: Sim holds this too, and a strong
+## reference each way is a cycle that RefCounted never frees.
+var sim: Sim:
+	get:
+		return _sim.get_ref()
+	set(v):
+		_sim = weakref(v)
+var _sim := WeakRef.new()
 
 
 func _init(sim_: Sim) -> void:

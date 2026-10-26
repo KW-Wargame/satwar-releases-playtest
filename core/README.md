@@ -26,7 +26,8 @@ godot --headless --path godot --script res://cli/run.gd -- --scenario= --hours=2
 tracks with their 1σ ellipses, escalation, and every log entry since the last
 step), and an `end` line with the debrief. `--scenario=res://data/....json`
 picks the scenario, `--seed=N` the random seed, `--truth=true` adds Red's and
-neutrals' true states. With no scenario file
+neutrals' true states. A relative `--out` path is relative to the `godot/`
+folder (Godot starts there), so `run.jsonl` above lands in `godot/run.jsonl`. With no scenario file
 (`--scenario=`) it runs on `game.json` alone: the classes, the equipment and
 the opening positions. Units are km, km/s and s, Jupiter-centred.
 
@@ -82,4 +83,12 @@ godot --headless --path godot --import
 godot --headless --path godot --script res://tests/run_tests.gd
 godot --headless --path godot --script res://tests/forecast_test.gd
 node tools/check-core.mjs    # Core never reaches into the game
+node tools/verify.mjs        # every number against independent references (needs Python 3.12+)
 ```
+
+The verification suite (`tools/verify/`) evaluates Core's own functions and
+compares them with hapsira, scipy, astropy, filterpy, JPL Horizons data and
+published worked examples; the method and the latest results are in
+[docs/PHYSICS-VERIFICATION.md](docs/PHYSICS-VERIFICATION.md). Its first run
+installs the Python packages it needs into `tools/verify/.venv`; after that it
+works offline.

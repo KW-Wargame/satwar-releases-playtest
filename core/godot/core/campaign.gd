@@ -4,7 +4,14 @@
 class_name Campaign
 extends RefCounted
 
-var sim: Sim
+## The world this belongs to, held weakly: Sim holds this too, and a strong
+## reference each way is a cycle that RefCounted never frees.
+var sim: Sim:
+	get:
+		return _sim.get_ref()
+	set(v):
+		_sim = weakref(v)
+var _sim := WeakRef.new()
 var found := {} # pocket id -> time found
 var over := false
 var result := "" # "won", "lost", "time"

@@ -26,7 +26,14 @@ class_name Effects
 extends RefCounted
 
 const H := 3600.0
-var sim: Sim
+## The world this belongs to, held weakly: Sim holds this too, and a strong
+## reference each way is a cycle that RefCounted never frees.
+var sim: Sim:
+	get:
+		return _sim.get_ref()
+	set(v):
+		_sim = weakref(v)
+var _sim := WeakRef.new()
 var cfg: Dictionary
 var jamming := {} # shooter id -> {target, mode: "jam"/"spoof"}
 var kvs: Array = [] # flights: {id (the kill vehicle's object), target, launch, arrive, aim, reach, rel, acquired, done, result}

@@ -1,7 +1,6 @@
 # xGEO Core: fidelity of each model
 
-Every model and value in xGEO Core carries one of three labels
-(docs/XGEO.md):
+Every model and value in xGEO Core carries one of three labels:
 
 - **Real:** sourced and checked against an independent reference
   ([PHYSICS-VERIFICATION.md](PHYSICS-VERIFICATION.md)).
@@ -19,6 +18,7 @@ jammer's power is Notional, and the range it yields is only as good as both.
 | Moon positions | `gravity.gd`, `ephem.gd` | Real, simplified | JPL Horizons, 2036–2046 | planar mean elements, no mutual perturbations: up to 23,000 km and 0.72° off |
 | Sun and planets | `ephem.gd` | Real | JPL approximate positions (Standish & Williams 1992) | arc-minute accuracy only |
 | Propagation overall | `sim.gd` | Real, not operational | RK4 against DOP853 at 60 s steps | not the high-fidelity propagation used in operations |
+| Time | `sim.gd`, `ephem.gd` | Real, simplified | astropy.time | leap seconds are ignored: the clock runs 69.2 s from TT (0.16° of Io's orbit) |
 | Radio link budgets, noise, integration | `rf.gd` | Real | ITU-R P.525, published examples | atmospheric and plasma effects, multipath |
 | Antenna patterns | `antenna.gd` | Real | ITU-R reference patterns | real dishes' measured patterns |
 | Radar range equation | `rf.gd` | Real | radar handbooks (REALISM-SOURCES) | clutter, Swerling fluctuation beyond the stated case |
@@ -26,7 +26,7 @@ jammer's power is Notional, and the range it yields is only as good as both.
 | Jamming (J/S, spot and barrage) | `effects.gd`, `rf.gd` | Real equations, Notional powers | jamming equation; powers are design values | effect is binary (cut or not), Red does not hop or null |
 | Heat and infrared | `thermal.gd` | Real | Stefan–Boltzmann, Planck band fractions | Jupiter as a grey body, zodiacal background not verified at 5.2 AU |
 | Heat forecast | `forecast.gd` | Real model, Notional thresholds | the same IR look as `sensing.gd` | |
-| Tracking filter | `tracking.gd` | Real | filterpy; consistency (NEES) over many runs | data association is by truth id; drop thresholds are design values |
+| Tracking filter | `tracking.gd` | Real | filterpy; consistency (NEES) over many runs | planar: the state is [x, y, vx, vy] in Jupiter's equatorial plane, while ships move in 3-D (the Sun pulls them out of it by metres over days); data association is by truth id; drop thresholds are design values |
 | Breakup and debris | `breakup.gd` | Real | NASA Standard Breakup Model | long-term debris evolution |
 | Component damage | `damage.gd` | Notional | | |
 | Nuclear-thermal drives at 900 s | `game.json` classes | Projected | NASA tested specific impulse | |
@@ -36,5 +36,6 @@ jammer's power is Notional, and the range it yields is only as good as both.
 | Civil radio traffic | `traffic.gd` | Notional | | |
 | Timescale (weeks compressed to days) | `campaign.json` | Notional | | |
 
-Run the checks: `node tools/godot.mjs test` (the game's own tests) and
-`node tools/godot.mjs verify` (every number against independent references).
+Run the checks: the Godot tests listed in Core's README, and
+`node tools/verify.mjs` (every number against independent references; the
+results table is in [PHYSICS-VERIFICATION.md](PHYSICS-VERIFICATION.md)).

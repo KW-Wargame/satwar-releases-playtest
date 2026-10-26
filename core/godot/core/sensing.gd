@@ -22,7 +22,14 @@
 class_name Sensing
 extends RefCounted
 
-var sim: Sim
+## The world this belongs to, held weakly: Sim holds this too, and a strong
+## reference each way is a cycle that RefCounted never frees.
+var sim: Sim:
+	get:
+		return _sim.get_ref()
+	set(v):
+		_sim = weakref(v)
+var _sim := WeakRef.new()
 var pending := {} # ship id -> recent bearing lines not yet a track
 var auto := false # analyse every intercept as it arrives
 const DF_FLOOR := 20e-6 # rad
