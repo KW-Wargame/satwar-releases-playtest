@@ -292,7 +292,7 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
 <header class="nav" id="nav"><div class="wrap"><a class="word" href="./">xGEO</a><nav aria-label="Sections"><a href="#operation">The Operation</a><a href="#features">Features</a><a href="#media">Media</a><a href="#manual">Field Manual</a></nav><a class="btn sm" href="game/">Play free</a></div></header>
 <main>
 <section class="hero" aria-label="xGEO">
-  <picture><source media="(max-width:1280px)" srcset="images/site/hero-1280.jpg"><img src="images/site/hero.jpg" width="2560" height="1100" alt="Above Jupiter's dayside, a dark angular inspector hangs just beneath ORIEL-36, a box-shaped radar satellite with a long flat antenna." fetchpriority="high"></picture>
+  <picture><source media="(max-width:1280px)" srcset="images/site/hero-1280.jpg"><img src="images/site/hero.jpg" width="2560" height="1100" alt="Against Jupiter's cream limb, a black angular inspector hangs just behind ORIEL-36, a small radar satellite with a long flat antenna, both caught by a hard sun." fetchpriority="high"></picture>
   <div class="wrap"><div class="copy">
     <span class="k">Alpha 0.5 &middot; Free in your browser</span>
     <h1>xGEO</h1>
@@ -317,11 +317,11 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
 </div></section>
 
 <section class="sec flush" id="trailer"><div class="wrap">
-  <button class="film" id="film" type="button" aria-label="Play the xGEO trailer, 86 seconds with sound. ORIEL-36 in low Jupiter orbit and the inspector beside it; the console and the planner; HYDRA lighting its drive; HYDRA alongside and dark; the SIGINT station picking out the inspector's report; a jamming beam on its command link; the inspector backing away; then the title.">
-    <img src="images/trailer.jpg?v=0.8" width="1920" height="1080" alt="" loading="lazy">
+  <button class="film" id="film" type="button" aria-label="Play the xGEO Live trailer, 86 seconds with sound. ORIEL-36 against Jupiter's cloud tops and the inspector beside it; the console and the planner; HYDRA in silhouette on the lit crescent as it burns; HYDRA alongside and dark; the SIGINT station picking out the inspector's report; HYDRA jamming its command link over the clouds; the inspector backing away; then the title.">
+    <img src="images/trailer.jpg?v=0.11" width="1920" height="1080" alt="" loading="lazy">
     <span class="play"><i><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1.5 1 11 6 1.5 11Z" fill="currentColor"/></svg></i><span>Watch the trailer &middot; 1:26</span></span>
   </button>
-  <div class="film-meta"><span class="k dim">Official trailer</span><span class="small">Every shot is the game itself, with its own score. 23 MB, loads when you press play.</span></div>
+  <div class="film-meta"><span class="k dim">Official trailer</span><span class="small">Every shot is the game itself, with its own score. 24 MB, loads when you press play.</span></div>
 </div></section>
 
 <section class="sec nob has-art" id="features"><div class="art dim" aria-hidden="true"><picture><source media="(max-width:1280px)" srcset="images/site/bg-deep-1280.jpg"><img src="images/site/bg-deep.jpg" width="2560" height="1440" alt="" loading="lazy" style="object-position:50% 50%"></picture></div><div class="wrap">
@@ -392,7 +392,7 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
  if(film){film.addEventListener('click',function(){
    if(film.querySelector('video'))return;
    var v=document.createElement('video');v.controls=true;v.autoplay=true;v.playsInline=true;v.setAttribute('aria-label',film.getAttribute('aria-label'));
-   v.innerHTML='<source src="images/trailer.mp4?v=0.8" type="video/mp4">';film.appendChild(v);v.play&&v.play().catch(function(){});film.style.cursor='default';});}
+   v.innerHTML='<source src="images/trailer.mp4?v=0.11" type="video/mp4">';film.appendChild(v);v.play&&v.play().catch(function(){});film.style.cursor='default';});}
  var lb=document.getElementById('lb');if(!lb||!lb.showModal)return;
  var imgs=[].slice.call(document.querySelectorAll('[data-zoom] img')),cur=0;
  function show(i){cur=(i+imgs.length)%imgs.length;var im=imgs[cur],fc=im.closest('figure'),big=document.getElementById('lbImg');

@@ -509,7 +509,7 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
  if(film){film.addEventListener('click',function(){
    if(film.querySelector('video'))return;
    var v=document.createElement('video');v.controls=true;v.autoplay=true;v.playsInline=true;v.setAttribute('aria-label',film.getAttribute('aria-label'));
-   v.innerHTML='<source src="images/trailer.mp4?v=0.8" type="video/mp4">';film.appendChild(v);v.play&&v.play().catch(function(){});film.style.cursor='default';});}
+   v.innerHTML='<source src="images/trailer.mp4?v=0.11" type="video/mp4">';film.appendChild(v);v.play&&v.play().catch(function(){});film.style.cursor='default';});}
  var lb=document.getElementById('lb');if(!lb||!lb.showModal)return;
  var imgs=[].slice.call(document.querySelectorAll('[data-zoom] img')),cur=0;
  function show(i){cur=(i+imgs.length)%imgs.length;var im=imgs[cur],fc=im.closest('figure'),big=document.getElementById('lbImg');
