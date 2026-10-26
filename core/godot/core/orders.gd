@@ -108,6 +108,9 @@ static func give(sim: Sim, order: Dictionary) -> Dictionary:
 			out.why = "" if out.ok else String(plan.get("why", "cannot fly it"))
 			if out.ok:
 				out.dv = plan.dv
+				out.arrive = plan.arrive # when it meets: the order's time + tof
+				out.miss_km = plan.get("miss_km", 0.0) # from its aim, flown under full gravity
+				out.sigma_km = plan.get("sigma", 0.0) # the target's 1σ there, on Blue's track
 		"match":
 			var tv := _seen(sim, target)
 			if tv.is_empty():

@@ -397,33 +397,47 @@ func plan_to(id: String, node: PackedFloat64Array, tof: float, sigma := 0.0, tar
 ## aim point by the miss, re-solve, until it arrives within 50 m (a few passes;
 ## the classic differential-correction method, Vallado 2013; single shooting as in
 ## NASA/TP-20220014814, §5.2.1). Far out,
-## where J2 is small, the first pass already lands. Updates dv_vec, dv, v2.
-func refine(plan: Dictionary, tol_km := 0.05) -> void:
+## where J2 is small, the first pass already lands. Updates dv_vec, dv, v2, and
+## miss_km: how far from its aim the burn it settles on arrives, flown under full
+## gravity. Returns whether that is within tol_km; when it is not (the shooting
+## stalls, or Lambert has no arc to a moved aim), it keeps the best pass it flew
+## and execute() refuses the burn rather than fly a silent miss.
+const REFINE_PASSES := 8 # design value: from 12,000 km off, 7 corrections reach a few m
+
+
+func refine(plan: Dictionary, tol_km := 0.05) -> bool:
 	if not plan.has("node") or not plan.has("arrive"):
-		return
+		return true
 	if plan.get("kind", "") == "planet":
 		refine_planet(plan)
-		return
+		return true
 	var s: Dictionary = by_id[plan.id]
 	var tof := float(plan.arrive) - t
 	if tof <= 0.0:
-		return
+		return true
 	var node: PackedFloat64Array = plan.node
 	var aim := node
 	var v1 := V.add(s.v, plan.dv_vec)
-	for i in 6:
+	var best_v := v1
+	var best := INF
+	for i in REFINE_PASSES:
 		var st := gravity.coast(s.r, v1, t, tof, 60.0)
 		var miss := V.sub(st[0], node)
-		plan.v2 = st[1]
-		if V.norm(miss) < tol_km:
+		if V.norm(miss) < best:
+			best = V.norm(miss)
+			best_v = v1
+			plan.v2 = st[1]
+		if best < tol_km or i == REFINE_PASSES - 1:
 			break
 		aim = V.sub(aim, miss)
 		var sol := Lambert.solve(s.r, aim, tof, mu)
 		if sol.is_empty():
-			return
+			break
 		v1 = sol[0]
-	plan.dv_vec = V.sub(v1, s.v)
+	plan.dv_vec = V.sub(best_v, s.v)
 	plan.dv = V.norm(plan.dv_vec)
+	plan.miss_km = best
+	return best < tol_km
 
 
 ## Flights between planets (core/transfer.gd). Off unless the campaign says
@@ -658,8 +672,10 @@ func burn(id: String, dv_vec: PackedFloat64Array) -> bool:
 func execute(plan: Dictionary) -> bool:
 	if not plan.get("ok", false):
 		return false
-	if plan.get("kind", "") != "orbit":
-		refine(plan)
+	if plan.get("kind", "") != "orbit" and not refine(plan):
+		plan.ok = false
+		plan.why = "no transfer under full gravity (%s km off)" % String.num(float(plan.miss_km), 1)
+		return false
 	var ok := burn(plan.id, plan.dv_vec)
 	if ok and by_id[plan.id].side == "blue":
 		by_id[plan.id].plan_arrive = plan.arrive
