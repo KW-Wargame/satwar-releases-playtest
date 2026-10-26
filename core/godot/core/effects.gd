@@ -511,7 +511,7 @@ func _exploit(tg: Dictionary) -> void:
 			continue
 		if tg.role == "relay" or r.role == "relay":
 			var P := Track.diag([3000.0 ** 2, 3000.0 ** 2, 0.2 ** 2, 0.2 ** 2])
-			var x := PackedFloat64Array([r.r[0] + sim.rng.randfn() * 2000.0, r.r[1] + sim.rng.randfn() * 2000.0, r.v[0], r.v[1]])
+			var x := PackedFloat64Array([r.r[0] + sim.stream("effects").randfn() * 2000.0, r.r[1] + sim.stream("effects").randfn() * 2000.0, r.v[0], r.v[1]])
 			var tr := Track.new(r.id, "TRK %d" % sim.track_n, x, P, sim.t)
 			sim.track_n += 3
 			tr.ident = "classified"
@@ -574,7 +574,7 @@ func step(h: float) -> void:
 			var nrm := V.scale(V.of(-los[1], los[0]), 1.0 / maxf(V.norm(los), 1e-9))
 			var dv := minf(1.0, sim.delta_v(tg.id) - 0.3)
 			if dv > 0.2:
-				sim.burn(tg.id, V.scale(nrm, dv * (1.0 if sim.rng.randf() < 0.5 else -1.0)))
+				sim.burn(tg.id, V.scale(nrm, dv * (1.0 if sim.stream("effects").randf() < 0.5 else -1.0)))
 		var tgo := float(kv.arrive) - now
 		# The seeker: it steers only on what it can see itself.
 		if not kv.acquired and tg.alive and sim.sensing.ir_sees(k, tg):
@@ -598,7 +598,7 @@ func _divert(k: Dictionary, tg: Dictionary, now: float, tgo: float) -> void:
 	# Where the seeker puts the target: off by its angular error, across the line of sight.
 	var los := V.sub(tg.r, k.r)
 	var R := V.norm(los)
-	var e := V.of(sim.rng.randfn(), sim.rng.randfn(), sim.rng.randfn())
+	var e := V.of(sim.stream("effects").randfn(), sim.stream("effects").randfn(), sim.stream("effects").randfn())
 	e = V.sub(e, V.scale(los, V.dot(e, los) / maxf(R * R, 1e-12)))
 	var seen := V.add(tg.r, V.scale(e, SEEKER_RAD * R))
 	var goal: PackedFloat64Array = sim.gravity.coast(seen, tg.v, now, tgo, sub)[0]
@@ -635,7 +635,7 @@ func _arrive(kv: Dictionary, k: Dictionary, tg: Dictionary, now: float) -> void:
 	kv.miss_km = miss
 	var hard := (float(tg.cls.get("length", 10.0)) / 2.0 + 0.3) / 1000.0 # the hull's half-length plus the KV's radius, km
 	var label: String = sim.tracks[kv.target].label if sim.tracks.has(kv.target) else String(tg.short)
-	if tg.alive and miss <= hard and sim.rng.randf() < float(kv.rel):
+	if tg.alive and miss <= hard and sim.stream("effects").randf() < float(kv.rel):
 		kv.result = "hit"
 		impact(k, tg)
 		return
@@ -667,7 +667,7 @@ func impact(p: Dictionary, tg: Dictionary) -> Dictionary:
 	if cat:
 		# Everything breaks up; the cloud moves with the pair's centre of mass.
 		var vc := V.scale(V.add(V.scale(tg.v, mt), V.scale(p.v, mp)), 1.0 / (mt + mp))
-		var c := Breakup.cloud(tg.r, vc, sim.t, M, true, tg.id, sim.rng)
+		var c := Breakup.cloud(tg.r, vc, sim.t, M, true, tg.id, sim.stream("breakup"))
 		sim.debris.append(c)
 		tg.alive = false
 		tg.destroyed = true
@@ -678,7 +678,7 @@ func impact(p: Dictionary, tg: Dictionary) -> Dictionary:
 		# projectile's momentum, and the ejecta make a smaller cloud.
 		var hull: Dictionary = sim.data.hulls.get(String(tg.classId), {})
 		var hits := []
-		var tags := Breakup.struck(tg, hull, sim.rng, hits)
+		var tags := Breakup.struck(tg, hull, sim.stream("breakup"), hits)
 		Damage.apply(tg, sim.data.classes[tg.classId], tags)
 		for h in hits:
 			h.t = sim.t
@@ -689,11 +689,11 @@ func impact(p: Dictionary, tg: Dictionary) -> Dictionary:
 		out.n = 0
 		if not ground:
 			# Pushed and set tumbling about its centre of mass by the hit.
-			var sp := Breakup.spin(tg, hull, mp, vrel, float(hits[0].x) if not hits.is_empty() else float(tg.cls.get("length", 10.0)) / 2.0, sim.rng)
+			var sp := Breakup.spin(tg, hull, mp, vrel, float(hits[0].x) if not hits.is_empty() else float(tg.cls.get("length", 10.0)) / 2.0, sim.stream("breakup"))
 			sp.t0 = sim.t
 			tg.spin = sp
 			tg.v = V.add(tg.v, V.scale(vrel, mp / mt))
-			var c := Breakup.cloud(tg.r, tg.v, sim.t, M, false, tg.id, sim.rng)
+			var c := Breakup.cloud(tg.r, tg.v, sim.t, M, false, tg.id, sim.stream("breakup"))
 			sim.debris.append(c)
 			out.n = c.n
 		sim.say("kv_cripple", Lang.f("kv_cripple", [label, Damage.describe(tags), out.n]), "good", {"to": tg.id, "from": p.id, "emr": e})

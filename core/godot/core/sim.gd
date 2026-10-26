@@ -20,7 +20,12 @@ var ships: Array = [] # Dictionary per ship: exported fields plus r, v, cls, sta
 var by_id := {}
 var moons: Array
 var gravity: Gravity
-var rng := RandomNumberGenerator.new()
+## Random draws come from named streams, one per subsystem (stream()), so a
+## change in how often one subsystem draws never shifts another's numbers, and
+## run N of a seed is the same world on every machine.
+var master_seed := 0
+var run := 0
+var streams := {} # name -> RandomNumberGenerator
 var intercepts: Array = [] # recordings: {id, ship, kind, f, bw, start, end, heard_by: {ear: snr}, df, classified}
 var tracks := {} # ship id -> Track (Blue's belief)
 var track_n := 4417
@@ -41,7 +46,7 @@ var scheduled: Array = [] # planned burns: {at, id, target, tof}
 static var campaign_path := "res://data/campaign.json"
 
 
-func _init(path := "res://data/game.json", camp_path := "*", seed_ := -1) -> void:
+func _init(path := "res://data/game.json", camp_path := "*", seed_ := -1, run_ := 0) -> void:
 	if camp_path == "*":
 		camp_path = campaign_path
 	data = JSON.parse_string(FileAccess.get_file_as_string(path))
@@ -54,7 +59,8 @@ func _init(path := "res://data/game.json", camp_path := "*", seed_ := -1) -> voi
 	gravity = Gravity.new(mu, moons, _moon_state_of(moons, mu, float(data.epochOffset)))
 	gravity.utc_of = _utc_of(float(data.startUtc))
 	Track.gravity = gravity
-	rng.seed = int(data.scenario.seed) if seed_ < 0 else seed_
+	master_seed = int(data.scenario.seed) if seed_ < 0 else seed_
+	run = run_
 	for k in camp.get("classes", {}):
 		data.classes[k] = camp.classes[k]
 	for k in camp.get("hulls", {}):
@@ -119,7 +125,7 @@ func _add_campaign() -> void:
 			by_id[r.id].pocket = r.pocket
 			continue
 		var choices: Array = r.pocket if r.pocket is Array else [r.pocket]
-		var pk: Dictionary = pocket(choices[rng.randi() % choices.size()])
+		var pk: Dictionary = pocket(choices[stream("setup").randi() % choices.size()])
 		var st := pocket_state(pk, 0.0)
 		var off := V.of(float(r.offset[0]), float(r.offset[1]))
 		var s := {"id": r.id, "name": r.name, "short": r.short, "side": "red", "kind": "hostile", "classId": r.class, "role": r.role, "pocket": pk.id, "operator": "UNKNOWN", "flag": "NONE",
@@ -593,6 +599,44 @@ func plan_orbit(id: String) -> Dictionary:
 
 ## Burn: change velocity now and pay for it by the rocket equation; the drive
 ## glows for the length of the burn (thrust-limited), and at least 5 min.
+## The random stream of one subsystem: setup, sensing, effects, breakup, red,
+## traffic. Its seed is the first 60 bits of SHA-256 (FIPS 180-4) of
+## "xgeo/<master seed>/<run>/<name>": streams of one run, and the runs of one
+## seed, start far apart, and a new stream never moves the others. (A hash
+## rather than SplitMix64: GDScript has no unsigned 64-bit arithmetic.)
+func stream(name: String) -> RandomNumberGenerator:
+	if not streams.has(name):
+		var g := RandomNumberGenerator.new()
+		g.seed = stream_seed(master_seed, run, name)
+		streams[name] = g
+	return streams[name]
+
+
+static func stream_seed(master: int, run_: int, name: String) -> int:
+	return ("xgeo/%d/%d/%s" % [master, run_, name]).sha256_text().substr(0, 15).hex_to_int()
+
+
+## Every stream's position, for a save.
+func stream_states() -> Dictionary:
+	var out := {}
+	for k in streams:
+		out[k] = streams[k].state
+	return out
+
+
+## Put the streams back as saved. A save from before the streams (one shared
+## generator, its state an int) restarts them from the seed: the world is the
+## one saved, only its later chance draws differ.
+func restore_streams(state: Dictionary) -> void:
+	master_seed = int(state.get("seed", master_seed))
+	run = int(state.get("run", run))
+	streams.clear()
+	var saved = state.get("rng", {})
+	if saved is Dictionary:
+		for k in saved:
+			stream(k).state = int(saved[k])
+
+
 func burn(id: String, dv_vec: PackedFloat64Array) -> bool:
 	var s: Dictionary = by_id[id]
 	var dv := V.norm(dv_vec)
@@ -645,7 +689,8 @@ func day() -> int:
 ## Release a listening buoy from a warship, where it is and moving as it moves.
 func drop_buoy(from_id: String) -> String:
 	var s: Dictionary = by_id[from_id]
-	if int(s.get("buoys", 1 if s.kind == "warship" else 0)) <= 0 or not s.alive:
+	# A scenario without the buoy's class (TEST RANGE: game.json alone) has none to drop.
+	if int(s.get("buoys", 1 if s.kind == "warship" else 0)) <= 0 or not s.alive or not data.classes.has("wren"):
 		return ""
 	s.buoys = int(s.get("buoys", 1)) - 1
 	var n := 1

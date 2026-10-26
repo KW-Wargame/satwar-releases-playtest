@@ -31,7 +31,7 @@ static func save(sim: Sim) -> void:
 		var tr: Track = sim.tracks[id]
 		tracks[id] = {"label": tr.label, "x": tr.x, "P": tr.P, "t": tr.t, "ident": tr.ident, "class_id": tr.class_id, "side": tr.side, "last_seen": tr.last_seen, "in_contact": tr.in_contact, "intercepts": tr.intercepts, "lkp": tr.lkp, "lkp_t": tr.lkp_t}
 	var state := {"t": sim.t, "next_look": sim.next_look, "escalation": sim.escalation, "ships": ships, "tracks": tracks, "track_n": sim.track_n,
-		"intercepts": sim.intercepts, "log": sim.log, "debris": sim.debris, "scheduled": sim.scheduled, "rng": sim.rng.state,
+		"intercepts": sim.intercepts, "log": sim.log, "debris": sim.debris, "scheduled": sim.scheduled, "seed": sim.master_seed, "run": sim.run, "rng": sim.stream_states(),
 		"jamming": sim.effects.jamming, "kvs": sim.effects.kvs, "radar": sim.effects.radar_on, "found": sim.campaign.found, "pending": sim.sensing.pending,
 		"auto": sim.sensing.auto, "dish_aim": sim.sensing.dish_aim, "last_look": sim.sensing.last_look, "doctrinal": Lang.doctrinal}
 	var f := FileAccess.open(PATH, FileAccess.WRITE)
@@ -71,7 +71,7 @@ static func load_into(sim: Sim) -> bool:
 	sim.log = state.log
 	sim.debris = state.debris
 	sim.scheduled = state.scheduled
-	sim.rng.state = state.rng
+	sim.restore_streams(state)
 	sim.effects.jamming = state.jamming
 	sim.effects.kvs = state.kvs
 	sim.effects.radar_on = state.radar

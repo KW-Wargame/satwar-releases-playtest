@@ -79,7 +79,7 @@ func _init(sim_: Sim) -> void:
 
 
 func gauss() -> float:
-	return sim.rng.randfn(0.0, 1.0)
+	return sim.stream("sensing").randfn(0.0, 1.0)
 
 
 ## The opening picture: the tender's departure burn was seen, so it already
@@ -256,11 +256,11 @@ func look() -> void:
 			# Each look is a draw: Pd = Φ(SNR − 5) in infrared, then in visible light.
 			var by := ""
 			var p_ir := float(ir_look(o, x).get("pd", 0.0))
-			if p_ir > 1e-9 and sim.rng.randf() < p_ir:
+			if p_ir > 1e-9 and sim.stream("sensing").randf() < p_ir:
 				by = "IR"
 			else:
 				var p_vis := float(vis_look(o, x).get("pd", 0.0))
-				if p_vis > 1e-9 and sim.rng.randf() < p_vis:
+				if p_vis > 1e-9 and sim.stream("sensing").randf() < p_vis:
 					by = "VIS"
 			if by == "":
 				continue
@@ -328,12 +328,12 @@ func _false_alarms(t: float) -> void:
 	for o in sensors():
 		var n := 0
 		var L := exp(-mean)
-		var p := sim.rng.randf()
+		var p := sim.stream("sensing").randf()
 		while p > L:
 			n += 1
-			p *= sim.rng.randf()
+			p *= sim.stream("sensing").randf()
 		for i in n:
-			false_lines.append({"t": t, "from": o.r, "bearing": sim.rng.randf() * TAU, "by": o.id})
+			false_lines.append({"t": t, "from": o.r, "bearing": sim.stream("sensing").randf() * TAU, "by": o.id})
 	false_lines = false_lines.filter(func(l): return t - l.t < 2.0 * sim.LOOK)
 
 
@@ -436,7 +436,7 @@ func _listen(a: float, b: float) -> void:
 				"start": burst.start, "end": burst.end, "heard_by": {}, "ear_pos": {}, "budget": {}, "truth": _back(x, mid), "df": false, "classified": false}
 			for e in ears():
 				var bud := budget(x, burst, e, mid)
-				if bud.is_empty() or sim.rng.randf() >= float(bud.pd):
+				if bud.is_empty() or sim.stream("sensing").randf() >= float(bud.pd):
 					continue
 				rec.heard_by[e.id] = bud.snr
 				rec.ear_pos[e.id] = bud.ear_pos

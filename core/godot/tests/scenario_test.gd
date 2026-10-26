@@ -17,6 +17,11 @@
 ## 8. The campaign: objectives, the end of the operation, the debrief.
 ## 9. Save and load give back the same world; the command-line runner writes
 ##    well-formed JSON lines; a finished world is freed.
+## 10. Random streams: each subsystem's seed is SHA-256 of seed, run and name
+##    (checked against Python's hashlib); drawing from one stream leaves the
+##    others alone; another run of a seed is another world.
+## 11. A course of action: the runner gives timed orders, reports which were
+##    carried out and why not, changes the outcome, and replays byte for byte.
 ## Thresholds are design values for a test, chosen with margin over what the
 ## models give; each is stated where it is checked.
 extends SceneTree
@@ -31,8 +36,19 @@ func _check(ok: bool, what: String) -> void:
 		fails += 1
 
 
-func _world(seed_ := -1) -> Sim:
-	return Sim.new("res://data/game.json", RANGE, seed_)
+func _world(seed_ := -1, run := 0) -> Sim:
+	return Sim.new("res://data/game.json", RANGE, seed_, run)
+
+
+## The runner on TEST RANGE: [exit code, its lines parsed, the raw text].
+func _run(args: Array) -> Array:
+	var out := OS.get_user_data_dir().path_join("scenario_test.jsonl")
+	var code := OS.execute(OS.get_executable_path(), ["--headless", "--path", ProjectSettings.globalize_path("res://"), "--script", "res://cli/run.gd", "--",
+		"--scenario=" + RANGE, "--out=" + out] + args)
+	var text := FileAccess.get_file_as_string(out) if FileAccess.file_exists(out) else ""
+	DirAccess.remove_absolute(out)
+	var lines := text.strip_edges().split("\n") if text != "" else PackedStringArray()
+	return [code, Array(lines).map(func(l): return JSON.parse_string(l)), text]
 
 
 ## Put a ship beside another (offset km along its track, same velocity).
@@ -241,22 +257,65 @@ func _init() -> void:
 	back.advance(Sim.HOUR)
 	sim.advance(Sim.HOUR)
 	_check(_fingerprint(back) == _fingerprint(sim), "and the two run on alike")
+	# A save from before the random streams: one generator, its state an int.
+	SaveGame.save(sim)
+	var old: Dictionary = bytes_to_var(FileAccess.get_file_as_bytes(SaveGame.PATH))
+	old.rng = 12345
+	old.erase("seed")
+	old.erase("run")
+	FileAccess.open(SaveGame.PATH, FileAccess.WRITE).store_buffer(var_to_bytes(old))
+	var older := _world()
+	_check(SaveGame.load_into(older) and _fingerprint(older) == _fingerprint(sim), "a save from before the streams still loads, into the same world")
+	older = null
 	if keep != "":
 		FileAccess.open(SaveGame.PATH, FileAccess.WRITE).store_string(keep)
 	else:
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(SaveGame.PATH))
 
 	# The command-line runner on this scenario.
-	var out := OS.get_user_data_dir().path_join("scenario_test.jsonl")
-	var code := OS.execute(OS.get_executable_path(), ["--headless", "--path", ProjectSettings.globalize_path("res://"), "--script", "res://cli/run.gd", "--",
-		"--scenario=" + RANGE, "--hours=3", "--step=600", "--out=" + out])
-	var lines := FileAccess.get_file_as_string(out).strip_edges().split("\n") if FileAccess.file_exists(out) else PackedStringArray()
-	var parsed := Array(lines).map(func(l): return JSON.parse_string(l))
-	_check(code == 0 and lines.size() == 20, "the runner exits cleanly with start, 18 steps and end (%d lines)" % lines.size())
+	var plain := _run(["--hours=3", "--step=600"])
+	var parsed: Array = plain[1]
+	_check(plain[0] == 0 and parsed.size() == 20, "the runner exits cleanly with start, 18 steps and end (%d lines)" % parsed.size())
 	_check(parsed.all(func(x): return x is Dictionary), "every line is a JSON object")
 	if parsed.size() >= 2 and parsed[0] is Dictionary and parsed.back() is Dictionary:
 		_check(parsed[0].type == "start" and parsed[0].name == "TEST RANGE" and parsed.back().type == "end", "it starts with the scenario's name and ends with a debrief")
-	DirAccess.remove_absolute(out)
+
+	# 10. Random streams. The seeds against Python: hashlib.sha256(b"xgeo/4417/0/setup").hexdigest()[:15].
+	_check(Sim.stream_seed(4417, 0, "setup") == 0xf40a3220fb5b489 and Sim.stream_seed(4417, 0, "sensing") == 0xc5a7b235956e3de,
+		"stream seeds are SHA-256 of seed, run and name (FIPS 180-4, as Python's hashlib gives)")
+	var s1 := _world()
+	var s2 := _world()
+	for i in 1000:
+		s2.stream("traffic").randf()
+	var same := true
+	for name in ["setup", "sensing", "effects", "breakup", "red"]:
+		same = same and s1.stream(name).randf() == s2.stream(name).randf()
+	_check(same, "a thousand extra draws on one stream leave every other stream's next draw unchanged")
+	var run0 := _world(-1, 0)
+	var run1 := _world(-1, 1)
+	run0.advance(6.0 * Sim.HOUR)
+	run1.advance(6.0 * Sim.HOUR)
+	_check(_fingerprint(run0) != _fingerprint(run1), "run 1 of a seed is another world than run 0")
+	s1 = null
+	s2 = null
+	run0 = null
+	run1 = null
+
+	# 11. A course of action (data/examples/test_range_coa.json).
+	var coa := ["--hours=3", "--step=600", "--coa=res://data/examples/test_range_coa.json"]
+	var ca := _run(coa)
+	var cb := _run(coa)
+	var given: Array = ca[1].filter(func(x): return x is Dictionary and x.type == "order")
+	var did := given.map(func(x): return "%s %s" % [x.order.do, "ok" if x.ok else "refused"])
+	_check(ca[0] == 0 and did == ["intercept ok", "effect refused", "burn ok", "buoy refused", "burn refused"], "every order is reported, carried out or refused (%s)" % ", ".join(did))
+	_check(given.size() == 5 and given[1].why != "" and String(given[4].why).contains("Blue"), "a refusal says why: the rules of engagement, a Red ship")
+	_check(given.size() == 5 and given[0].t == 1800.0 and given[2].t == 5400.0, "each order is given at its time")
+	_check(ca[1].size() == 25 and ca[1].back().type == "end", "snapshots still come every step around the orders (%d lines)" % ca[1].size())
+	var last_ships := func(lines: Array) -> String:
+		var snaps: Array = lines.filter(func(x): return x is Dictionary and x.type == "step")
+		return JSON.stringify(snaps.back().ships) if not snaps.is_empty() else ""
+	_check(last_ships.call(ca[1]) != last_ships.call(plain[1]), "the course of action changes the outcome")
+	_check(ca[2] != "" and ca[2] == cb[2], "the same seed, run and orders replay byte for byte")
 
 	# A finished world is freed (no reference cycles keep it).
 	var wr: WeakRef = weakref(sim)

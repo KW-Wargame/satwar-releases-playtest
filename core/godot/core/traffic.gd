@@ -2,7 +2,7 @@
 ## X-band with Red. Each reports on its own schedule; ears hear them like any
 ## other burst, so the waterfall is busy and the work is telling Red's few
 ## quiet reports from everyone else's. Some sit close to Red's frequencies on
-## purpose. They have their own random stream, so Red's draws are unchanged.
+## purpose. They draw from their own stream (Sim.stream), so Red's draws are unchanged.
 class_name Traffic
 extends RefCounted
 
@@ -14,12 +14,11 @@ var sim: Sim:
 	set(v):
 		_sim = weakref(v)
 var _sim := WeakRef.new()
-var rng := RandomNumberGenerator.new()
 
 
 func _init(sim_: Sim) -> void:
 	sim = sim_
-	rng.seed = 2041
+	var rng := sim.stream("traffic")
 	for s in sim.ships:
 		if s.get("kind", "") == "civil":
 			s.bursts = []
@@ -33,7 +32,7 @@ func think() -> void:
 			continue
 		if sim.t >= float(s.next_tx):
 			var t: Dictionary = s.cls.ttc
-			s.bursts.append({"start": sim.t, "end": sim.t + float(t.burst) * rng.randf_range(0.7, 1.3), "kind": "ttc"})
-			s.next_tx = sim.t + rng.randf_range(float(t.every[0]), float(t.every[1]))
+			s.bursts.append({"start": sim.t, "end": sim.t + float(t.burst) * sim.stream("traffic").randf_range(0.7, 1.3), "kind": "ttc"})
+			s.next_tx = sim.t + sim.stream("traffic").randf_range(float(t.every[0]), float(t.every[1]))
 			if s.bursts.size() > 12:
 				s.bursts = s.bursts.slice(s.bursts.size() - 12)

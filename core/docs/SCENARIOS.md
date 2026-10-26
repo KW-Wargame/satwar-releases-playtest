@@ -212,15 +212,53 @@ the first look and the run is won at once.
 The CLI runs for `--hours` whatever happens, and stops early once the run is
 over. It gives no orders: Blue's ships coast and sense, and Red follows its
 plan. A CLI run of the example is therefore lost when the inspector finishes.
-To play Blue, drive `Sim` from GDScript (`sim.execute(sim.plan_intercept(...))`,
-`sim.effects`), as `godot/tests/` do.
+To play Blue from the command line, give the runner a course of action
+(below); for anything more, drive `Sim` from GDScript
+(`sim.execute(sim.plan_intercept(...))`, `sim.effects`), as `godot/tests/` do.
 
-## The seed
+## The seed and the run
 
 The seed drives every random draw: the opening track's error, sensor noise,
 when Red reports home, which pocket a Red ship picks. It is `game.json`'s
 `scenario.seed` (4417) unless `--seed=N` is given; a scenario file cannot set
-it. The same file, seed and `--step` give the same output, line for line.
+it. The same file, seed, run, orders and `--step` give the same output, byte
+for byte.
+
+Each part of Core draws from its own stream: `setup` (which pocket),
+`sensing` (noise, detections, false alarms), `effects` (a kill vehicle's hit,
+a captured node's logs, a jinking target), `breakup` (the debris and the
+damage), `red` (when Red reports home) and `traffic` (civil emitters). A
+stream's seed is the first 60 bits of SHA-256 (FIPS 180-4) of
+`xgeo/<seed>/<run>/<name>`, so more draws in one part (a new sensor, say)
+never move another part's numbers. `--run=K` picks run K of a seed: runs 0 to
+K-1 of one seed are a Monte Carlo set that anyone can reproduce.
+
+## A course of action
+
+`--coa=file.json` gives Blue's orders at set times, from a file like
+`data/examples/test_range_coa.json`:
+
+```json
+{"orders": [
+  {"t": 1800, "do": "intercept", "ship": "lancer", "target": "h1", "tof": 7200},
+  {"t": 3600, "do": "effect", "effect": "jam", "ship": "excal", "target": "h1"},
+  {"t": 5400, "do": "burn", "ship": "excal", "dv": [0.0, 0.003, 0.0]},
+  {"t": 5400, "do": "buoy", "ship": "lancer"}
+]}
+```
+
+| Order | Fields | What it does |
+|---|---|---|
+| `burn` | `ship`, `dv` [x, y, z] km/s | An impulsive burn, paid for in propellant. |
+| `intercept` | `ship`, `target`, `tof` s | A transfer that meets the target `tof` seconds later, refined under full gravity and flown. Against a Red ship it is planned on Blue's track, not the truth. |
+| `effect` | `effect`, `ship`, `target` | `jam`, `spoof`, `dazzle`, `hpm`, `cyber` or `kinetic`, if it can be used then (in range, on the beam, a declared enemy). |
+| `buoy` | `ship` | Drop a listening buoy, if the ship carries one and the scenario has the buoy class. |
+
+`t` is seconds from the start; the runner stops at each order's time to give
+it, and orders only Blue's ships. Each order adds an `order` line saying
+whether it was carried out (`ok`) and, if not, why (`why`: not enough fuel,
+not a known enemy, …). An order that cannot be carried out is reported and
+skipped, not fatal.
 
 ## Running it
 
@@ -236,7 +274,9 @@ godot --headless --path godot --script res://cli/run.gd -- \
 | `--scenario=` | `res://data/campaign.json` | The scenario. Empty runs `game.json` alone. |
 | `--hours=` | 24 | Sim hours to run. |
 | `--step=` | 600 | Seconds between `step` lines. The world acts every 600 s look whatever this is. |
-| `--seed=` | `game.json`'s | The random seed. |
+| `--seed=` | `game.json`'s | The master random seed. |
+| `--run=` | 0 | The run of that seed (a Monte Carlo set: 0, 1, 2, …). |
+| `--coa=` | none | A course of action: Blue's orders at set times. |
 | `--out=` | standard output | Write the lines to this file. |
 | `--truth=` | false | Also report Red's and neutrals' true states. |
 
@@ -251,8 +291,8 @@ error for `SCRIPT ERROR` after every change.
 One JSON object per line. Units are km, km/s and s, Jupiter-centred, in the
 game's plane; `t` is sim seconds from the start.
 
-- `start`: the scenario, its `name`, the seed, the start time (UTC), hours and
-  step.
+- `start`: the scenario, its `name`, the seed, the run, the number of orders,
+  the start time (UTC), hours and step.
 - `step`, one per `--step`: `t` and `utc`; `escalation`; `ships`, Blue's (all
   of them with `--truth=true`) with position `r`, velocity `v` and remaining
   `delta_v`; `tracks`, Blue's belief about each contact, never the truth:
@@ -264,12 +304,14 @@ game's plane; `t` is sim seconds from the start.
 - `end`: the last `t`, `over`, `result` (`won`, `lost`, `time`, or empty if
   `--hours` ran out first) and the `debrief`: each objective's state, each Red
   ship's fate, escalation and debris.
+- `order`, one per order given: `t`, the `order` as written, `ok`, `why`, and
+  for an intercept the `dv` flown.
 
 From the command above (seed 7), trimmed: positions, velocities and the second
 Blue ship are cut, and `…` marks a cut.
 
 ```json
-{"engine":"xGEO Core","hours":8.0,"name":"TWO SHIPS","scenario":"res://data/examples/two_ships.json","seed":7,"step":1800.0,"type":"start","units":{"distance":"km","speed":"km/s","time":"s"},"utc":"2041-10-12T16:10:00Z"}
+{"engine":"xGEO Core","hours":8.0,"name":"TWO SHIPS","orders":0,"run":0,"scenario":"res://data/examples/two_ships.json","seed":7,"step":1800.0,"type":"start","units":{"distance":"km","speed":"km/s","time":"s"},"utc":"2041-10-12T16:10:00Z"}
 {"escalation":0.0,"log":[{"code":"red_quiet","kind":"warn","t":600.0,"text":"TRK 4417 went quiet."},{"code":"burn_seen","kind":"alert","t":1200.0,"text":"TRK 4417 just burned. It's on the move."}],"ships":[{"alive":true,"class":"sentinel","delta_v":8.6567842746427,"id":"lancer","name":"LANCER (USA 702)",…}],"t":1800.0,"tracks":[{"class":"","ident":"unknown","in_contact":true,"label":"TRK 4417","last_seen":1800.0,…,"side":"unknown","sigma_km":{"angle":-0.861880495496169,"major":62.6413797362481,"minor":2.15452248200939},…}],"type":"step","utc":"2041-10-12T16:40:00Z"}
 …
 {"escalation":0.0,"log":[{"code":"shadow_hold","kind":"warn","t":7800.0,"text":"TRK 4417 has parked 40 km behind PELICAN-3."},{"code":"burn_seen","kind":"alert","t":8400.0,"text":"TRK 4417 just burned. It's on the move."}],…,"t":9000.0,…}
@@ -311,6 +353,10 @@ irradiance at its dazzle reach, Pk, the jammer's reach) and in use, with its
 escalation and the laser's waste heat; a kill vehicle breaking up a 0.5 t
 inspector and only cratering a 60 t tender (the NASA breakup model's 40 J/g);
 the objectives, the end of the operation and the debrief; a save that loads
-back bit for bit and runs on alike; the command-line runner's JSON lines; and
-that a finished world is freed. Its thresholds (4σ, 50 km, 2%) are design
+back bit for bit and runs on alike, and a save from before the random streams
+still loads; the command-line runner's JSON lines; the random streams (their
+seeds against Python's SHA-256, a thousand extra draws on one leaving the
+others alone, another run giving another world); a course of action (each
+order given at its time, carried out or refused with the reason, changing the
+outcome, and replaying byte for byte); and that a finished world is freed. Its thresholds (4σ, 50 km, 2%) are design
 values for a test, chosen with margin over what the models give.

@@ -1,0 +1,11 @@
+{
+  "name": "TEST RANGE: a course of action",
+  "about": "Orders for the command-line runner (cli/run.gd --coa=...) on the TEST RANGE scenario. Times are seconds from the start. LANCER closes on the inspector it holds a track on (planned on that track, not the truth); EXCALIBUR tries to jam it but is refused, because nobody has identified the track as an enemy (the rules of engagement); EXCALIBUR then makes a small burn; LANCER's buoy order is refused (the range has no buoy class); an order to a Red ship is refused. The runner reports each order with whether it was carried out, and why not. The 0.003 km/s burn is a design value for the example.",
+  "orders": [
+    {"t": 1800, "do": "intercept", "ship": "lancer", "target": "h1", "tof": 7200},
+    {"t": 3600, "do": "effect", "effect": "jam", "ship": "excal", "target": "h1"},
+    {"t": 5400, "do": "burn", "ship": "excal", "dv": [0.0, 0.003, 0.0]},
+    {"t": 5400, "do": "buoy", "ship": "lancer"},
+    {"t": 7200, "do": "burn", "ship": "h1", "dv": [0.0, 0.003, 0.0]}
+  ]
+}

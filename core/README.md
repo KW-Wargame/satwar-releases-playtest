@@ -25,7 +25,10 @@ godot --headless --path godot --script res://cli/run.gd -- --scenario= --hours=2
 `start` line, one `step` line per `--step` seconds (Blue's ships, Blue's
 tracks with their 1σ ellipses, escalation, and every log entry since the last
 step), and an `end` line with the debrief. `--scenario=res://data/....json`
-picks the scenario, `--seed=N` the random seed, `--truth=true` adds Red's and
+picks the scenario, `--seed=N` the random seed and `--run=K` the run of it
+(each subsystem draws from its own stream, so runs 0..K-1 are a reproducible
+Monte Carlo set), `--coa=orders.json` gives Blue's orders at set times (burn,
+intercept, effect, buoy; see `docs/SCENARIOS.md`), `--truth=true` adds Red's and
 neutrals' true states. A relative `--out` path is relative to the `godot/`
 folder (Godot starts there), so `run.jsonl` above lands in `godot/run.jsonl`. With no scenario file
 (`--scenario=`) it runs on `game.json` alone: the classes, the equipment and

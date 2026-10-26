@@ -50,7 +50,7 @@ func _init(sim_: Sim) -> void:
 func _first_tx(s: Dictionary) -> float:
 	if not s.cls.has("ttc"):
 		return INF
-	return sim.rng.randf_range(0.2, 1.0) * float(s.cls.ttc.every[0])
+	return sim.stream("red").randf_range(0.2, 1.0) * float(s.cls.ttc.every[0])
 
 
 ## Is this Red ship still taking orders from its handler?
@@ -124,7 +124,7 @@ func _talk(s: Dictionary) -> void:
 		ai.silent_until = maxf(ai.silent_until, sim.t + 6.0 * H)
 	if sim.t >= ai.next_tx and sim.t >= ai.silent_until:
 		s.bursts.append({"start": sim.t, "end": sim.t + float(s.cls.ttc.burst), "kind": "ttc"})
-		ai.next_tx = sim.t + sim.rng.randf_range(float(s.cls.ttc.every[0]), float(s.cls.ttc.every[1]))
+		ai.next_tx = sim.t + sim.stream("red").randf_range(float(s.cls.ttc.every[0]), float(s.cls.ttc.every[1]))
 
 
 func _mv() -> Dictionary:
