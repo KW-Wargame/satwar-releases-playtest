@@ -1,0 +1,88 @@
+{
+ "note": "A minimal xGEO Core scenario (docs/SCENARIOS.md): two Blue ships and one Red inspector in low Jupiter orbit. Every class, size, power, orbit and timing here is a design value (Notional) made up for this example.",
+ "id": "two_ships",
+ "name": "TWO SHIPS",
+ "days": 1,
+ "opening": {
+  "sigma_km": 20.0,
+  "sigma_kms": 0.005,
+  "cue": [
+   "A ground radar reports an unknown craft 300 km behind PELICAN-3 and closing: TRK 4417.",
+   "TRK 4417: radar report, uncorrelated object closing on PELICAN-3 (300 km, trailing)."
+  ]
+ },
+ "ships": [
+  {
+   "id": "pelican",
+   "name": "PELICAN-3 WEATHER SATELLITE",
+   "short": "PELICAN-3",
+   "side": "blue",
+   "kind": "commercial",
+   "classId": "pelican",
+   "orbit": {"radius_km": 92940, "phase_deg": 0.0}
+  },
+  {
+   "id": "lancer",
+   "name": "LANCER (USA 702)",
+   "short": "LANCER",
+   "side": "blue",
+   "kind": "warship",
+   "classId": "sentinel",
+   "operator": "U.S. SPACE CORPS",
+   "orbit": {"radius_km": 92940, "phase_deg": 0.0, "along_km": -1500.0, "radial_km": -40.0}
+  },
+  {
+   "id": "h1",
+   "name": "UNFLAGGED INSPECTOR",
+   "short": "4417",
+   "side": "red",
+   "kind": "hostile",
+   "classId": "midge",
+   "role": "shadow",
+   "orbit": {"radius_km": 92940, "phase_deg": 0.0, "along_km": -300.0, "radial_km": -10.0},
+   "plan": {
+    "target": "pelican",
+    "legs": [
+     [-40, 1, 2],
+     [-3, 2, 1.5]
+    ]
+   }
+  }
+ ],
+ "classes": {
+  "pelican": {
+   "name": "PELICAN-CLASS WEATHER SATELLITE",
+   "length": 4,
+   "sig": {"T": 285, "eps": 0.5, "A": 10, "alpha": 0.3, "diffuse": 0.3},
+   "rcs": 3
+  },
+  "midge": {
+   "name": "MIDGE-CLASS INSPECTOR",
+   "length": 1.8,
+   "dry": 0.4,
+   "prop": 0.12,
+   "engine": {"ve": 2.2, "thrust": 22, "hot": {"A": 0.003, "T": 1000, "eps": 0.85}},
+   "sig": {"T": 240, "eps": 0.12, "A": 6, "alpha": 0.05, "diffuse": 0.05},
+   "rcs": 0.3,
+   "ir": {"aperture": 0.1, "nei": 1.8e-14, "neiBand": 1.7e-16},
+   "ttc": {
+    "f": 8433000000.0,
+    "Pt": 10,
+    "dish": 0.4,
+    "aim": "handler",
+    "bw": 256000.0,
+    "mod": "BPSK 256 KBAUD",
+    "burst": 90,
+    "every": [3600, 7200]
+   }
+  }
+ },
+ "escalation": {"war": 100},
+ "objectives": [
+  {"id": "signal", "text": "Find and identify the inspector's radio", "fail": false},
+  {"id": "stop", "text": "Make it break off before it finishes its inspection", "fail": true,
+   "advice": "The inspector finished its look. Get alongside it and cut its command link."},
+  {"id": "protect_sat", "text": "Keep PELICAN-3 working", "fail": true},
+  {"id": "peace", "text": "Stay below open war (escalation 100)", "fail": true}
+ ]
+}

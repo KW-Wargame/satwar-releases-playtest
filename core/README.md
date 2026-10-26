@@ -73,7 +73,9 @@ play, not physics; most values here are Notional)
 | `save_game.gd` | save and continue |
 
 The data is JSON in `godot/data/`: `game.json` holds the classes and
-constants. A scenario is another JSON file, passed with `--scenario=`. A value in a data file
+constants. A scenario is another JSON file, passed with `--scenario=`; two
+examples are in `godot/data/examples/`, and how to write one is in
+[docs/SCENARIOS.md](docs/SCENARIOS.md). A value in a data file
 is either cited (a `sources` entry) or marked as a design value.
 
 ## Test it
@@ -81,6 +83,7 @@ is either cited (a `sources` entry) or marked as a design value.
 ```sh
 godot --headless --path godot --import
 godot --headless --path godot --script res://tests/run_tests.gd
+godot --headless --path godot --script res://tests/scenario_test.gd
 godot --headless --path godot --script res://tests/forecast_test.gd
 node tools/check-core.mjs    # Core never reaches into the game
 node tools/verify.mjs        # every number against independent references (needs Python 3.12+)

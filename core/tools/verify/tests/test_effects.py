@@ -19,8 +19,8 @@ from .test_antenna import itu_gain
 @pytest.fixture(autouse=True)
 def _scenario_effects(game):
     """The effects' parameters (jammers, uplinks, the laser, HPM, kill vehicles) come
-    from a scenario file. xGEO Core on its own ships none (the NIGHT HERON file
-    these were written for is part of xGEO Live), so there these checks skip."""
+    from a scenario file. xGEO Core on its own ships none (the scenario,
+    campaign.json, is part of xGEO Live), so there these checks skip."""
     if not game["effects"].get("jam"):
         pytest.skip("needs a scenario's effects; Core alone has no scenario file")
 

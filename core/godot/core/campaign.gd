@@ -1,6 +1,6 @@
 ## The campaign's bookkeeping: objectives, pockets found, how it ends, and the
 ## debrief. Objectives and their wording come from the campaign file: the
-## shadowing (data/campaign.json) or Operation NIGHT HERON (night_heron.json).
+## shadowing (data/campaign.json).
 class_name Campaign
 extends RefCounted
 

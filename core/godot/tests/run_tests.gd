@@ -27,8 +27,9 @@ func vrel(a: PackedFloat64Array, b: Array) -> float:
 
 
 func _init() -> void:
-	# These check Operation NIGHT HERON (shelved), whose numbers they were written for.
-	Sim.campaign_path = Sim.NIGHT_HERON
+	# On game.json alone (its own opening: HYDRA, the freighter, TRK 4417), as
+	# xGEO Core ships and runs these; the scenario's checks are in shadow_test.
+	Sim.campaign_path = ""
 	var fx: Dictionary = JSON.parse_string(FileAccess.get_file_as_string("res://tests/fixtures/parity.json"))
 	var mu: float = fx.mu
 

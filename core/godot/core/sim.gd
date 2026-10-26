@@ -2,7 +2,7 @@
 ## (gravity.gd), and the systems that act on it each look: sensing (what Blue
 ## learns), Red's behaviour, the effects, and the campaign's bookkeeping.
 ## Content: data/game.json (exported from the JS engine) and
-## data/campaign.json (Operation NIGHT HERON).
+## data/campaign.json (the scenario, CLOSE PASS).
 class_name Sim
 extends RefCounted
 
@@ -37,10 +37,8 @@ var debris: Array = [] # clouds (Breakup.cloud): {r, v, t, n, M, cat, of, frags}
 var scheduled: Array = [] # planned burns: {at, id, target, tof}
 
 
-## The campaign a plain Sim.new() plays: the shadowing (data/campaign.json), or
-## Operation NIGHT HERON (data/night_heron.json, shelved) for its films and tests.
+## The scenario a plain Sim.new() plays ("" for none: game.json alone).
 static var campaign_path := "res://data/campaign.json"
-const NIGHT_HERON := "res://data/night_heron.json"
 
 
 func _init(path := "res://data/game.json", camp_path := "*", seed_ := -1) -> void:
@@ -51,9 +49,10 @@ func _init(path := "res://data/game.json", camp_path := "*", seed_ := -1) -> voi
 	interplanetary = bool(camp.get("interplanetary", false)) or OS.get_cmdline_user_args().has("--interplanetary")
 	mu = data.jupiter.gm
 	moons = data.moons
-	# Through a weak reference, so the force model does not keep this Sim alive.
-	gravity = Gravity.new(mu, moons, _weak_moon_state(weakref(self)))
-	gravity.utc_of = _weak_utc(weakref(self))
+	# The force model holds the constants it needs, not this Sim: no reference
+	# cycle, and a track (Track.gravity is shared) never calls into a freed world.
+	gravity = Gravity.new(mu, moons, _moon_state_of(moons, mu, float(data.epochOffset)))
+	gravity.utc_of = _utc_of(float(data.startUtc))
 	Track.gravity = gravity
 	rng.seed = int(data.scenario.seed) if seed_ < 0 else seed_
 	for k in camp.get("classes", {}):
@@ -181,12 +180,16 @@ func moon(id: String) -> Dictionary:
 
 
 ## Moon state from JPL mean elements at sim time at. Returns [r, v].
-static func _weak_moon_state(w: WeakRef) -> Callable:
-	return func(id: String, at: float) -> Array: return w.get_ref().moon_state(id, at)
+static func _moon_state_of(moons_: Array, mu_: float, epoch_offset: float) -> Callable:
+	return func(id: String, at: float) -> Array:
+		for m in moons_:
+			if m.id == id:
+				return Kepler.from_elements(m, epoch_offset + at, mu_ + float(m.gm))
+		return []
 
 
-static func _weak_utc(w: WeakRef) -> Callable:
-	return func(at: float) -> float: return w.get_ref().utc_ms(at)
+static func _utc_of(start_ms: float) -> Callable:
+	return func(at: float) -> float: return start_ms + at * 1000.0
 
 
 func moon_state(id: String, at: float) -> Array:

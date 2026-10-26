@@ -1,9 +1,21 @@
-## Save and continue: the whole running world in one file (user://), written
-## with Godot's own var_to_str so packed arrays survive exactly.
+## Save and continue: the whole running world in one file (user://), in
+## Godot's binary encoding (var_to_bytes), which keeps every double bit for bit.
+## (Text, var_to_str, does not: str_to_var reads some 17-digit numbers back one
+## unit in the last place off, and a loaded world then drifts from the one saved.
+## Older text saves are still read.)
 class_name SaveGame
 
-const PATH := "user://night_heron.save"
+const PATH := "user://xgeo.save"
+## Where saves went before 26 Oct 2026: still read, and moved on the next save.
+const OLD_PATH := "user://night_heron.save"
 const SHIP_SKIP := ["cls", "plan_ref"]
+
+
+## The save to read: the current file, else one from before the rename.
+static func found() -> String:
+	if FileAccess.file_exists(PATH):
+		return PATH
+	return OLD_PATH if FileAccess.file_exists(OLD_PATH) else ""
 
 
 static func save(sim: Sim) -> void:
@@ -23,13 +35,18 @@ static func save(sim: Sim) -> void:
 		"jamming": sim.effects.jamming, "kvs": sim.effects.kvs, "radar": sim.effects.radar_on, "found": sim.campaign.found, "pending": sim.sensing.pending,
 		"auto": sim.sensing.auto, "dish_aim": sim.sensing.dish_aim, "last_look": sim.sensing.last_look, "doctrinal": Lang.doctrinal}
 	var f := FileAccess.open(PATH, FileAccess.WRITE)
-	f.store_string(var_to_str(state))
+	f.store_buffer(var_to_bytes(state))
+	if FileAccess.file_exists(OLD_PATH):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(OLD_PATH))
 
 
 static func load_into(sim: Sim) -> bool:
-	if not FileAccess.file_exists(PATH):
+	var path := found()
+	if path == "":
 		return false
-	var state = str_to_var(FileAccess.get_file_as_string(PATH))
+	var raw := FileAccess.get_file_as_bytes(path)
+	# A text save (before 26 Oct 2026) starts with "{"; a binary one with its type code.
+	var state = str_to_var(raw.get_string_from_utf8()) if raw.size() > 0 and raw[0] == 0x7B else bytes_to_var(raw)
 	if typeof(state) != TYPE_DICTIONARY:
 		return false
 	sim.t = state.t

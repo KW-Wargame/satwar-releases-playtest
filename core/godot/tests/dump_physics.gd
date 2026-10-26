@@ -35,9 +35,10 @@ func state(st: Array) -> Dictionary:
 
 
 func _init() -> void:
-	# These check Operation NIGHT HERON (shelved), whose numbers they were written for.
-	# xGEO Core on its own has no scenario files: then they run on game.json alone.
-	Sim.campaign_path = Sim.NIGHT_HERON if FileAccess.file_exists(Sim.NIGHT_HERON) else ""
+	# The platforms and effects of the scenario (data/campaign.json) when it is here;
+	# xGEO Core on its own has no scenario file, and then it runs on game.json alone.
+	if not FileAccess.file_exists(Sim.campaign_path):
+		Sim.campaign_path = ""
 	var args := {}
 	for a in OS.get_cmdline_user_args():
 		var kv := a.trim_prefix("--").split("=", true, 1)
