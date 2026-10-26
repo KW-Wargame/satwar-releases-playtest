@@ -54,6 +54,16 @@ func _run(args: Array) -> Array:
 	return [code, Array(lines).map(func(l): return JSON.parse_string(l)), text]
 
 
+## The batch runner on TEST RANGE: [exit code, its lines parsed].
+func _batch(args: Array) -> Array:
+	var out := OS.get_user_data_dir().path_join("scenario_batch.jsonl")
+	var code := OS.execute(OS.get_executable_path(), ["--headless", "--path", ProjectSettings.globalize_path("res://"), "--script", "res://cli/batch.gd", "--",
+		"--scenario=" + RANGE, "--out=" + out] + args)
+	var text := FileAccess.get_file_as_string(out) if FileAccess.file_exists(out) else ""
+	DirAccess.remove_absolute(out)
+	return [code, Array(text.strip_edges().split("\n")).map(func(l): return JSON.parse_string(l)) if text != "" else []]
+
+
 ## Put a ship beside another (offset km along its track, same velocity).
 func _beside(sim: Sim, id: String, of: String, along_km: float) -> void:
 	var o: Dictionary = sim.by_id[of]
@@ -319,6 +329,35 @@ func _init() -> void:
 		return JSON.stringify(snaps.back().ships) if not snaps.is_empty() else ""
 	_check(last_ships.call(ca[1]) != last_ships.call(plain[1]), "the course of action changes the outcome")
 	_check(ca[2] != "" and ca[2] == cb[2], "the same seed, run and orders replay byte for byte")
+
+	# 11b. The other orders, given directly (core/orders.gd).
+	var ow := _world()
+	_check(Orders.give(ow, {"do": "analyse"}).ok and ow.sensing.auto, "analyse turns on the analysis of every burst heard")
+	_check(Orders.give(ow, {"do": "radar", "ship": "lancer", "on": true}).ok and ow.effects.radar_on.get("lancer", false), "radar makes a ship radiate")
+	_check(not Orders.give(ow, {"do": "radar", "ship": "pelican"}).ok, "radar is refused to a ship without one")
+	_beside(ow, "lancer", "h1", 30.0)
+	ow.by_id.lancer.v = V.add(ow.by_id.lancer.v, V.of(0.01, -0.02, 0.0))
+	var m := Orders.give(ow, {"do": "match", "ship": "lancer", "target": "h1"})
+	var tv: Array = Orders._seen(ow, "h1")
+	_check(m.ok and V.dist(ow.by_id.lancer.v, ow.station_v(ow.by_id.lancer.r, tv[0], tv[1])) < 1e-9, "match flies the velocity that keeps it alongside the track")
+	ow = _world() # not analysing: the inspector stays unidentified, so the jam stays refused
+	var q := Orders.new([{"t": 0, "until": 1200, "do": "effect", "effect": "jam", "ship": "excal", "target": "h1"}])
+	while q.next_t() < INF:
+		q.due(ow)
+		ow.advance(maxf(q.next_t() - ow.t, 0.0) if q.next_t() < INF else 0.0)
+	_check(q.reports.size() == 1 and not q.reports[0].ok and q.reports[0].tries == 3, "an order with until is tried every look and given up after (%d tries)" % (q.reports[0].tries if q.reports.size() == 1 else -1))
+	ow = null
+
+	# 11c. The batch runner (cli/batch.gd): runs in order, common random
+	# numbers, and the same lines from one process or from two.
+	var both := _batch(["--coa=none,none", "--runs=2", "--hours=4"])
+	var rows: Array = both[1].filter(func(x): return x is Dictionary and x.type == "run")
+	_check(both[0] == 0 and both[1][0].type == "batch" and rows.map(func(x): return int(x.run)) == [0, 0, 1, 1], "the batch runner writes a header and each run for each course of action, in order")
+	_check(rows.size() == 4 and JSON.stringify(rows[0]) == JSON.stringify(rows[1]) and JSON.stringify(rows[2]) == JSON.stringify(rows[3]), "common random numbers: the same run of two identical courses of action ends identically")
+	var part0 := _batch(["--coa=none,none", "--runs=0-0", "--hours=4"])
+	var part1 := _batch(["--coa=none,none", "--runs=1-1", "--hours=4"])
+	var joined: Array = part0[1].filter(func(x): return x is Dictionary and x.type == "run") + part1[1].filter(func(x): return x is Dictionary and x.type == "run")
+	_check(JSON.stringify(joined) == JSON.stringify(rows), "two processes on runs 0 and 1 give the lines one process gives")
 
 	# 12. Real time. A scenario may compress its story (CLOSE PASS: weeks into
 	# days, by shorter holds and quicker hops paid for in real Δv); the clock and

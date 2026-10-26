@@ -253,6 +253,17 @@ K-1 of one seed are a Monte Carlo set that anyone can reproduce.
 | `intercept` | `ship`, `target`, `tof` s | A transfer that meets the target `tof` seconds later, refined under full gravity and flown. Against a Red ship it is planned on Blue's track, not the truth. |
 | `effect` | `effect`, `ship`, `target` | `jam`, `spoof`, `dazzle`, `hpm`, `cyber` or `kinetic`, if it can be used then (in range, on the beam, a declared enemy). |
 | `buoy` | `ship` | Drop a listening buoy, if the ship carries one and the scenario has the buoy class. |
+| `match` | `ship`, `target` | The velocity that keeps the ship alongside the target, on Blue's track of a Red ship (same orbit, turned to where the ship is). |
+| `analyse` | `on` (default true) | Take bearings on and classify every burst as it is heard, as the game's auto-analysis does. |
+| `radar` | `ship`, `on` | Radiate: ranges every track in reach, and escalates while it runs. |
+
+`intercept` also takes `behind_km`, to arrive that far behind the target along
+its orbit instead of on it. An effect order with `stop: true` ends a jam or a
+spoof. Any order may carry `until` (s): refused at its time, it is tried again
+every look (600 s) until it is carried out or `until` passes, so "jam as soon
+as the rules allow" is `{"t": 0, "until": 259200, "do": "effect", ...}`; the
+`order` line then reports how many `tries` it took. The full list is in
+`godot/core/orders.gd`.
 
 `t` is seconds from the start; the runner stops at each order's time to give
 it, and orders only Blue's ships. Each order adds an `order` line saying
@@ -331,6 +342,31 @@ Two things the output does not say directly. The opening cue is logged while
 the scenario loads, before the first line, so it never appears. And the moment
 the run ended is the `t` of the log line that ended it, not the `end` line's
 `t`, which is the last step boundary.
+
+## Many runs: the batch runner
+
+`godot/cli/batch.gd` plays many runs of a scenario for each course of action
+and writes one line of outcomes per run:
+
+```sh
+godot --headless --path godot --script res://cli/batch.gd --   --coa=a.json,b.json --runs=20 --hours=72 --out=batch.jsonl
+```
+
+`--runs=20` plays runs 0 to 19 of the seed; `--runs=20-39` plays those, so
+several processes can share a batch and their lines join into the same file
+one process would write. `none` in `--coa` is a course of action with no
+orders. The first line, `batch`, names the scenario, seed, runs and courses of
+action; then one `run` line per run and course of action: `coa`, `run`,
+`result` and `won`, `t_end`, `escalation`, `blue_dv_used` (km/s, all of
+Blue's ships), each objective's state, each Red ship's fate, the debris
+clouds, and the orders carried out and refused (with why).
+
+Run k is the same world for every course of action: the same opening track
+error, detections and chance draws until the orders change what happens
+(common random numbers, from the per-subsystem streams). Comparing two
+courses of action run by run then measures the effect of the orders, with
+much less noise than independent runs (Law 2015, *Simulation Modeling and
+Analysis*, 5th ed., §11.2).
 
 ## Testing a scenario
 
