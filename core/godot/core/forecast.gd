@@ -38,8 +38,10 @@ const MAX_H := 24.0 * 3600.0 # s, the longest
 const SAMPLES := 84
 const REAL_REFRESH := 2.0 # s of real time between recomputes at most
 ## New coast steps get_for flies per call: a fresh path (on opening, or after
-## a burn) fills in over a few frames instead of stalling one.
-const BUDGET := 24
+## a burn) fills in over a few frames instead of stalling one. Sized for about
+## 7 ms a call on a desktop, half the 15 ms forecast_test allows, so a slower
+## machine (the CI runner) stays inside it too.
+const BUDGET := 12
 ## Ghost streak ranks: [hours COLD without a break, name]. Design values.
 const RANKS := [[1.0, "QUIET"], [6.0, "DARK"], [24.0, "BLACK"], [72.0, "GHOST"]]
 ## A broken streak this long (s) or more is reported in the event log (design value).
