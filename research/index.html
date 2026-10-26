@@ -242,7 +242,7 @@ footer p{margin:0 0 6px}
   <li><span class="tag u">UNVERIFIED</span> Not confirmed. Treat it as unsourced.</li>
   <li><span class="tag">DERIVED</span> Computed from verified inputs, with the method stated so it can be rerun.</li>
 </ul>
-<p>Values chosen for play carry <span class="tag dv">DESIGN VALUE</span>. A design value is never presented as measured. Where possible, it is chosen inside a range that a source does support. The most important design values are the J/S needed to break a link (6 dB), the three hours of lost contact after which the inspector withdraws, the escalation costs, and the compressed timescale of the scenario.</p>
+<p>Values chosen for play carry <span class="tag dv">DESIGN VALUE</span>. A design value is never presented as measured. Where possible, it is chosen inside a range that a source does support. The most important design values are the J/S needed to break a link (6 dB), the three hours of lost contact after which the inspector withdraws (only with a Blue ship within 25 km of it), the escalation costs, and the compressed timescale of the scenario.</p>
 <p>The game runs in Godot 4.7 (GDScript, with 64-bit arithmetic wherever precision matters). Its physics is tested by an external suite (§10), which reads the game's own outputs. Python never reimplements the game in order to grade it.</p>
 </section>
 
@@ -444,7 +444,7 @@ J/S = J − S − 10 log(B<sub>j</sub>/B<sub>v</sub>)          dB</div>
 <ul>
   <li><b>Orbit.</b> 1.3 R<sub>J</sub> (92,940 km), a 4.37 h period. This is inside Jupiter's radiation belts, so every craft is assumed rad-hardened (Juno's titanium vault cuts its dose about 800 times<sup><a href="#r161">161</a></sup>). No dose is modelled.</li>
   <li><b>The inspector's radio.</b> An X-band (8.436 GHz) BPSK burst at 256 kbaud, 10 W into a 0.4 m dish aimed at its handler, 90 s long, after each move. These are design values within ordinary CCSDS practice. Seeing a threat, it goes quiet for 6 hours.</li>
-  <li><b>Losing its link.</b> Cut off from its handler for 3 hours within 200 km of its target, it backs away prograde at 4 m/s and departs. This is grounded in practice, not in a published rule: a Progress approach to the ISS was aborted on loss of its telemetry link in 2010<sup><a href="#r162">162</a></sup>, and ESA's ATV carried RETREAT and ESCAPE modes for the same reason. The threshold and the burn are <span class="tag dv">DESIGN VALUES</span>.</li>
+  <li><b>Losing its link.</b> Cut off from its handler for 3 hours within 200 km of its target, and with a Blue ship within 25 km of it (a design value: one MATCH drifts about 20 km in 3 h), it backs away prograde at 4 m/s and departs. Cut off but alone, it holds its slot and waits. Taking its controls needs the jammer holding its owner off first. This is grounded in practice, not in a published rule: a Progress approach to the ISS was aborted on loss of its telemetry link in 2010<sup><a href="#r162">162</a></sup>, and ESA's ATV carried RETREAT and ESCAPE modes for the same reason. The threshold and the burn are <span class="tag dv">DESIGN VALUES</span>.</li>
   <li><b>Timescale.</b> The real event took weeks. The game compresses it to about 57 hours over three days <span class="tag dv">DESIGN VALUE</span>.</li>
 </ul>
 

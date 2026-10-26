@@ -287,9 +287,32 @@ dialog.lb::backdrop{background:rgba(0,0,0,.94)}
 <body>
 <header class="nav solid" id="nav"><div class="wrap"><a class="word" href="../">SATWAR</a><nav aria-label="Site"><a href="../#operation">The Operation</a><a href="../#features">Features</a><a href="../manual/">Handbook</a><a href="../research/">Research</a></nav><a class="btn sm" href="../game/">Play free</a></div></header>
 <main>
-  <div class="pagehead"><div class="wrap"><span class="k">Development</span><h1>Changelog</h1><p class="lead">Every playtest build, newest first. The current build is Alpha 0.5, build 10. Click a picture to enlarge it.</p></div></div>
+  <div class="pagehead"><div class="wrap"><span class="k">Development</span><h1>Changelog</h1><p class="lead">Every playtest build, newest first. The current build is Alpha 0.5, build 11. Click a picture to enlarge it.</p></div></div>
   <div class="wrap" data-zoom><dl class="log">
-      <dt><span class="bn">Build 10</span><small>25 Oct 2026 · the solar system</small><span class="latest">Alpha 0.5 &middot; current</span></dt>
+      <dt><span class="bn">Build 11</span><small>25 Oct 2026 · the new look</small><span class="latest">Alpha 0.5 &middot; current</span></dt>
+      <dd>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>A new look.</b> Ships in dark machined metal with clear-coat and edge glints, a hard Sun with long shadows, a sharper Cassini map of Jupiter with softer, truer colour, and new key art on the title screen.</li>
+          <li><b>One scenario, renamed.</b> THE SHADOWING is now <b>CLOSE PASS</b>, after the inspector's 500 m closest pass in the real incident it is drawn from. The title screen reads START SCENARIO.</li>
+          <li><b>No freeze on the first zoom.</b> Every hull, plume, planet and the Sun are prepared behind the title screen, and orbit lines no longer trail the camera when you zoom or drag.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The title screen: SATWAR, the scenario Close Pass and Start scenario, over HYDRA and Jupiter." loading="lazy" src="../images/g11-menu.jpg"><figcaption>The new title screen</figcaption></figure></div>
+        <div class="cl-pair flip"><div class="cl-note"><ul>
+          <li><b>A header bar.</b> GAME, VIEW, STATIONS, MAP, ORDERS and HELP menus along the top, in the manner of desktop sims, with every command and its key, and a field that searches them all. TERMS and MENU move there from the rail.</li>
+          <li><b>Animated gauges.</b> Fuel drains with a fading trail when you burn; heat eases between COLD, WARM and SEEN. While the drive burns, the heat ring says BURNING and counts down how long you stay visible.</li>
+          <li><b>A calmer emissions and escalation panel.</b> A lamp that breathes while quiet and pulses red when loud, and an escalation scale whose needle glides to its value.</li>
+        </ul></div><figure><img width="1600" height="900" alt="The console with the STATIONS menu open from the header bar: Campaign, SIGINT station, Planner, Database, Ground tracker, Heat forecast, Signals and Solar system, each with its key." loading="lazy" src="../images/g11-stations.jpg"><figcaption>The header bar's STATIONS menu</figcaption></figure></div>
+        <div class="cl-pair"><div class="cl-note"><ul>
+          <li><b>You have to be there.</b> Jamming from afar no longer wins on its own. Cut off for three hours, the inspector leaves only if one of your ships is within 25 km of it. Alone, it holds its slot and waits.</li>
+          <li><b>Jam before you take.</b> TAKE needs your jammer holding its controller off first, or its owner would simply command it back.</li>
+          <li><b>Detections you can read.</b> The faint grey bearing lines are gone. A telescope sighting is a line and a diamond, a radio bearing a wedge, a radar fix a ring; the newest is labelled with who looked and when.</li>
+        </ul></div><figure><img width="1600" height="900" alt="A telescope detection on a track: the line of sight and a diamond, labelled IR LOOKS, HYDRA and Ganymede Station, now." loading="lazy" src="../images/g11-detect.jpg"><figcaption>A telescope detection</figcaption></figure></div>
+        <div class="cl-pair flip"><div class="cl-note"><ul>
+          <li><b>Old tracks show their age.</b> A track that has lost contact carries a ring and a chip, LAST 2H 18M, amber after an hour and red near the end, when it says when it will drop.</li>
+          <li><b>No direction arrows</b> on tracks that already sit on their orbit, and track icons shrink a little as you zoom out instead of growing.</li>
+          <li><b>A leaner Selected window.</b> Range once, three tiles for what matters, and one row per action with a single status and cost; the full reasoning is on hover.</li>
+        </ul></div><figure><img width="1600" height="900" alt="A lost track far out with its age ring and the chip LAST 21H 00M, DROPS IN 3H 00M." loading="lazy" src="../images/g11-age.jpg"><figcaption>How long since we last saw it</figcaption></figure></div>
+      </dd>
+      <dt><span class="bn">Build 10</span><small>25 Oct 2026 · the solar system</small></dt>
       <dd>
         <div class="cl-pair"><div class="cl-note"><ul>
           <li><b>The whole solar system, in 3D.</b> Keep zooming out from Jupiter and the map carries on to Neptune: the Sun, all eight planets on their real orbits, and their names. Double-click a planet or the Sun to fly there.</li>

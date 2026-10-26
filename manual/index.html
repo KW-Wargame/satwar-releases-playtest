@@ -182,7 +182,7 @@ kbd{display:inline-block;min-width:1.7em;text-align:center;font:600 8.5pt/1 var(
   <div class="t">
     <div class="k">Operator's Handbook</div>
     <h1>SATWAR</h1>
-    <h2>The Shadowing</h2>
+    <h2>Close Pass</h2>
     <p>How to play on PC, and how to win your first operation.</p>
     <div class="meta">Alpha 0.5 · Keyboard &amp; mouse</div>
   </div>
@@ -220,8 +220,8 @@ kbd{display:inline-block;min-width:1.7em;text-align:center;font:600 8.5pt/1 var(
   <h3>The main menu</h3>
   <div class="two" style="align-items:start">
     <div class="menu"><div class="t" style="border:0;padding:0;display:block">SATWAR</div>
-      <div class="go"><b>NEW CAMPAIGN</b>Start here</div><div><b>CONTINUE</b>Saves every game day</div><div><b>HOW TO PLAY</b>One-page briefing</div><div><b>SETTINGS</b>Sound and words</div><div><b>LIBRARY · SOURCES</b>Where the numbers come from</div></div>
-    <div><p style="margin:0 0 10px">Choose <b>NEW CAMPAIGN</b>. The game starts paused, with the tutorial on.</p>
+      <div class="go"><b>START SCENARIO</b>Close Pass</div><div><b>CONTINUE</b>Saves every game day</div><div><b>HOW TO PLAY</b>One-page briefing</div><div><b>SETTINGS</b>Sound and words</div><div><b>LIBRARY · SOURCES</b>Where the numbers come from</div></div>
+    <div><p style="margin:0 0 10px">Choose <b>START SCENARIO</b>. The game starts paused, with the tutorial on.</p>
       <div class="tip" style="margin-top:0"><b>First time?</b>Follow the tutorial card in the game. Each step names one thing to press and carries you to a win. This handbook is the same plan on paper.</div></div>
   </div>
   <div class="foot"><span>SATWAR · Operator's Handbook</span><span>2</span></div>
@@ -298,10 +298,10 @@ kbd{display:inline-block;min-width:1.7em;text-align:center;font:600 8.5pt/1 var(
     <div class="tile"><kbd>4</kbd><div class="ib"><img src="img/i-buoy.png" alt=""></div><b>BUOY</b><span>Drop a second listener</span><em class="cost q">Quiet</em></div>
     <div class="tile"><kbd>5</kbd><div class="ib"><img src="img/i-radar.png" alt=""></div><b>RADAR</b><span>Exact range; everyone hears it</span><em class="cost l">+1 per hour</em></div>
     <div class="tile"><kbd>6</kbd><div class="ib"><img src="img/i-thermometer.png" alt=""></div><b>DARK</b><span>Hide your heat about 3.5 h, once</span><em class="cost q">Quiet</em></div>
-    <div class="tile"><kbd>7</kbd><div class="ib"><img src="img/i-jam.png" alt=""></div><b>JAM</b><span>Cut its orders: how you win</span><em class="cost l">+2 per hour</em></div>
+    <div class="tile"><kbd>7</kbd><div class="ib"><img src="img/i-jam.png" alt=""></div><b>JAM</b><span>Cut its orders, stay close: how you win</span><em class="cost l">+2 per hour</em></div>
     <div class="tile"><kbd>8</kbd><div class="ib"><img src="img/i-spoof.png" alt=""></div><b>FAKE</b><span>Spoof its ranging so it drifts</span><em class="cost l">+4</em></div>
     <div class="tile"><kbd>9</kbd><div class="ib"><img src="img/i-hpm.png" alt=""></div><b>PULSE</b><span>Microwave burst at its receiver</span><em class="cost l">+15</em></div>
-    <div class="tile"><kbd>0</kbd><div class="ib"><img src="img/i-cyber.png" alt=""></div><b>TAKE</b><span>Take over its controls</span><em class="cost l">+10</em></div>
+    <div class="tile"><kbd>0</kbd><div class="ib"><img src="img/i-cyber.png" alt=""></div><b>TAKE</b><span>Take its controls, once jammed</span><em class="cost l">+10</em></div>
     <div class="tile"><span class="rl">NO KEY</span><div class="ib"><img src="img/i-kinetic.png" alt=""></div><b>KV</b><span>Kinetic kill, left without a key on purpose</span><em class="cost x">+45 · debris loses</em></div>
   </div>
   <h3>Windows</h3>
@@ -316,10 +316,10 @@ kbd{display:inline-block;min-width:1.7em;text-align:center;font:600 8.5pt/1 var(
     <div class="tile"><kbd>L</kbd><div class="ib"><img src="img/i-layers.png" alt=""></div><b>LAYERS</b><span>What's drawn</span></div>
     <div class="tile"><span class="rl">RAIL</span><div class="ib"><img src="img/i-signals.png" alt=""></div><b>SIGNALS</b><span>All heard</span></div>
     <div class="tile"><span class="rl">RAIL</span><div class="ib"><img src="img/i-solar.png" alt=""></div><b>SOLAR</b><span>The planets</span></div>
-    <div class="tile"><span class="rl">RAIL</span><div class="ib"><img src="img/i-language.png" alt=""></div><b>TERMS</b><span>Plain or military</span></div>
+    <div class="tile"><span class="rl">VIEW MENU</span><div class="ib"><img src="img/i-language.png" alt=""></div><b>TERMS</b><span>Plain or military</span></div>
     <div class="tile"><span class="rl">RAIL</span><div class="ib"><img src="img/i-details.png" alt=""></div><b>DETAILS</b><span>The maths</span></div>
   </div>
-  <p style="margin:8px 0 0;font-size:9pt;color:var(--ink3)">RAIL: no key. Click it on the left-hand rail.</p>
+  <p style="margin:8px 0 0;font-size:9pt;color:var(--ink3)">RAIL: no key. Click it on the left-hand rail. VIEW MENU: on the header bar along the top, whose menus (GAME, VIEW, STATIONS, MAP, ORDERS, HELP) hold every command with its key.</p>
   <div class="foot"><span>Actions and windows</span><span>5</span></div>
 </section>
 
@@ -386,7 +386,7 @@ kbd{display:inline-block;min-width:1.7em;text-align:center;font:600 8.5pt/1 var(
     <div class="step"><div class="shot"><img src="img/c-heatgauge.jpg" alt=""></div><div><span class="no">10</span><b>Go dark</b><div class="do">Press <kbd>6</kbd> DARK · <kbd>F7</kbd> forecast</div><p>Stores your waste heat for about 3.5 h, so SEEN turns COLD. You get one, so use it once you are alongside.</p></div></div>
     <div class="step"><div class="shot"><img class="ic" src="img/i-look.png" alt=""></div><div><span class="no">11</span><b>Look closer</b><div class="do">Select TRK 4417 · <kbd>2</kbd></div><p>Up close the telescope sees its hull, so you can aim. <kbd>V</kbd> visible light, <kbd>Esc</kbd> closes.</p></div></div>
     <div class="step"><div class="shot"><img src="img/c-hover.jpg" alt=""></div><div><span class="no">12</span><b>Jam</b><div class="do">Press <kbd>7</kbd> JAM</div><p>Drowns out its handler's orders. If the key is grey, hover over it: the card ticks off what's missing.</p></div></div>
-    <div class="step"><div class="shot"><img src="img/c-escal.jpg" alt=""></div><div><span class="no">13</span><b>Hold, then stop</b><div class="do">Keep jamming 3 h · <kbd>7</kbd> again to stop</div><p>Cut off for three hours, it backs away and leaves. Jamming adds 2 escalation an hour, so switch it off once it's gone.</p></div></div>
+    <div class="step"><div class="shot"><img src="img/c-escal.jpg" alt=""></div><div><span class="no">13</span><b>Hold, then stop</b><div class="do">Keep jamming 3 h · <kbd>7</kbd> again to stop</div><p>Cut off for three hours with you within 25 km of it, it backs away and leaves. Alone, it just waits. Jamming adds 2 escalation an hour, so switch it off once it's gone.</p></div></div>
   </div>
   <div class="tip"><b>JAM is grey?</b><i>Not a known enemy:</i> identify its signal first (step 5). <i>Can't aim:</i> get closer or let the telescope see it. <i>Out of reach:</i> close in.</div>
   <div class="foot"><span>Walkthrough · Stay cold, cut the line</span><span>9</span></div>
@@ -397,7 +397,7 @@ kbd{display:inline-block;min-width:1.7em;text-align:center;font:600 8.5pt/1 var(
   <div class="sec">8 · After the operation</div><h1>Endings</h1>
   <p class="lede">The debrief says which goal decided it and what to try next time.</p>
   <div class="ends">
-    <div class="end good"><b>The inspector departs</b>It was cut off for three hours, backed away and left. No debris, no war, ORIEL-36 still working.</div>
+    <div class="end good"><b>The inspector departs</b>It was cut off for three hours with you alongside, backed away and left. No debris, no war, ORIEL-36 still working.</div>
     <div class="end"><b>It finished its look</b>All seven moves done. <em>Try:</em> get alongside sooner and jam earlier.</div>
     <div class="end"><b>It went silent</b>It saw you coming and stopped talking. <em>Try:</em> listen before you move.</div>
     <div class="end"><b>Open war</b>Escalation reached 100. <em>Try:</em> fewer loud acts; stop jamming once it's gone.</div>
@@ -436,7 +436,7 @@ kbd{display:inline-block;min-width:1.7em;text-align:center;font:600 8.5pt/1 var(
       <li><span><kbd>7</kbd> stop once it leaves</span></li>
     </ol>
     <h4>Win and lose</h4><dl>
-      <dt><b>Win</b></dt><dd>Jam it 3 h within 200 km of ORIEL-36</dd>
+      <dt><b>Win</b></dt><dd>Jam it 3 h within 200 km of ORIEL-36, with HYDRA within 25 km of it</dd>
       <dt><b>Lose</b></dt><dd>It finishes 7 moves · ORIEL-36 damaged · any debris · escalation 100</dd>
       <dt><b>Bonus</b></dt><dd>Identify its radio signal</dd></dl></div>
     <div><h4>Keys</h4><dl>
@@ -456,7 +456,7 @@ kbd{display:inline-block;min-width:1.7em;text-align:center;font:600 8.5pt/1 var(
 <!-- 12 WORDS -->
 <section class="pg">
   <div class="sec">10 · Words you'll see</div><h1>Glossary</h1>
-  <p class="lede">TERMS on the rail switches the game between plain words and military ones.</p>
+  <p class="lede">TERMS, in the VIEW menu on the header bar, switches the game between plain words and military ones.</p>
   <div class="terms">
     <div class="term"><b>Δv</b>How much you can still change your speed: your fuel, in km/s.</div>
     <div class="term"><b>Track</b>What you believe about a contact. Its ring shows how unsure you are.</div>
